@@ -61,9 +61,9 @@ describe('Data File Loading', () => {
     it('should validate repository structure', () => {
       const result = loadRepositoriesData();
       expect(result.success).toBe(true);
-      
+
       if (result.data) {
-        result.data.repositories.forEach(repo => {
+        result.data.repositories.forEach((repo) => {
           expect(repo.name).toBeDefined();
           expect(repo.description).toBeDefined();
           expect(repo.url).toBeDefined();
@@ -84,9 +84,9 @@ describe('Data File Loading', () => {
     it('should validate publication structure', () => {
       const result = loadPublicationsData();
       expect(result.success).toBe(true);
-      
+
       if (result.data) {
-        result.data.publications.forEach(pub => {
+        result.data.publications.forEach((pub) => {
           expect(pub.title).toBeDefined();
           expect(pub.authors).toBeInstanceOf(Array);
           expect(pub.authors.length).toBeGreaterThan(0);
@@ -108,9 +108,9 @@ describe('Data File Loading', () => {
     it('should validate testimonial ratings are within 1-5 range', () => {
       const result = loadTestimonialsData();
       expect(result.success).toBe(true);
-      
+
       if (result.data) {
-        result.data.testimonials.forEach(testimonial => {
+        result.data.testimonials.forEach((testimonial) => {
           expect(testimonial.rating).toBeGreaterThanOrEqual(1);
           expect(testimonial.rating).toBeLessThanOrEqual(5);
         });
@@ -122,7 +122,7 @@ describe('Data File Loading', () => {
     it('should return error for malformed YAML', () => {
       const malformedPath = path.join(TEST_DATA_DIR, 'malformed.yaml');
       fs.writeFileSync(malformedPath, 'invalid: yaml: content: [unclosed');
-      
+
       const result = loadYamlFile(malformedPath, z.object({ test: z.string() }));
       expect(result.success).toBe(false);
       expect(result.error).toBeDefined();
@@ -130,7 +130,9 @@ describe('Data File Loading', () => {
 
     it('should return error for schema validation failure', () => {
       const invalidPath = path.join(TEST_DATA_DIR, 'invalid-testimonial.yaml');
-      fs.writeFileSync(invalidPath, `
+      fs.writeFileSync(
+        invalidPath,
+        `
 testimonials:
   - id: "test"
     authorName: "Test"
@@ -139,8 +141,9 @@ testimonials:
     text: "Test text"
     date: "2024-01-01"
     verified: true
-`);
-      
+`
+      );
+
       const result = loadTestimonialsData(invalidPath);
       expect(result.success).toBe(false);
       expect(result.error).toContain('Schema validation failed');
@@ -149,10 +152,26 @@ testimonials:
 
   describe('calculateAverageRating', () => {
     const mockTestimonials = [
-      { id: '1', authorName: 'A', courseSlug: 'course-1', rating: 5, text: 'Great', date: '2024-01-01', verified: true },
+      {
+        id: '1',
+        authorName: 'A',
+        courseSlug: 'course-1',
+        rating: 5,
+        text: 'Great',
+        date: '2024-01-01',
+        verified: true,
+      },
       { id: '2', authorName: 'B', courseSlug: 'course-1', rating: 4, text: 'Good', date: '2024-01-02', verified: true },
       { id: '3', authorName: 'C', courseSlug: 'course-1', rating: 3, text: 'OK', date: '2024-01-03', verified: true },
-      { id: '4', authorName: 'D', courseSlug: 'course-2', rating: 5, text: 'Excellent', date: '2024-01-04', verified: true },
+      {
+        id: '4',
+        authorName: 'D',
+        courseSlug: 'course-2',
+        rating: 5,
+        text: 'Excellent',
+        date: '2024-01-04',
+        verified: true,
+      },
     ];
 
     it('should calculate correct average rating for a course', () => {
@@ -173,15 +192,31 @@ testimonials:
 
   describe('getTestimonialsForCourse', () => {
     const mockTestimonials = [
-      { id: '1', authorName: 'A', courseSlug: 'course-1', rating: 5, text: 'Great', date: '2024-01-01', verified: true },
+      {
+        id: '1',
+        authorName: 'A',
+        courseSlug: 'course-1',
+        rating: 5,
+        text: 'Great',
+        date: '2024-01-01',
+        verified: true,
+      },
       { id: '2', authorName: 'B', courseSlug: 'course-1', rating: 4, text: 'Good', date: '2024-01-02', verified: true },
-      { id: '3', authorName: 'C', courseSlug: 'course-2', rating: 5, text: 'Excellent', date: '2024-01-03', verified: true },
+      {
+        id: '3',
+        authorName: 'C',
+        courseSlug: 'course-2',
+        rating: 5,
+        text: 'Excellent',
+        date: '2024-01-03',
+        verified: true,
+      },
     ];
 
     it('should return only testimonials for the specified course', () => {
       const result = getTestimonialsForCourse(mockTestimonials, 'course-1');
       expect(result.length).toBe(2);
-      expect(result.every(t => t.courseSlug === 'course-1')).toBe(true);
+      expect(result.every((t) => t.courseSlug === 'course-1')).toBe(true);
     });
 
     it('should return empty array for course with no testimonials', () => {

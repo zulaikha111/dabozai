@@ -2,8 +2,8 @@
  * Property-based tests for navigation link validity
  * Feature: portfolio-training-website, Property 8: Navigation link validity
  * Validates: Requirements 7.2, 7.4
- * 
- * For any navigation link in the system, it should resolve to a valid, 
+ *
+ * For any navigation link in the system, it should resolve to a valid,
  * accessible page in both development and production builds.
  */
 import { describe, it, expect } from 'vitest';
@@ -21,18 +21,6 @@ interface NavLink {
 interface FooterSection {
   title: string;
   links: { text: string; href: string }[];
-}
-
-interface SocialLink {
-  ariaLabel: string;
-  icon: string;
-  href: string;
-}
-
-interface ActionLink {
-  text: string;
-  href: string;
-  target?: string;
 }
 
 /**
@@ -107,22 +95,14 @@ const footerData = {
 /**
  * Valid internal page paths that should exist in the site
  */
-const VALID_INTERNAL_PATHS = [
-  '/',
-  '/about',
-  '/contact',
-  '/services',
-  '/terms',
-  '/privacy',
-  '/blog',
-];
+const VALID_INTERNAL_PATHS = ['/', '/about', '/contact', '/services', '/terms', '/privacy', '/blog'];
 
 /**
  * Extract all links from navigation structure recursively
  */
 function extractAllLinks(links: NavLink[]): { text: string; href: string }[] {
   const result: { text: string; href: string }[] = [];
-  
+
   for (const link of links) {
     if (link.href) {
       result.push({ text: link.text, href: link.href });
@@ -131,7 +111,7 @@ function extractAllLinks(links: NavLink[]): { text: string; href: string }[] {
       result.push(...extractAllLinks(link.links));
     }
   }
-  
+
   return result;
 }
 
@@ -140,13 +120,13 @@ function extractAllLinks(links: NavLink[]): { text: string; href: string }[] {
  */
 function extractFooterLinks(sections: FooterSection[]): { text: string; href: string }[] {
   const result: { text: string; href: string }[] = [];
-  
+
   for (const section of sections) {
     if (section.links && Array.isArray(section.links)) {
       result.push(...section.links);
     }
   }
-  
+
   return result;
 }
 
@@ -158,40 +138,40 @@ function isValidLink(href: string): boolean {
   if (href.startsWith('http://') || href.startsWith('https://')) {
     return true;
   }
-  
+
   // Anchor links are valid
   if (href.startsWith('#')) {
     return true;
   }
-  
+
   // Asset links (like RSS) are valid
   if (href.includes('/rss.xml') || href.includes('rss.xml')) {
     return true;
   }
-  
+
   // Internal paths should start with /
   if (!href.startsWith('/')) {
     return false;
   }
-  
+
   // Check if the path matches a known valid path or pattern
   const normalizedPath = href.replace(/\/$/, '') || '/'; // Remove trailing slash
-  
+
   // Check exact matches
   if (VALID_INTERNAL_PATHS.includes(normalizedPath)) {
     return true;
   }
-  
+
   // Check for blog paths (dynamic routes)
   if (normalizedPath.startsWith('/blog')) {
     return true;
   }
-  
+
   // Check for product paths (dynamic routes)
   if (normalizedPath.startsWith('/products')) {
     return true;
   }
-  
+
   return false;
 }
 
@@ -210,7 +190,7 @@ function hasRequiredProperties(link: { text: string; href: string }): boolean {
 describe('Navigation Link Validity - Property Tests', () => {
   /**
    * Property 8: Navigation link validity
-   * For any navigation link in the system, it should resolve to a valid, 
+   * For any navigation link in the system, it should resolve to a valid,
    * accessible page in both development and production builds.
    */
 
@@ -223,8 +203,8 @@ describe('Navigation Link Validity - Property Tests', () => {
 
     it('should have all required navigation items (Home, About/CV, Blog, Training Products, Contact)', () => {
       const requiredItems = ['Home', 'About/CV', 'Blog', 'Training Products', 'Contact'];
-      const linkTexts = headerLinks.map(link => link.text);
-      
+      const linkTexts = headerLinks.map((link) => link.text);
+
       for (const item of requiredItems) {
         expect(linkTexts).toContain(item);
       }
@@ -232,13 +212,10 @@ describe('Navigation Link Validity - Property Tests', () => {
 
     it('should have valid href for every header navigation link', () => {
       fc.assert(
-        fc.property(
-          fc.constantFrom(...headerLinks),
-          (link) => {
-            expect(hasRequiredProperties(link)).toBe(true);
-            expect(isValidLink(link.href)).toBe(true);
-          }
-        ),
+        fc.property(fc.constantFrom(...headerLinks), (link) => {
+          expect(hasRequiredProperties(link)).toBe(true);
+          expect(isValidLink(link.href)).toBe(true);
+        }),
         { numRuns: Math.min(100, headerLinks.length * 10) }
       );
     });
@@ -251,9 +228,7 @@ describe('Navigation Link Validity - Property Tests', () => {
 
     it('should have internal paths starting with /', () => {
       for (const link of headerLinks) {
-        if (!link.href.startsWith('http://') && 
-            !link.href.startsWith('https://') && 
-            !link.href.startsWith('#')) {
+        if (!link.href.startsWith('http://') && !link.href.startsWith('https://') && !link.href.startsWith('#')) {
           expect(link.href.startsWith('/')).toBe(true);
         }
       }
@@ -286,13 +261,10 @@ describe('Navigation Link Validity - Property Tests', () => {
 
     it('should have valid href for every footer navigation link', () => {
       fc.assert(
-        fc.property(
-          fc.constantFrom(...footerLinks),
-          (link) => {
-            expect(hasRequiredProperties(link)).toBe(true);
-            expect(isValidLink(link.href)).toBe(true);
-          }
-        ),
+        fc.property(fc.constantFrom(...footerLinks), (link) => {
+          expect(hasRequiredProperties(link)).toBe(true);
+          expect(isValidLink(link.href)).toBe(true);
+        }),
         { numRuns: Math.min(100, footerLinks.length * 10) }
       );
     });
@@ -341,15 +313,15 @@ describe('Navigation Link Validity - Property Tests', () => {
 
   describe('Navigation Consistency', () => {
     it('should have consistent navigation between header and footer', () => {
-      const headerLinkTexts = extractAllLinks(headerData.links as NavLink[]).map(l => l.text);
+      const headerLinkTexts = extractAllLinks(headerData.links as NavLink[]).map((l) => l.text);
       const footerSections = footerData.links as FooterSection[];
-      
+
       // Find the Navigation section in footer
-      const navSection = footerSections.find(s => s.title === 'Navigation');
-      
+      const navSection = footerSections.find((s) => s.title === 'Navigation');
+
       if (navSection) {
-        const footerNavTexts = navSection.links.map(l => l.text);
-        
+        const footerNavTexts = navSection.links.map((l) => l.text);
+
         // All header links should be in footer navigation
         for (const headerText of headerLinkTexts) {
           expect(footerNavTexts).toContain(headerText);
@@ -359,9 +331,9 @@ describe('Navigation Link Validity - Property Tests', () => {
 
     it('should not have duplicate links in header navigation', () => {
       const headerLinks = extractAllLinks(headerData.links as NavLink[]);
-      const hrefs = headerLinks.map(l => l.href);
+      const hrefs = headerLinks.map((l) => l.href);
       const uniqueHrefs = [...new Set(hrefs)];
-      
+
       expect(hrefs.length).toBe(uniqueHrefs.length);
     });
   });
@@ -387,9 +359,7 @@ describe('Navigation Link Validity - Property Tests', () => {
 
     it('should have properly formatted internal paths', () => {
       for (const link of allLinks) {
-        if (!link.href.startsWith('http://') && 
-            !link.href.startsWith('https://') && 
-            !link.href.startsWith('#')) {
+        if (!link.href.startsWith('http://') && !link.href.startsWith('https://') && !link.href.startsWith('#')) {
           // Internal paths should start with /
           expect(link.href.startsWith('/')).toBe(true);
           // Should not have double slashes (except in protocol)
@@ -401,8 +371,7 @@ describe('Navigation Link Validity - Property Tests', () => {
 
   describe('Property-Based Navigation Generation', () => {
     // Generator for valid navigation link text
-    const validLinkText = fc.string({ minLength: 1, maxLength: 50 })
-      .filter(s => s.trim().length > 0);
+    const validLinkText = fc.string({ minLength: 1, maxLength: 50 }).filter((s) => s.trim().length > 0);
 
     // Generator for valid internal paths
     const validInternalPath = fc.constantFrom(...VALID_INTERNAL_PATHS);
@@ -446,12 +415,9 @@ describe('Navigation Link Validity - Property Tests', () => {
       ];
 
       fc.assert(
-        fc.property(
-          fc.constantFrom(...pathPatterns),
-          (path) => {
-            expect(isValidLink(path)).toBe(true);
-          }
-        ),
+        fc.property(fc.constantFrom(...pathPatterns), (path) => {
+          expect(isValidLink(path)).toBe(true);
+        }),
         { numRuns: 100 }
       );
     });

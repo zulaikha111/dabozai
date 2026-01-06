@@ -226,20 +226,14 @@ export function getFileModifiedTime(filePath: string): number | null {
  * Watches content directories for changes (for development mode)
  * Returns a cleanup function to stop watching
  */
-export function watchContentDirectories(
-  basePath: string,
-  onChange: (filePath: string) => void
-): () => void {
-  const watchPaths = [
-    path.join(basePath, 'src/data'),
-    path.join(basePath, 'src/content'),
-  ];
+export function watchContentDirectories(basePath: string, onChange: (filePath: string) => void): () => void {
+  const watchPaths = [path.join(basePath, 'src/data'), path.join(basePath, 'src/content')];
 
   const watchers: fs.FSWatcher[] = [];
 
   for (const watchPath of watchPaths) {
     if (fs.existsSync(watchPath)) {
-      const watcher = fs.watch(watchPath, { recursive: true }, (eventType, filename) => {
+      const watcher = fs.watch(watchPath, { recursive: true }, (_eventType, filename) => {
         if (filename) {
           onChange(path.join(watchPath, filename));
         }
@@ -262,10 +256,7 @@ export function watchContentDirectories(
 export function generateContentManifest(basePath: string = '.'): Record<string, number> {
   const manifest: Record<string, number> = {};
 
-  const contentPaths = [
-    path.join(basePath, 'src/data'),
-    path.join(basePath, 'src/content'),
-  ];
+  const contentPaths = [path.join(basePath, 'src/data'), path.join(basePath, 'src/content')];
 
   for (const contentPath of contentPaths) {
     if (!fs.existsSync(contentPath)) continue;

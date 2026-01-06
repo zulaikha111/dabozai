@@ -23,7 +23,7 @@ describe('Responsive Design Utilities', () => {
     it('should extract responsive classes from a class string', () => {
       const classes = 'flex md:flex-row lg:grid-cols-3 p-4 md:p-6';
       const result = extractResponsiveClasses(classes);
-      
+
       expect(result).toHaveLength(3);
       expect(result).toContainEqual({ className: 'md:flex-row', breakpoint: 'md', property: 'flex-row' });
       expect(result).toContainEqual({ className: 'lg:grid-cols-3', breakpoint: 'lg', property: 'grid-cols-3' });
@@ -39,9 +39,9 @@ describe('Responsive Design Utilities', () => {
     it('should handle all breakpoint prefixes', () => {
       const classes = 'sm:text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl';
       const result = extractResponsiveClasses(classes);
-      
+
       expect(result).toHaveLength(5);
-      expect(result.map(r => r.breakpoint)).toEqual(['sm', 'md', 'lg', 'xl', '2xl']);
+      expect(result.map((r) => r.breakpoint)).toEqual(['sm', 'md', 'lg', 'xl', '2xl']);
     });
   });
 
@@ -61,7 +61,7 @@ describe('Responsive Design Utilities', () => {
     it('should return unique breakpoints used', () => {
       const classes = 'md:flex md:p-4 lg:grid-cols-2 md:text-lg';
       const result = getBreakpointsUsed(classes);
-      
+
       expect(result).toHaveLength(2);
       expect(result).toContain('md');
       expect(result).toContain('lg');
@@ -102,9 +102,9 @@ describe('Responsive Design Utilities', () => {
           <div class="p-4 md:p-6">Content</div>
         </div>
       `;
-      
+
       const result = analyzeComponentResponsiveness('TestComponent', content);
-      
+
       expect(result.componentName).toBe('TestComponent');
       expect(result.hasResponsiveClasses).toBe(true);
       expect(result.breakpointsUsed).toContain('md');
@@ -118,9 +118,9 @@ describe('Responsive Design Utilities', () => {
           <div>Item 2</div>
         </div>
       `;
-      
+
       const result = analyzeComponentResponsiveness('GridComponent', content);
-      
+
       expect(result.issues).toContain('Grid layout without responsive column adjustments');
     });
 
@@ -130,9 +130,9 @@ describe('Responsive Design Utilities', () => {
           <div>Item 1</div>
         </div>
       `;
-      
+
       const result = analyzeComponentResponsiveness('SingleColGrid', content);
-      
+
       expect(result.issues).not.toContain('Grid layout without responsive column adjustments');
     });
   });
@@ -145,9 +145,9 @@ describe('Responsive Design Utilities', () => {
         <p class="text-sm md:text-base">Text</p>
         <div class="p-4 md:p-6">Spacing</div>
       `;
-      
+
       const result = validateResponsivePatterns(content);
-      
+
       expect(result.patterns.hasResponsiveVisibility).toBe(true);
       expect(result.patterns.hasResponsiveGrid).toBe(true);
       expect(result.patterns.hasResponsiveText).toBe(true);
@@ -162,9 +162,9 @@ describe('Responsive Design Utilities', () => {
         { name: 'Footer', content: '<footer class="grid md:grid-cols-3 lg:grid-cols-4"></footer>' },
         { name: 'Card', content: '<div class="p-4">Simple card</div>' },
       ];
-      
+
       const report = generateResponsiveReport(components);
-      
+
       expect(report.summary.totalComponents).toBe(3);
       expect(report.summary.responsiveComponents).toBe(2);
       expect(report.components).toHaveLength(3);
@@ -174,7 +174,7 @@ describe('Responsive Design Utilities', () => {
 
 describe('Real Component Responsive Design Verification', () => {
   const componentsDir = 'src/components/widgets';
-  
+
   const componentFiles = [
     'Portfolio.astro',
     'TrainingCatalog.astro',
@@ -187,7 +187,7 @@ describe('Real Component Responsive Design Verification', () => {
 
   it('should verify all key components have responsive design', () => {
     const components: Array<{ name: string; content: string }> = [];
-    
+
     for (const file of componentFiles) {
       const filePath = path.join(componentsDir, file);
       if (fs.existsSync(filePath)) {
@@ -195,15 +195,15 @@ describe('Real Component Responsive Design Verification', () => {
         components.push({ name: file, content });
       }
     }
-    
+
     const report = generateResponsiveReport(components);
-    
+
     // Log the report for visibility
     console.log('\n=== Responsive Design Report ===');
     console.log(`Total Components: ${report.summary.totalComponents}`);
     console.log(`Responsive Components: ${report.summary.responsiveComponents}`);
     console.log(`Components with Issues: ${report.summary.componentsWithIssues}`);
-    
+
     for (const comp of report.components) {
       console.log(`\n${comp.componentName}:`);
       console.log(`  - Has responsive classes: ${comp.hasResponsiveClasses}`);
@@ -212,11 +212,11 @@ describe('Real Component Responsive Design Verification', () => {
         console.log(`  - Issues: ${comp.issues.join(', ')}`);
       }
     }
-    
+
     if (report.overallIssues.length > 0) {
       console.log(`\nOverall Issues: ${report.overallIssues.join(', ')}`);
     }
-    
+
     // At least 50% of components should have responsive classes
     const responsiveRatio = report.summary.responsiveComponents / report.summary.totalComponents;
     expect(responsiveRatio).toBeGreaterThanOrEqual(0.5);
@@ -226,10 +226,10 @@ describe('Real Component Responsive Design Verification', () => {
     const headerPath = path.join(componentsDir, 'Header.astro');
     if (fs.existsSync(headerPath)) {
       const content = fs.readFileSync(headerPath, 'utf-8');
-      
+
       // Header should have mobile menu toggle
       expect(content).toMatch(/md:hidden|ToggleMenu/);
-      
+
       // Header should have responsive navigation
       expect(content).toMatch(/md:flex|md:block/);
     }
@@ -239,7 +239,7 @@ describe('Real Component Responsive Design Verification', () => {
     const catalogPath = path.join(componentsDir, 'TrainingCatalog.astro');
     if (fs.existsSync(catalogPath)) {
       const content = fs.readFileSync(catalogPath, 'utf-8');
-      
+
       // Should have responsive grid columns
       expect(content).toMatch(/md:grid-cols-|lg:grid-cols-/);
     }
@@ -249,7 +249,7 @@ describe('Real Component Responsive Design Verification', () => {
     const formPath = path.join(componentsDir, 'ContactForm.astro');
     if (fs.existsSync(formPath)) {
       const content = fs.readFileSync(formPath, 'utf-8');
-      
+
       // Should have responsive padding or max-width
       expect(content).toMatch(/sm:p-|lg:p-|max-w-/);
     }
@@ -259,7 +259,7 @@ describe('Real Component Responsive Design Verification', () => {
 describe('Viewport Breakpoint Coverage', () => {
   it('should have all standard Tailwind breakpoints defined', () => {
     expect(TAILWIND_BREAKPOINTS).toHaveLength(5);
-    expect(TAILWIND_BREAKPOINTS.map(b => b.name)).toEqual(['sm', 'md', 'lg', 'xl', '2xl']);
+    expect(TAILWIND_BREAKPOINTS.map((b) => b.name)).toEqual(['sm', 'md', 'lg', 'xl', '2xl']);
   });
 
   it('should have common viewport sizes for testing', () => {

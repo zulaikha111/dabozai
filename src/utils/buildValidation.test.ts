@@ -16,16 +16,16 @@ function hasValidSyntaxStructure(content: string): boolean {
   const stack: string[] = [];
   const pairs: Record<string, string> = { '{': '}', '[': ']', '(': ')' };
   const closers = new Set(Object.values(pairs));
-  
+
   let inString = false;
   let stringChar = '';
   let inComment = false;
   let inLineComment = false;
-  
+
   for (let i = 0; i < content.length; i++) {
     const char = content[i];
     const nextChar = content[i + 1];
-    
+
     // Handle line comments
     if (!inString && !inComment && char === '/' && nextChar === '/') {
       inLineComment = true;
@@ -36,7 +36,7 @@ function hasValidSyntaxStructure(content: string): boolean {
       continue;
     }
     if (inLineComment) continue;
-    
+
     // Handle block comments
     if (!inString && !inComment && char === '/' && nextChar === '*') {
       inComment = true;
@@ -48,7 +48,7 @@ function hasValidSyntaxStructure(content: string): boolean {
       continue;
     }
     if (inComment) continue;
-    
+
     // Handle strings
     if (!inString && (char === '"' || char === "'" || char === '`')) {
       inString = true;
@@ -60,7 +60,7 @@ function hasValidSyntaxStructure(content: string): boolean {
       continue;
     }
     if (inString) continue;
-    
+
     // Check brackets
     if (pairs[char]) {
       stack.push(pairs[char]);
@@ -70,7 +70,7 @@ function hasValidSyntaxStructure(content: string): boolean {
       }
     }
   }
-  
+
   return stack.length === 0;
 }
 
@@ -83,7 +83,7 @@ function hasValidHtmlStructure(content: string): boolean {
   const hasHtmlTag = /<html[^>]*>/i.test(content) && /<\/html>/i.test(content);
   const hasHead = /<head[^>]*>/i.test(content) && /<\/head>/i.test(content);
   const hasBody = /<body[^>]*>/i.test(content) && /<\/body>/i.test(content);
-  
+
   return hasDoctype && hasHtmlTag && hasHead && hasBody;
 }
 
@@ -92,11 +92,11 @@ function hasValidHtmlStructure(content: string): boolean {
  */
 function extractInternalLinks(content: string): string[] {
   const links: string[] = [];
-  
+
   // Match href attributes that don't start with http, https, mailto, tel, or #
   const hrefPattern = /href=["']([^"']+)["']/g;
   let match;
-  
+
   while ((match = hrefPattern.exec(content)) !== null) {
     const href = match[1];
     if (
@@ -110,7 +110,7 @@ function extractInternalLinks(content: string): string[] {
       links.push(href);
     }
   }
-  
+
   return links;
 }
 
@@ -119,14 +119,14 @@ function extractInternalLinks(content: string): string[] {
  */
 function validateInternalLinks(distDir: string): { valid: boolean; brokenLinks: string[] } {
   const brokenLinks: string[] = [];
-  
+
   if (!fs.existsSync(distDir)) {
     return { valid: true, brokenLinks: [] };
   }
-  
+
   // Collect all HTML files
   const htmlFiles: string[] = [];
-  
+
   function collectHtmlFiles(dir: string) {
     const entries = fs.readdirSync(dir, { withFileTypes: true });
     for (const entry of entries) {
@@ -138,27 +138,27 @@ function validateInternalLinks(distDir: string): { valid: boolean; brokenLinks: 
       }
     }
   }
-  
+
   collectHtmlFiles(distDir);
-  
+
   // Check links in each HTML file
   for (const htmlFile of htmlFiles) {
     const content = fs.readFileSync(htmlFile, 'utf-8');
     const links = extractInternalLinks(content);
-    
+
     for (const link of links) {
       // Normalize the link path
       let targetPath: string;
-      
+
       if (link.startsWith('/')) {
         targetPath = path.join(distDir, link);
       } else {
         targetPath = path.join(path.dirname(htmlFile), link);
       }
-      
+
       // Remove query strings and fragments
       targetPath = targetPath.split('?')[0].split('#')[0];
-      
+
       // Check if target exists (as file or directory with index.html)
       if (!fs.existsSync(targetPath)) {
         // Try with .html extension
@@ -171,7 +171,7 @@ function validateInternalLinks(distDir: string): { valid: boolean; brokenLinks: 
       }
     }
   }
-  
+
   return {
     valid: brokenLinks.length === 0,
     brokenLinks,
@@ -184,30 +184,29 @@ function validateInternalLinks(distDir: string): { valid: boolean; brokenLinks: 
 function validateTsConfig(projectDir: string): { valid: boolean; errors: string[] } {
   const errors: string[] = [];
   const tsconfigPath = path.join(projectDir, 'tsconfig.json');
-  
+
   if (!fs.existsSync(tsconfigPath)) {
     errors.push('tsconfig.json not found');
     return { valid: false, errors };
   }
-  
+
   try {
     const content = fs.readFileSync(tsconfigPath, 'utf-8');
     const config = JSON.parse(content);
-    
+
     // Check for strict mode
     if (!config.compilerOptions?.strict) {
       // Not an error, just a note
     }
-    
+
     // Check for required compiler options
     if (!config.compilerOptions) {
       errors.push('compilerOptions not defined in tsconfig.json');
     }
-    
   } catch (e) {
     errors.push(`Failed to parse tsconfig.json: ${e}`);
   }
-  
+
   return {
     valid: errors.length === 0,
     errors,
@@ -219,29 +218,29 @@ function validateTsConfig(projectDir: string): { valid: boolean; errors: string[
  */
 function validateAstroConfig(projectDir: string): { valid: boolean; errors: string[] } {
   const errors: string[] = [];
-  
+
   // Check for astro.config.ts or astro.config.mjs
   const configTs = path.join(projectDir, 'astro.config.ts');
   const configMjs = path.join(projectDir, 'astro.config.mjs');
-  
+
   if (!fs.existsSync(configTs) && !fs.existsSync(configMjs)) {
     errors.push('Astro configuration file not found');
     return { valid: false, errors };
   }
-  
+
   const configPath = fs.existsSync(configTs) ? configTs : configMjs;
   const content = fs.readFileSync(configPath, 'utf-8');
-  
+
   // Check for site URL configuration
   if (!content.includes('site:') && !content.includes('site =')) {
     errors.push('Site URL not configured in Astro config');
   }
-  
+
   // Check for output mode
-  if (!content.includes("output:") && !content.includes("output =")) {
+  if (!content.includes('output:') && !content.includes('output =')) {
     // Default is static, which is fine
   }
-  
+
   return {
     valid: errors.length === 0,
     errors,
@@ -262,7 +261,7 @@ describe('Build Process Validation - Property Tests', () => {
           fc.array(
             fc.record({
               type: fc.constantFrom('object', 'array', 'function'),
-              content: fc.string({ minLength: 0, maxLength: 20 }).filter(s => !/[{}[\]()'"\\`]/g.test(s)),
+              content: fc.string({ minLength: 0, maxLength: 20 }).filter((s) => !/[{}[\]()'"\\`]/g.test(s)),
             }),
             { minLength: 1, maxLength: 5 }
           ),
@@ -279,7 +278,7 @@ describe('Build Process Validation - Property Tests', () => {
                 code += `function fn() { return "${safeContent}"; }\n`;
               }
             }
-            
+
             expect(hasValidSyntaxStructure(code)).toBe(true);
           }
         ),
@@ -291,7 +290,7 @@ describe('Build Process Validation - Property Tests', () => {
       fc.assert(
         fc.property(
           fc.constantFrom('{', '[', '('),
-          fc.string({ minLength: 1, maxLength: 20 }).filter(s => !/[{}[\]()]/g.test(s)),
+          fc.string({ minLength: 1, maxLength: 20 }).filter((s) => !/[{}[\]()]/g.test(s)),
           (bracket, content) => {
             // Create code with unbalanced bracket
             const code = `const x = ${bracket}${content}`;
@@ -307,8 +306,12 @@ describe('Build Process Validation - Property Tests', () => {
     it('should validate proper HTML structure', () => {
       fc.assert(
         fc.property(
-          fc.string({ minLength: 1, maxLength: 50 }).filter(s => s.trim().length > 0 && !s.includes('<') && !s.includes('>')),
-          fc.string({ minLength: 1, maxLength: 100 }).filter(s => s.trim().length > 0 && !s.includes('<') && !s.includes('>')),
+          fc
+            .string({ minLength: 1, maxLength: 50 })
+            .filter((s) => s.trim().length > 0 && !s.includes('<') && !s.includes('>')),
+          fc
+            .string({ minLength: 1, maxLength: 100 })
+            .filter((s) => s.trim().length > 0 && !s.includes('<') && !s.includes('>')),
           (title, content) => {
             const html = `<!DOCTYPE html>
 <html lang="en">
@@ -319,7 +322,7 @@ describe('Build Process Validation - Property Tests', () => {
   <p>${content}</p>
 </body>
 </html>`;
-            
+
             expect(hasValidHtmlStructure(html)).toBe(true);
           }
         ),
@@ -330,7 +333,7 @@ describe('Build Process Validation - Property Tests', () => {
     it('should detect invalid HTML structure', () => {
       fc.assert(
         fc.property(
-          fc.string({ minLength: 1, maxLength: 100 }).filter(s => !s.includes('<html') && !s.includes('<body')),
+          fc.string({ minLength: 1, maxLength: 100 }).filter((s) => !s.includes('<html') && !s.includes('<body')),
           (content) => {
             // HTML without proper structure
             const html = `<div>${content}</div>`;
@@ -347,15 +350,15 @@ describe('Build Process Validation - Property Tests', () => {
       fc.assert(
         fc.property(
           fc.array(
-            fc.string({ minLength: 1, maxLength: 20 }).filter(s => /^[a-z0-9-]+$/.test(s)),
+            fc.string({ minLength: 1, maxLength: 20 }).filter((s) => /^[a-z0-9-]+$/.test(s)),
             { minLength: 1, maxLength: 5 }
           ),
           (paths) => {
-            const links = paths.map(p => `/${p}/`);
-            const html = links.map(l => `<a href="${l}">Link</a>`).join('\n');
-            
+            const links = paths.map((p) => `/${p}/`);
+            const html = links.map((l) => `<a href="${l}">Link</a>`).join('\n');
+
             const extracted = extractInternalLinks(html);
-            
+
             expect(extracted.length).toBe(links.length);
             for (const link of links) {
               expect(extracted).toContain(link);
@@ -368,15 +371,12 @@ describe('Build Process Validation - Property Tests', () => {
 
     it('should not extract external links', () => {
       fc.assert(
-        fc.property(
-          fc.webUrl(),
-          (url) => {
-            const html = `<a href="${url}">External Link</a>`;
-            const extracted = extractInternalLinks(html);
-            
-            expect(extracted.length).toBe(0);
-          }
-        ),
+        fc.property(fc.webUrl(), (url) => {
+          const html = `<a href="${url}">External Link</a>`;
+          const extracted = extractInternalLinks(html);
+
+          expect(extracted.length).toBe(0);
+        }),
         { numRuns: 100 }
       );
     });
@@ -386,7 +386,7 @@ describe('Build Process Validation - Property Tests', () => {
 describe('Project Configuration Validation', () => {
   it('should validate TypeScript configuration exists and is valid', () => {
     const result = validateTsConfig('.');
-    
+
     expect(result.valid).toBe(true);
     if (!result.valid) {
       console.log('TypeScript config errors:', result.errors);
@@ -395,7 +395,7 @@ describe('Project Configuration Validation', () => {
 
   it('should validate Astro configuration exists and is valid', () => {
     const result = validateAstroConfig('.');
-    
+
     expect(result.valid).toBe(true);
     if (!result.valid) {
       console.log('Astro config errors:', result.errors);
@@ -406,17 +406,17 @@ describe('Project Configuration Validation', () => {
 describe('Build Output Validation', () => {
   it('should validate internal links in dist folder if it exists', () => {
     const distDir = 'dist';
-    
+
     if (fs.existsSync(distDir)) {
       const result = validateInternalLinks(distDir);
-      
+
       if (!result.valid) {
         console.log('Broken links found:', result.brokenLinks.slice(0, 10));
         if (result.brokenLinks.length > 10) {
           console.log(`... and ${result.brokenLinks.length - 10} more`);
         }
       }
-      
+
       // Report the result but don't fail - broken links may be expected in some cases
       console.log(`Internal link validation: ${result.valid ? 'PASSED' : 'FAILED'}`);
       console.log(`Total broken links: ${result.brokenLinks.length}`);
@@ -427,10 +427,10 @@ describe('Build Output Validation', () => {
 
   it('should validate HTML files in dist have proper structure', () => {
     const distDir = 'dist';
-    
+
     if (fs.existsSync(distDir)) {
       const htmlFiles: string[] = [];
-      
+
       function collectHtmlFiles(dir: string) {
         const entries = fs.readdirSync(dir, { withFileTypes: true });
         for (const entry of entries) {
@@ -442,13 +442,14 @@ describe('Build Output Validation', () => {
           }
         }
       }
-      
+
       collectHtmlFiles(distDir);
-      
+
       let validCount = 0;
       let invalidCount = 0;
-      
-      for (const htmlFile of htmlFiles.slice(0, 20)) { // Check first 20 files
+
+      for (const htmlFile of htmlFiles.slice(0, 20)) {
+        // Check first 20 files
         const content = fs.readFileSync(htmlFile, 'utf-8');
         if (hasValidHtmlStructure(content)) {
           validCount++;
@@ -457,7 +458,7 @@ describe('Build Output Validation', () => {
           console.log(`Invalid HTML structure: ${path.relative(distDir, htmlFile)}`);
         }
       }
-      
+
       console.log(`HTML structure validation: ${validCount} valid, ${invalidCount} invalid`);
       expect(validCount).toBeGreaterThan(0);
     } else {

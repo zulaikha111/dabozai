@@ -2,3 +2,5 @@ dist
 node_modules
 .github
 .changeset
+src/components/widgets/Portfolio.astro
+src/data/post/markdown-elements-demo-post.mdx

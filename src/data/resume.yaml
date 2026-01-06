@@ -2,11 +2,11 @@
 # This file contains professional information for the portfolio display
 
 personalInfo:
-  name: "Zuzu"
-  title: "AI/ML Engineer & Robotics Specialist"
-  email: "zuzu@example.com"
-  phone: "+61 4XX XXX XXX"
-  location: "Melbourne, Australia"
+  name: 'Zuzu'
+  title: 'AI/ML Engineer & Robotics Specialist'
+  email: 'zuzu@example.com'
+  phone: '+61 4XX XXX XXX'
+  location: 'Melbourne, Australia'
   summary: |
     Software Engineering graduate from the University of Melbourne with Honours, 
     specializing in Artificial Intelligence, Machine Learning, Large Language Models, 
@@ -14,109 +14,109 @@ personalInfo:
     bridge cutting-edge research and real-world applications.
 
 experience:
-  - company: "Melbourne AI Lab"
-    position: "Research Engineer"
-    startDate: "2024-01"
-    endDate: "Present"
-    description: "Leading research on multi-agent LLM systems and robotic manipulation."
+  - company: 'Melbourne AI Lab'
+    position: 'Research Engineer'
+    startDate: '2024-01'
+    endDate: 'Present'
+    description: 'Leading research on multi-agent LLM systems and robotic manipulation.'
     achievements:
-      - "Developed a novel multi-agent coordination framework achieving 40% improvement in task completion"
-      - "Published 2 papers at top-tier AI conferences (NeurIPS, ICRA)"
-      - "Built production LLM pipeline serving 10K+ daily requests"
+      - 'Developed a novel multi-agent coordination framework achieving 40% improvement in task completion'
+      - 'Published 2 papers at top-tier AI conferences (NeurIPS, ICRA)'
+      - 'Built production LLM pipeline serving 10K+ daily requests'
 
-  - company: "RoboTech Solutions"
-    position: "Robotics Software Engineer"
-    startDate: "2023-01"
-    endDate: "2023-12"
-    description: "Developed autonomous navigation and manipulation systems for mobile robots."
+  - company: 'RoboTech Solutions'
+    position: 'Robotics Software Engineer'
+    startDate: '2023-01'
+    endDate: '2023-12'
+    description: 'Developed autonomous navigation and manipulation systems for mobile robots.'
     achievements:
-      - "Implemented SLAM-based navigation reducing localization error by 35%"
-      - "Designed deep RL policy for robotic arm manipulation with 95% success rate"
-      - "Integrated LLM-based natural language interface for robot control"
+      - 'Implemented SLAM-based navigation reducing localization error by 35%'
+      - 'Designed deep RL policy for robotic arm manipulation with 95% success rate'
+      - 'Integrated LLM-based natural language interface for robot control'
 
-  - company: "AI Startup Incubator"
-    position: "ML Engineer Intern"
-    startDate: "2022-06"
-    endDate: "2022-12"
-    description: "Built and deployed machine learning models for various startup clients."
+  - company: 'AI Startup Incubator'
+    position: 'ML Engineer Intern'
+    startDate: '2022-06'
+    endDate: '2022-12'
+    description: 'Built and deployed machine learning models for various startup clients.'
     achievements:
-      - "Developed computer vision system for quality inspection (98% accuracy)"
-      - "Created RAG-based customer support chatbot reducing response time by 60%"
-      - "Optimized model inference achieving 3x speedup on edge devices"
+      - 'Developed computer vision system for quality inspection (98% accuracy)'
+      - 'Created RAG-based customer support chatbot reducing response time by 60%'
+      - 'Optimized model inference achieving 3x speedup on edge devices'
 
 certifications:
-  - name: "AWS Certified Machine Learning - Specialty"
-    issuer: "Amazon Web Services"
-    date: "2024-03"
-    credentialId: "AWS-ML-2024-XXXX"
-    credentialUrl: "https://www.credly.com/badges/example"
+  - name: 'AWS Certified Machine Learning - Specialty'
+    issuer: 'Amazon Web Services'
+    date: '2024-03'
+    credentialId: 'AWS-ML-2024-XXXX'
+    credentialUrl: 'https://www.credly.com/badges/example'
 
-  - name: "TensorFlow Developer Certificate"
-    issuer: "Google"
-    date: "2023-09"
-    credentialId: "TF-DEV-2023-XXXX"
-    credentialUrl: "https://www.credential.net/example"
+  - name: 'TensorFlow Developer Certificate'
+    issuer: 'Google'
+    date: '2023-09'
+    credentialId: 'TF-DEV-2023-XXXX'
+    credentialUrl: 'https://www.credential.net/example'
 
-  - name: "Deep Learning Specialization"
-    issuer: "DeepLearning.AI"
-    date: "2023-06"
-    credentialId: "DL-SPEC-2023-XXXX"
-    credentialUrl: "https://www.coursera.org/account/accomplishments/specialization/example"
+  - name: 'Deep Learning Specialization'
+    issuer: 'DeepLearning.AI'
+    date: '2023-06'
+    credentialId: 'DL-SPEC-2023-XXXX'
+    credentialUrl: 'https://www.coursera.org/account/accomplishments/specialization/example'
 
-  - name: "ROS2 Developer Certificate"
-    issuer: "The Construct"
-    date: "2023-03"
-    credentialId: "ROS2-DEV-2023-XXXX"
-    credentialUrl: "https://www.theconstructsim.com/certificate/example"
+  - name: 'ROS2 Developer Certificate'
+    issuer: 'The Construct'
+    date: '2023-03'
+    credentialId: 'ROS2-DEV-2023-XXXX'
+    credentialUrl: 'https://www.theconstructsim.com/certificate/example'
 
 skills:
-  - category: "AI/ML Frameworks"
+  - category: 'AI/ML Frameworks'
     items:
-      - "PyTorch"
-      - "TensorFlow"
-      - "JAX"
-      - "Hugging Face Transformers"
-      - "scikit-learn"
-      - "OpenCV"
+      - 'PyTorch'
+      - 'TensorFlow'
+      - 'JAX'
+      - 'Hugging Face Transformers'
+      - 'scikit-learn'
+      - 'OpenCV'
 
-  - category: "LLM & Agents"
+  - category: 'LLM & Agents'
     items:
-      - "LangChain"
-      - "LlamaIndex"
-      - "OpenAI API"
-      - "Anthropic Claude"
-      - "Prompt Engineering"
-      - "RAG Systems"
+      - 'LangChain'
+      - 'LlamaIndex'
+      - 'OpenAI API'
+      - 'Anthropic Claude'
+      - 'Prompt Engineering'
+      - 'RAG Systems'
 
-  - category: "Robotics"
+  - category: 'Robotics'
     items:
-      - "ROS/ROS2"
-      - "Gazebo"
-      - "MoveIt"
-      - "SLAM"
-      - "Motion Planning"
-      - "Sensor Fusion"
+      - 'ROS/ROS2'
+      - 'Gazebo'
+      - 'MoveIt'
+      - 'SLAM'
+      - 'Motion Planning'
+      - 'Sensor Fusion'
 
-  - category: "Programming Languages"
+  - category: 'Programming Languages'
     items:
-      - "Python"
-      - "C++"
-      - "TypeScript"
-      - "CUDA"
-      - "Rust"
+      - 'Python'
+      - 'C++'
+      - 'TypeScript'
+      - 'CUDA'
+      - 'Rust'
 
-  - category: "MLOps & Cloud"
+  - category: 'MLOps & Cloud'
     items:
-      - "Docker"
-      - "Kubernetes"
-      - "AWS (SageMaker, EC2, Lambda)"
-      - "GCP (Vertex AI)"
-      - "MLflow"
-      - "Weights & Biases"
+      - 'Docker'
+      - 'Kubernetes'
+      - 'AWS (SageMaker, EC2, Lambda)'
+      - 'GCP (Vertex AI)'
+      - 'MLflow'
+      - 'Weights & Biases'
 
-  - category: "Soft Skills"
+  - category: 'Soft Skills'
     items:
-      - "Technical Writing"
-      - "Research Presentation"
-      - "Team Leadership"
-      - "Mentoring"
+      - 'Technical Writing'
+      - 'Research Presentation'
+      - 'Team Leadership'
+      - 'Mentoring'

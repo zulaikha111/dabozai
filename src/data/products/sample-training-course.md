@@ -1,18 +1,18 @@
 ---
-title: "Sample Training Course"
-description: "A comprehensive training course covering essential topics for professional development."
-duration: "2 days"
+title: 'Sample Training Course'
+description: 'A comprehensive training course covering essential topics for professional development.'
+duration: '2 days'
 price: 1500
-image: "/images/default.png"
+image: '/images/default.png'
 featured: true
-category: "Professional Development"
+category: 'Professional Development'
 prerequisites:
-  - "Basic understanding of the subject matter"
-  - "Laptop with required software installed"
+  - 'Basic understanding of the subject matter'
+  - 'Laptop with required software installed'
 learningOutcomes:
-  - "Understand core concepts and principles"
-  - "Apply learned techniques in real-world scenarios"
-  - "Develop practical skills through hands-on exercises"
+  - 'Understand core concepts and principles'
+  - 'Apply learned techniques in real-world scenarios'
+  - 'Develop practical skills through hands-on exercises'
 ---
 
 ## Course Overview

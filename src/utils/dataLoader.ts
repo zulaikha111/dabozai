@@ -22,7 +22,7 @@ export interface DataLoadResult<T> {
 export function loadYamlFile<T>(filePath: string, schema: ZodSchema<T>): DataLoadResult<T> {
   try {
     const absolutePath = path.resolve(filePath);
-    
+
     if (!fs.existsSync(absolutePath)) {
       return {
         success: false,
@@ -32,9 +32,9 @@ export function loadYamlFile<T>(filePath: string, schema: ZodSchema<T>): DataLoa
 
     const fileContent = fs.readFileSync(absolutePath, 'utf-8');
     const parsedYaml = yaml.load(fileContent);
-    
+
     const validationResult = schema.safeParse(parsedYaml);
-    
+
     if (!validationResult.success) {
       return {
         success: false,
@@ -85,9 +85,12 @@ export function loadTestimonialsData(filePath: string = 'src/data/testimonials.y
 /**
  * Calculate average rating for a specific course from testimonials
  */
-export function calculateAverageRating(testimonials: Array<{ courseSlug: string; rating: number }>, courseSlug: string): number | null {
-  const courseTestimonials = testimonials.filter(t => t.courseSlug === courseSlug);
-  
+export function calculateAverageRating(
+  testimonials: Array<{ courseSlug: string; rating: number }>,
+  courseSlug: string
+): number | null {
+  const courseTestimonials = testimonials.filter((t) => t.courseSlug === courseSlug);
+
   if (courseTestimonials.length === 0) {
     return null;
   }
@@ -100,5 +103,5 @@ export function calculateAverageRating(testimonials: Array<{ courseSlug: string;
  * Get testimonials for a specific course
  */
 export function getTestimonialsForCourse<T extends { courseSlug: string }>(testimonials: T[], courseSlug: string): T[] {
-  return testimonials.filter(t => t.courseSlug === courseSlug);
+  return testimonials.filter((t) => t.courseSlug === courseSlug);
 }

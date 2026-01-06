@@ -23,9 +23,7 @@ function renderPortfolioContent(resumeData: ResumeData): {
   const personalInfoRendered = !!(personalInfo.name && personalInfo.title && personalInfo.email);
 
   // Transform experience data for rendering
-  const experienceItems = experience.map((exp) => 
-    `${exp.position} at ${exp.company}`
-  );
+  const experienceItems = experience.map((exp) => `${exp.position} at ${exp.company}`);
 
   // Transform certifications for rendering
   const certificationItems = certifications.map((cert) => cert.name);
@@ -44,14 +42,8 @@ function renderPortfolioContent(resumeData: ResumeData): {
 /**
  * Helper to check if all items from source are present in rendered output
  */
-function allItemsRendered<T>(
-  sourceItems: T[],
-  renderedItems: string[],
-  extractKey: (item: T) => string
-): boolean {
-  return sourceItems.every((item) => 
-    renderedItems.includes(extractKey(item))
-  );
+function allItemsRendered<T>(sourceItems: T[], renderedItems: string[], extractKey: (item: T) => string): boolean {
+  return sourceItems.every((item) => renderedItems.includes(extractKey(item)));
 }
 
 describe('Portfolio Content Rendering - Property Tests', () => {
@@ -62,15 +54,17 @@ describe('Portfolio Content Rendering - Property Tests', () => {
    */
 
   // Custom email generator compatible with zod validation
-  const zodCompatibleEmail = fc.tuple(
-    fc.stringMatching(/^[a-z][a-z0-9]{0,9}$/),
-    fc.stringMatching(/^[a-z][a-z0-9]{0,9}$/),
-    fc.constantFrom('com', 'org', 'net', 'edu', 'io', 'dev')
-  ).map(([local, domain, tld]) => `${local}@${domain}.${tld}`);
+  const zodCompatibleEmail = fc
+    .tuple(
+      fc.stringMatching(/^[a-z][a-z0-9]{0,9}$/),
+      fc.stringMatching(/^[a-z][a-z0-9]{0,9}$/),
+      fc.constantFrom('com', 'org', 'net', 'edu', 'io', 'dev')
+    )
+    .map(([local, domain, tld]) => `${local}@${domain}.${tld}`);
 
   // Non-whitespace string generator
-  const nonEmptyString = (maxLength: number) => 
-    fc.string({ minLength: 1, maxLength }).filter(s => s.trim().length > 0);
+  const nonEmptyString = (maxLength: number) =>
+    fc.string({ minLength: 1, maxLength }).filter((s) => s.trim().length > 0);
 
   // Generator for experience items
   const experienceArbitrary: fc.Arbitrary<Experience> = fc.record({
@@ -127,14 +121,14 @@ describe('Portfolio Content Rendering - Property Tests', () => {
       fc.property(validResumeArbitrary, (resumeData) => {
         const rendered = renderPortfolioContent(resumeData);
         const experience = resumeData.experience || [];
-        
+
         // All experience items should be rendered
         const allRendered = allItemsRendered(
           experience,
           rendered.experienceItems,
           (exp) => `${exp.position} at ${exp.company}`
         );
-        
+
         expect(allRendered).toBe(true);
         expect(rendered.experienceItems.length).toBe(experience.length);
       }),
@@ -147,14 +141,10 @@ describe('Portfolio Content Rendering - Property Tests', () => {
       fc.property(validResumeArbitrary, (resumeData) => {
         const rendered = renderPortfolioContent(resumeData);
         const certifications = resumeData.certifications || [];
-        
+
         // All certification items should be rendered
-        const allRendered = allItemsRendered(
-          certifications,
-          rendered.certificationItems,
-          (cert) => cert.name
-        );
-        
+        const allRendered = allItemsRendered(certifications, rendered.certificationItems, (cert) => cert.name);
+
         expect(allRendered).toBe(true);
         expect(rendered.certificationItems.length).toBe(certifications.length);
       }),
@@ -167,14 +157,10 @@ describe('Portfolio Content Rendering - Property Tests', () => {
       fc.property(validResumeArbitrary, (resumeData) => {
         const rendered = renderPortfolioContent(resumeData);
         const skills = resumeData.skills || [];
-        
+
         // All skill categories should be rendered
-        const allRendered = allItemsRendered(
-          skills,
-          rendered.skillItems,
-          (skill) => skill.category
-        );
-        
+        const allRendered = allItemsRendered(skills, rendered.skillItems, (skill) => skill.category);
+
         expect(allRendered).toBe(true);
         expect(rendered.skillItems.length).toBe(skills.length);
       }),
@@ -186,11 +172,11 @@ describe('Portfolio Content Rendering - Property Tests', () => {
     fc.assert(
       fc.property(validResumeArbitrary, (resumeData) => {
         const rendered = renderPortfolioContent(resumeData);
-        
+
         const sourceExperienceCount = (resumeData.experience || []).length;
         const sourceCertificationCount = (resumeData.certifications || []).length;
         const sourceSkillCount = (resumeData.skills || []).length;
-        
+
         // Count invariant: rendered count should equal source count
         expect(rendered.experienceItems.length).toBe(sourceExperienceCount);
         expect(rendered.certificationItems.length).toBe(sourceCertificationCount);

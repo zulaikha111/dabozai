@@ -2,7 +2,7 @@ import { getPermalink, getBlogPermalink, getAsset } from './utils/permalinks';
 
 /**
  * Navigation Configuration for Zuzu's Portfolio
- * 
+ *
  * Global navigation structure for the portfolio training website.
  * Includes: Home, Portfolio, About/CV, Blog, Training, Contact
  */

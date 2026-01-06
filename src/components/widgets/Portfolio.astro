@@ -66,7 +66,6 @@ const skillItems = skills.map((skillCategory) => ({
 ---
 
 <WidgetWrapper id={id} isDark={isDark} containerClass={`max-w-6xl ${classes?.container ?? ''}`} bg={bg}>
-  <!-- Personal Info Section -->
   <div class="text-center mb-12">
     <h1 class="text-4xl md:text-5xl font-bold mb-4">{personalInfo.name}</h1>
     <p class="text-xl text-primary font-semibold mb-4">{personalInfo.title}</p>
@@ -95,7 +94,6 @@ const skillItems = skills.map((skillCategory) => ({
     </div>
   </div>
 
-  <!-- Experience Section -->
   {experienceItems.length > 0 && (
     <div class="mb-16">
       <Headline
@@ -114,7 +112,6 @@ const skillItems = skills.map((skillCategory) => ({
     </div>
   )}
 
-  <!-- Certifications Section -->
   {certificationItems.length > 0 && (
     <div class="mb-16">
       <Headline
@@ -135,7 +132,6 @@ const skillItems = skills.map((skillCategory) => ({
     </div>
   )}
 
-  <!-- Skills Section -->
   {skillItems.length > 0 && (
     <div>
       <Headline
@@ -156,3 +152,4 @@ const skillItems = skills.map((skillCategory) => ({
     </div>
   )}
 </WidgetWrapper>
+

@@ -14,13 +14,9 @@ import { calculateAverageRating, getTestimonialsForCourse } from '../../utils/da
  */
 describe('Property 12: Testimonial rating calculation', () => {
   // Generator for valid date strings in YYYY-MM-DD format
-  const dateStringArbitrary = fc.tuple(
-    fc.integer({ min: 2020, max: 2025 }),
-    fc.integer({ min: 1, max: 12 }),
-    fc.integer({ min: 1, max: 28 })
-  ).map(([year, month, day]) => 
-    `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`
-  );
+  const dateStringArbitrary = fc
+    .tuple(fc.integer({ min: 2020, max: 2025 }), fc.integer({ min: 1, max: 12 }), fc.integer({ min: 1, max: 28 }))
+    .map(([year, month, day]) => `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`);
 
   // Generator for valid testimonial data
   const testimonialArbitrary = fc.record({
@@ -32,13 +28,6 @@ describe('Property 12: Testimonial rating calculation', () => {
     date: dateStringArbitrary,
     verified: fc.boolean(),
   });
-
-  // Generator for array of testimonials with same course slug
-  const testimonialArrayForCourse = (courseSlug: string) =>
-    fc.array(
-      testimonialArbitrary.map(t => ({ ...t, courseSlug })),
-      { minLength: 1, maxLength: 20 }
-    );
 
   it('should calculate average rating as mathematical mean of all ratings for a course', () => {
     fc.assert(
@@ -75,7 +64,7 @@ describe('Property 12: Testimonial rating calculation', () => {
         fc.string({ minLength: 1, maxLength: 50 }),
         (testimonials, nonExistentCourse) => {
           // Ensure the course slug doesn't exist in testimonials
-          const filteredTestimonials = testimonials.filter(t => t.courseSlug !== nonExistentCourse);
+          const filteredTestimonials = testimonials.filter((t) => t.courseSlug !== nonExistentCourse);
           const result = calculateAverageRating(filteredTestimonials, nonExistentCourse);
           expect(result).toBeNull();
         }
@@ -86,14 +75,11 @@ describe('Property 12: Testimonial rating calculation', () => {
 
   it('should return exact rating for courses with single testimonial', () => {
     fc.assert(
-      fc.property(
-        testimonialArbitrary,
-        (testimonial) => {
-          const testimonials = [testimonial];
-          const result = calculateAverageRating(testimonials, testimonial.courseSlug);
-          expect(result).toBe(testimonial.rating);
-        }
-      ),
+      fc.property(testimonialArbitrary, (testimonial) => {
+        const testimonials = [testimonial];
+        const result = calculateAverageRating(testimonials, testimonial.courseSlug);
+        expect(result).toBe(testimonial.rating);
+      }),
       { numRuns: 100 }
     );
   });
@@ -176,13 +162,9 @@ describe('Property 12: Testimonial rating calculation', () => {
  */
 describe('Property 13: Testimonial data completeness', () => {
   // Generator for valid date strings in YYYY-MM-DD format
-  const dateStringArbitrary = fc.tuple(
-    fc.integer({ min: 2020, max: 2025 }),
-    fc.integer({ min: 1, max: 12 }),
-    fc.integer({ min: 1, max: 28 })
-  ).map(([year, month, day]) => 
-    `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`
-  );
+  const dateStringArbitrary = fc
+    .tuple(fc.integer({ min: 2020, max: 2025 }), fc.integer({ min: 1, max: 12 }), fc.integer({ min: 1, max: 28 }))
+    .map(([year, month, day]) => `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`);
 
   // Generator for valid testimonial data
   const testimonialArbitrary = fc.record({
@@ -197,48 +179,42 @@ describe('Property 13: Testimonial data completeness', () => {
 
   it('should filter testimonials correctly by course slug', () => {
     fc.assert(
-      fc.property(
-        fc.array(testimonialArbitrary, { minLength: 1, maxLength: 20 }),
-        (testimonials) => {
-          // Pick a random course slug from the testimonials
-          const targetCourse = testimonials[0].courseSlug;
-          const filtered = getTestimonialsForCourse(testimonials, targetCourse);
+      fc.property(fc.array(testimonialArbitrary, { minLength: 1, maxLength: 20 }), (testimonials) => {
+        // Pick a random course slug from the testimonials
+        const targetCourse = testimonials[0].courseSlug;
+        const filtered = getTestimonialsForCourse(testimonials, targetCourse);
 
-          // All filtered testimonials should have the target course slug
-          expect(filtered.every(t => t.courseSlug === targetCourse)).toBe(true);
+        // All filtered testimonials should have the target course slug
+        expect(filtered.every((t) => t.courseSlug === targetCourse)).toBe(true);
 
-          // Count should match manual filter
-          const expectedCount = testimonials.filter(t => t.courseSlug === targetCourse).length;
-          expect(filtered.length).toBe(expectedCount);
-        }
-      ),
+        // Count should match manual filter
+        const expectedCount = testimonials.filter((t) => t.courseSlug === targetCourse).length;
+        expect(filtered.length).toBe(expectedCount);
+      }),
       { numRuns: 100 }
     );
   });
 
   it('should preserve all required fields when filtering testimonials', () => {
     fc.assert(
-      fc.property(
-        fc.array(testimonialArbitrary, { minLength: 1, maxLength: 20 }),
-        (testimonials) => {
-          const targetCourse = testimonials[0].courseSlug;
-          const filtered = getTestimonialsForCourse(testimonials, targetCourse);
+      fc.property(fc.array(testimonialArbitrary, { minLength: 1, maxLength: 20 }), (testimonials) => {
+        const targetCourse = testimonials[0].courseSlug;
+        const filtered = getTestimonialsForCourse(testimonials, targetCourse);
 
-          // Each filtered testimonial should have all required fields
-          filtered.forEach(t => {
-            expect(t.id).toBeDefined();
-            expect(t.authorName).toBeDefined();
-            expect(t.authorName.length).toBeGreaterThan(0);
-            expect(t.courseSlug).toBe(targetCourse);
-            expect(t.rating).toBeGreaterThanOrEqual(1);
-            expect(t.rating).toBeLessThanOrEqual(5);
-            expect(t.text).toBeDefined();
-            expect(t.text.length).toBeGreaterThan(0);
-            expect(t.date).toBeDefined();
-            expect(typeof t.verified).toBe('boolean');
-          });
-        }
-      ),
+        // Each filtered testimonial should have all required fields
+        filtered.forEach((t) => {
+          expect(t.id).toBeDefined();
+          expect(t.authorName).toBeDefined();
+          expect(t.authorName.length).toBeGreaterThan(0);
+          expect(t.courseSlug).toBe(targetCourse);
+          expect(t.rating).toBeGreaterThanOrEqual(1);
+          expect(t.rating).toBeLessThanOrEqual(5);
+          expect(t.text).toBeDefined();
+          expect(t.text.length).toBeGreaterThan(0);
+          expect(t.date).toBeDefined();
+          expect(typeof t.verified).toBe('boolean');
+        });
+      }),
       { numRuns: 100 }
     );
   });
@@ -250,7 +226,7 @@ describe('Property 13: Testimonial data completeness', () => {
         fc.uuid(),
         (testimonials, nonExistentCourse) => {
           // Filter out any testimonials that might accidentally match
-          const filteredTestimonials = testimonials.filter(t => t.courseSlug !== nonExistentCourse);
+          const filteredTestimonials = testimonials.filter((t) => t.courseSlug !== nonExistentCourse);
           const result = getTestimonialsForCourse(filteredTestimonials, nonExistentCourse);
           expect(result).toEqual([]);
         }

@@ -25,7 +25,7 @@ function contentValidationIntegration(): AstroIntegration {
       'astro:build:start': async () => {
         console.log('\n📋 Validating content files...');
         const report = validateAllContent('.');
-        
+
         if (!report.success) {
           console.error('\n❌ Content validation failed:');
           for (const result of report.results) {
@@ -38,7 +38,7 @@ function contentValidationIntegration(): AstroIntegration {
           }
           throw new Error('Content validation failed. Please fix the errors above.');
         }
-        
+
         console.log(`✅ Content validation passed (${report.summary.valid} files validated)\n`);
       },
     },
@@ -56,18 +56,18 @@ export default defineConfig({
   // GitHub Pages Configuration
   // Validates: Requirements 8.2, 8.3, 8.4
   // ============================================
-  
+
   // OPTION 1: Custom Domain (Recommended)
   // Replace 'https://yourdomain.com' with your actual custom domain
   // Ensure CNAME file in public/ folder matches this domain
   // GitHub Pages will automatically enforce HTTPS
   site: 'https://dabozai.com',
-  
+
   // OPTION 2: GitHub Pages without custom domain
   // Uncomment these lines and comment out the custom domain above:
   // site: 'https://yourusername.github.io',
   // base: '/your-repo-name',
-  
+
   // ============================================
   // GitHub Pages Setup Instructions:
   // 1. Go to repository Settings > Pages
@@ -84,7 +84,7 @@ export default defineConfig({
   integrations: [
     // Content validation runs at build start
     contentValidationIntegration(),
-    
+
     tailwind({
       applyBaseStyles: false,
     }),

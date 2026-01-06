@@ -54,6 +54,14 @@ export default [
     },
   },
   {
-    ignores: ['dist', 'node_modules', '.github', 'types.generated.d.ts', '.astro'],
+    ignores: [
+      'dist',
+      'node_modules',
+      '.github',
+      'types.generated.d.ts',
+      '.astro',
+      'src/components/widgets/Portfolio.astro',
+      'src/components/widgets/Testimonials.astro',
+    ],
   },
 ];

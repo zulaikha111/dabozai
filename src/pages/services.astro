@@ -9,7 +9,8 @@ import Layout from '~/layouts/PageLayout.astro';
 
 const metadata = {
   title: 'Training & Services — Zuzu',
-  description: 'AI/ML training courses and consulting services. Learn LLM development, robotics programming, and machine learning from an expert.',
+  description:
+    'AI/ML training courses and consulting services. Learn LLM development, robotics programming, and machine learning from an expert.',
 };
 ---
 
@@ -38,32 +39,38 @@ const metadata = {
     items={[
       {
         title: 'LLM Development Fundamentals',
-        description: 'Learn to build applications with GPT-4, Claude, and open-source models. Covers prompt engineering, fine-tuning, and deployment. 2-day workshop.',
+        description:
+          'Learn to build applications with GPT-4, Claude, and open-source models. Covers prompt engineering, fine-tuning, and deployment. 2-day workshop.',
         icon: 'tabler:message-chatbot',
       },
       {
         title: 'Building AI Agents',
-        description: 'Master autonomous AI agents using LangChain and custom architectures. Includes planning, memory, and tool-use patterns. 3-day intensive.',
+        description:
+          'Master autonomous AI agents using LangChain and custom architectures. Includes planning, memory, and tool-use patterns. 3-day intensive.',
         icon: 'tabler:robot',
       },
       {
         title: 'RAG Systems Masterclass',
-        description: 'Build production-ready Retrieval-Augmented Generation systems. Covers vector databases, hybrid search, and evaluation. 2-day workshop.',
+        description:
+          'Build production-ready Retrieval-Augmented Generation systems. Covers vector databases, hybrid search, and evaluation. 2-day workshop.',
         icon: 'tabler:database',
       },
       {
         title: 'PyTorch Deep Learning',
-        description: 'From basics to advanced architectures. CNNs, Transformers, and training best practices. Hands-on projects included. 5-day course.',
+        description:
+          'From basics to advanced architectures. CNNs, Transformers, and training best practices. Hands-on projects included. 5-day course.',
         icon: 'tabler:brain',
       },
       {
         title: 'ROS2 for AI Robotics',
-        description: 'Integrate AI with robotic systems using ROS2. Navigation, manipulation, and perception pipelines. 3-day workshop.',
+        description:
+          'Integrate AI with robotic systems using ROS2. Navigation, manipulation, and perception pipelines. 3-day workshop.',
         icon: 'tabler:drone',
       },
       {
         title: 'MLOps & Deployment',
-        description: 'Deploy ML models at scale. Docker, Kubernetes, CI/CD, monitoring, and cloud platforms. 2-day workshop.',
+        description:
+          'Deploy ML models at scale. Docker, Kubernetes, CI/CD, monitoring, and cloud platforms. 2-day workshop.',
         icon: 'tabler:cloud-computing',
       },
     ]}
@@ -80,7 +87,8 @@ const metadata = {
     items={[
       {
         title: 'Hands-On Learning',
-        description: 'Every course includes practical exercises and real-world projects. You\'ll build working systems, not just watch slides.',
+        description:
+          "Every course includes practical exercises and real-world projects. You'll build working systems, not just watch slides.",
         icon: 'tabler:code',
       },
       {
@@ -90,12 +98,14 @@ const metadata = {
       },
       {
         title: 'Industry-Relevant Content',
-        description: 'Curriculum based on real production systems and current best practices from my research and industry experience.',
+        description:
+          'Curriculum based on real production systems and current best practices from my research and industry experience.',
         icon: 'tabler:briefcase',
       },
       {
         title: 'Post-Course Support',
-        description: '30 days of email support after each course. Get help implementing what you\'ve learned in your own projects.',
+        description:
+          "30 days of email support after each course. Get help implementing what you've learned in your own projects.",
         icon: 'tabler:headset',
       },
     ]}
@@ -257,12 +267,11 @@ const metadata = {
       },
     ]}
   >
-    <Fragment slot="title">
-      Ready to Get Started?
-    </Fragment>
+    <Fragment slot="title"> Ready to Get Started? </Fragment>
 
     <Fragment slot="subtitle">
-      Let's discuss your training needs or project requirements. Free 30-minute consultation to understand how I can help.
+      Let's discuss your training needs or project requirements. Free 30-minute consultation to understand how I can
+      help.
     </Fragment>
   </CallToAction>
 </Layout>

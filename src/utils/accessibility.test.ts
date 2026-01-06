@@ -24,7 +24,7 @@ describe('Accessibility Utilities', () => {
       const imgTag = '<img src="test.jpg" alt="A test image" />';
       const result = checkImageAlt(imgTag);
       expect(result.valid).toBe(true);
-      expect(result.issues.filter(i => i.type === 'error')).toHaveLength(0);
+      expect(result.issues.filter((i) => i.type === 'error')).toHaveLength(0);
     });
 
     it('should fail for images without alt attribute', () => {
@@ -156,9 +156,9 @@ describe('Accessibility Utilities', () => {
           </form>
         </div>
       `;
-      
+
       const report = analyzeComponentAccessibility('TestComponent', content);
-      
+
       expect(report.componentName).toBe('TestComponent');
       expect(report.score).toBeGreaterThanOrEqual(90);
       expect(report.passed).toBe(true);
@@ -174,9 +174,9 @@ describe('Accessibility Utilities', () => {
           <button></button>
         </div>
       `;
-      
+
       const report = analyzeComponentAccessibility('BadComponent', content);
-      
+
       expect(report.issues.length).toBeGreaterThan(0);
       expect(report.score).toBeLessThan(100);
     });
@@ -187,7 +187,7 @@ describe('Accessibility Utilities', () => {
       const recommendations = getAccessibilityRecommendations();
       expect(recommendations.length).toBeGreaterThan(5);
       // Check that at least one recommendation mentions semantic HTML
-      expect(recommendations.some(r => r.toLowerCase().includes('semantic'))).toBe(true);
+      expect(recommendations.some((r) => r.toLowerCase().includes('semantic'))).toBe(true);
     });
   });
 });
@@ -203,7 +203,7 @@ describe('SEO Checks', () => {
           <meta property="og:title" content="Page Title" />
         </head>
       `;
-      
+
       const result = checkSEORequirements(content);
       expect(result.valid).toBe(true);
     });
@@ -221,13 +221,13 @@ describe('Performance Recommendations', () => {
     const recommendations = getPerformanceRecommendations();
     expect(recommendations.length).toBeGreaterThan(5);
     // Check that at least one recommendation mentions images
-    expect(recommendations.some(r => r.toLowerCase().includes('image'))).toBe(true);
+    expect(recommendations.some((r) => r.toLowerCase().includes('image'))).toBe(true);
   });
 });
 
 describe('Real Component Accessibility Verification', () => {
   const componentsDir = 'src/components/widgets';
-  
+
   const componentFiles = [
     'Portfolio.astro',
     'TrainingCatalog.astro',
@@ -238,7 +238,7 @@ describe('Real Component Accessibility Verification', () => {
 
   it('should verify all key components meet accessibility standards', () => {
     const reports: Array<{ name: string; score: number; passed: boolean; errorCount: number }> = [];
-    
+
     for (const file of componentFiles) {
       const filePath = path.join(componentsDir, file);
       if (fs.existsSync(filePath)) {
@@ -248,24 +248,24 @@ describe('Real Component Accessibility Verification', () => {
           name: file,
           score: report.score,
           passed: report.passed,
-          errorCount: report.issues.filter(i => i.type === 'error').length,
+          errorCount: report.issues.filter((i) => i.type === 'error').length,
         });
       }
     }
-    
+
     // Log the report for visibility
     console.log('\n=== Accessibility Report ===');
     for (const report of reports) {
       console.log(`${report.name}: Score ${report.score}, Passed: ${report.passed}, Errors: ${report.errorCount}`);
     }
-    
+
     // Average score should be above 80 (allows for some components with minor issues)
     const avgScore = reports.reduce((sum, r) => sum + r.score, 0) / reports.length;
     console.log(`Average Accessibility Score: ${avgScore.toFixed(1)}`);
     expect(avgScore).toBeGreaterThanOrEqual(80);
-    
+
     // At least some components should pass
-    const passedCount = reports.filter(r => r.passed).length;
+    const passedCount = reports.filter((r) => r.passed).length;
     expect(passedCount).toBeGreaterThan(0);
   });
 
@@ -274,7 +274,7 @@ describe('Real Component Accessibility Verification', () => {
     if (fs.existsSync(formPath)) {
       const content = fs.readFileSync(formPath, 'utf-8');
       const result = checkFormLabels(content);
-      
+
       // ContactForm should have proper labels
       expect(result.valid).toBe(true);
     }
@@ -284,7 +284,7 @@ describe('Real Component Accessibility Verification', () => {
     const catalogPath = path.join(componentsDir, 'TrainingCatalog.astro');
     if (fs.existsSync(catalogPath)) {
       const content = fs.readFileSync(catalogPath, 'utf-8');
-      
+
       // Find all img tags and check for alt
       const imgMatches = content.matchAll(/<img[^>]*>/g);
       for (const match of imgMatches) {
@@ -304,13 +304,13 @@ describe('Lighthouse Score Requirements', () => {
       performance: 90, // Target, may vary based on content
       bestPractices: 90,
     };
-    
+
     console.log('\n=== Lighthouse Score Targets ===');
     console.log(`Accessibility: >${requirements.accessibility}`);
     console.log(`SEO: >${requirements.seo}`);
     console.log(`Performance: >${requirements.performance}`);
     console.log(`Best Practices: >${requirements.bestPractices}`);
-    
+
     // These are the documented requirements
     expect(requirements.accessibility).toBe(95);
     expect(requirements.seo).toBe(95);
@@ -326,12 +326,12 @@ describe('Lighthouse Score Requirements', () => {
       '6. Click "Analyze page load"',
       '7. Verify scores meet requirements (Accessibility >95, SEO >95)',
     ];
-    
+
     console.log('\n=== Lighthouse Audit Checklist ===');
     for (const item of checklist) {
       console.log(item);
     }
-    
+
     expect(checklist.length).toBeGreaterThan(0);
   });
 });

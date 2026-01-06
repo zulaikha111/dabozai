@@ -5,13 +5,7 @@
  */
 import { describe, it, expect } from 'vitest';
 import * as fc from 'fast-check';
-import {
-  productSchema,
-  testimonialSchema,
-  repositorySchema,
-  publicationSchema,
-  resumeFileSchema,
-} from './schemas';
+import { productSchema, testimonialSchema, repositorySchema, publicationSchema, resumeFileSchema } from './schemas';
 
 describe('Content Schema Validation - Property Tests', () => {
   /**
@@ -30,7 +24,9 @@ describe('Content Schema Validation - Property Tests', () => {
       image: fc.string({ minLength: 1, maxLength: 200 }),
       featured: fc.boolean(),
       category: fc.string({ minLength: 1, maxLength: 50 }),
-      prerequisites: fc.option(fc.array(fc.string({ minLength: 1 }), { minLength: 0, maxLength: 10 }), { nil: undefined }),
+      prerequisites: fc.option(fc.array(fc.string({ minLength: 1 }), { minLength: 0, maxLength: 10 }), {
+        nil: undefined,
+      }),
       learningOutcomes: fc.array(fc.string({ minLength: 1 }), { minLength: 1, maxLength: 10 }),
     });
 
@@ -190,14 +186,16 @@ describe('Content Schema Validation - Property Tests', () => {
   describe('Resume Schema', () => {
     // Custom email generator that produces emails compatible with zod's validation
     // Ensures: starts with letter, no consecutive dots, no dot before @
-    const zodCompatibleEmail = fc.tuple(
-      fc.stringMatching(/^[a-z][a-z0-9]{0,9}$/),
-      fc.stringMatching(/^[a-z][a-z0-9]{0,9}$/),
-      fc.constantFrom('com', 'org', 'net', 'edu', 'io', 'dev')
-    ).map(([local, domain, tld]) => `${local}@${domain}.${tld}`);
+    const zodCompatibleEmail = fc
+      .tuple(
+        fc.stringMatching(/^[a-z][a-z0-9]{0,9}$/),
+        fc.stringMatching(/^[a-z][a-z0-9]{0,9}$/),
+        fc.constantFrom('com', 'org', 'net', 'edu', 'io', 'dev')
+      )
+      .map(([local, domain, tld]) => `${local}@${domain}.${tld}`);
 
     // Non-whitespace string generator
-    const nonWhitespaceString = (maxLength: number) => 
+    const nonWhitespaceString = (maxLength: number) =>
       fc.stringMatching(new RegExp(`^[a-zA-Z][a-zA-Z0-9 ]{0,${maxLength - 1}}$`));
 
     // Generator for valid resume data

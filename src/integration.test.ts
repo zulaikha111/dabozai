@@ -1,7 +1,7 @@
 /**
  * End-to-end Integration Tests
  * Feature: portfolio-training-website
- * 
+ *
  * Tests complete user journeys from landing page to contact form submission
  * Validates: All requirements
  */
@@ -9,14 +9,31 @@ import { describe, it, expect, beforeAll } from 'vitest';
 import * as fc from 'fast-check';
 import * as fs from 'fs';
 import * as path from 'path';
-import { loadResumeData, loadRepositoriesData, loadPublicationsData, loadTestimonialsData, calculateAverageRating, getTestimonialsForCourse } from './utils/dataLoader';
-import { resumeFileSchema, repositoriesFileSchema, publicationsFileSchema, testimonialsFileSchema, productSchema } from './utils/schemas';
+import {
+  loadResumeData,
+  loadRepositoriesData,
+  loadPublicationsData,
+  loadTestimonialsData,
+  calculateAverageRating,
+  getTestimonialsForCourse,
+} from './utils/dataLoader';
+import {
+  resumeFileSchema,
+  repositoriesFileSchema,
+  publicationsFileSchema,
+  testimonialsFileSchema,
+  productSchema,
+} from './utils/schemas';
 import { analyzeComponentAccessibility, checkHeadingOrder, checkFormLabels } from './utils/accessibility';
-import { analyzeComponentResponsiveness, validateResponsivePatterns, TAILWIND_BREAKPOINTS } from './utils/responsiveDesign';
+import {
+  analyzeComponentResponsiveness,
+  validateResponsivePatterns,
+  TAILWIND_BREAKPOINTS,
+} from './utils/responsiveDesign';
 
 /**
  * User Journey 1: Portfolio Browsing to Contact Form
- * 
+ *
  * Flow: Landing Page -> About/CV -> View Portfolio -> Contact Form
  * This tests the complete journey of a visitor exploring professional credentials
  */
@@ -36,7 +53,7 @@ describe('User Journey: Portfolio Browsing to Contact Form', () => {
       // Verify the site can be built with valid configuration
       const astroConfigPath = path.join(process.cwd(), 'astro.config.ts');
       expect(fs.existsSync(astroConfigPath)).toBe(true);
-      
+
       const configContent = fs.readFileSync(astroConfigPath, 'utf-8');
       expect(configContent).toMatch(/site:\s*['"`]/);
       expect(configContent).toMatch(/output:\s*['"`]static['"`]/);
@@ -58,7 +75,7 @@ describe('User Journey: Portfolio Browsing to Contact Form', () => {
     it('should have experience data when available', () => {
       if (resumeData.data?.experience) {
         expect(Array.isArray(resumeData.data.experience)).toBe(true);
-        resumeData.data.experience.forEach(exp => {
+        resumeData.data.experience.forEach((exp) => {
           expect(exp.company).toBeDefined();
           expect(exp.position).toBeDefined();
         });
@@ -68,7 +85,7 @@ describe('User Journey: Portfolio Browsing to Contact Form', () => {
     it('should have certifications data when available', () => {
       if (resumeData.data?.certifications) {
         expect(Array.isArray(resumeData.data.certifications)).toBe(true);
-        resumeData.data.certifications.forEach(cert => {
+        resumeData.data.certifications.forEach((cert) => {
           expect(cert.name).toBeDefined();
           expect(cert.issuer).toBeDefined();
         });
@@ -78,7 +95,7 @@ describe('User Journey: Portfolio Browsing to Contact Form', () => {
     it('should have skills data when available', () => {
       if (resumeData.data?.skills) {
         expect(Array.isArray(resumeData.data.skills)).toBe(true);
-        resumeData.data.skills.forEach(skill => {
+        resumeData.data.skills.forEach((skill) => {
           expect(skill.category).toBeDefined();
           expect(Array.isArray(skill.items)).toBe(true);
         });
@@ -94,7 +111,7 @@ describe('User Journey: Portfolio Browsing to Contact Form', () => {
 
     it('should have valid repository structure', () => {
       if (repositoriesData.data?.repositories) {
-        repositoriesData.data.repositories.forEach(repo => {
+        repositoriesData.data.repositories.forEach((repo) => {
           expect(repo.name).toBeDefined();
           expect(repo.description).toBeDefined();
           expect(repo.url).toBeDefined();
@@ -112,7 +129,7 @@ describe('User Journey: Portfolio Browsing to Contact Form', () => {
 
     it('should have valid publication structure', () => {
       if (publicationsData.data?.publications) {
-        publicationsData.data.publications.forEach(pub => {
+        publicationsData.data.publications.forEach((pub) => {
           expect(pub.title).toBeDefined();
           expect(Array.isArray(pub.authors)).toBe(true);
           expect(pub.venue).toBeDefined();
@@ -151,7 +168,7 @@ describe('User Journey: Portfolio Browsing to Contact Form', () => {
 
 /**
  * User Journey 2: Training Product Discovery to Inquiry
- * 
+ *
  * Flow: Landing Page -> Services/Training -> Product Detail -> Contact Form with Pre-populated Subject
  * This tests the complete journey of a potential training client
  */
@@ -213,11 +230,8 @@ describe('User Journey: Training Product Discovery to Inquiry', () => {
     it('should calculate average rating correctly', () => {
       if (testimonialsData.data?.testimonials && testimonialsData.data.testimonials.length > 0) {
         const courseSlug = testimonialsData.data.testimonials[0].courseSlug;
-        const courseTestimonials = getTestimonialsForCourse(
-          testimonialsData.data.testimonials,
-          courseSlug
-        );
-        
+        const courseTestimonials = getTestimonialsForCourse(testimonialsData.data.testimonials, courseSlug);
+
         if (courseTestimonials.length > 0) {
           const avgRating = calculateAverageRating(testimonialsData.data.testimonials, courseSlug);
           expect(avgRating).toBeGreaterThanOrEqual(1);
@@ -230,8 +244,8 @@ describe('User Journey: Training Product Discovery to Inquiry', () => {
       if (testimonialsData.data?.testimonials && testimonialsData.data.testimonials.length > 0) {
         const courseSlug = testimonialsData.data.testimonials[0].courseSlug;
         const filtered = getTestimonialsForCourse(testimonialsData.data.testimonials, courseSlug);
-        
-        expect(filtered.every(t => t.courseSlug === courseSlug)).toBe(true);
+
+        expect(filtered.every((t) => t.courseSlug === courseSlug)).toBe(true);
       }
     });
   });
@@ -258,9 +272,9 @@ describe('User Journey: Training Product Discovery to Inquiry', () => {
     it('should build correct contact URL from product page', () => {
       const productId = 'aws-fundamentals';
       const productTitle = 'AWS Fundamentals Training';
-      
+
       const contactUrl = buildContactUrl(productId, productTitle);
-      
+
       expect(contactUrl).toContain('/contact?');
       expect(contactUrl).toContain('product=');
       expect(contactUrl).toContain('subject=');
@@ -269,10 +283,10 @@ describe('User Journey: Training Product Discovery to Inquiry', () => {
     it('should parse contact URL parameters correctly', () => {
       const productId = 'aws-fundamentals';
       const productTitle = 'AWS Fundamentals Training';
-      
+
       const contactUrl = buildContactUrl(productId, productTitle);
       const params = parseContactUrlParams(contactUrl);
-      
+
       expect(params.product).toBe(productId);
       expect(params.subject).toBe(`Training Inquiry: ${productTitle}`);
     });
@@ -280,12 +294,12 @@ describe('User Journey: Training Product Discovery to Inquiry', () => {
     it('should handle special characters in product names', () => {
       fc.assert(
         fc.property(
-          fc.string({ minLength: 1, maxLength: 50 }).filter(s => s.trim().length > 0),
-          fc.string({ minLength: 1, maxLength: 100 }).filter(s => s.trim().length > 0),
+          fc.string({ minLength: 1, maxLength: 50 }).filter((s) => s.trim().length > 0),
+          fc.string({ minLength: 1, maxLength: 100 }).filter((s) => s.trim().length > 0),
           (productId, productTitle) => {
             const contactUrl = buildContactUrl(productId, productTitle);
             const params = parseContactUrlParams(contactUrl);
-            
+
             expect(params.product).toBe(productId);
             expect(params.subject).toBe(`Training Inquiry: ${productTitle}`);
           }
@@ -358,8 +372,8 @@ describe('User Journey: Training Product Discovery to Inquiry', () => {
 
     it('should never show both success and error messages', () => {
       const states: FormState[] = ['idle', 'submitting', 'success', 'error'];
-      
-      states.forEach(state => {
+
+      states.forEach((state) => {
         const result = getFormStateResult(state);
         expect(result.showSuccessMessage && result.showErrorMessage).toBe(false);
       });
@@ -369,7 +383,7 @@ describe('User Journey: Training Product Discovery to Inquiry', () => {
 
 /**
  * Content Type Display Verification
- * 
+ *
  * Verifies all content types display correctly across the site
  */
 describe('Content Type Display Verification', () => {
@@ -377,7 +391,7 @@ describe('Content Type Display Verification', () => {
     it('should validate resume schema', () => {
       const result = loadResumeData();
       expect(result.success).toBe(true);
-      
+
       if (result.data) {
         const schemaResult = resumeFileSchema.safeParse(result.data);
         expect(schemaResult.success).toBe(true);
@@ -387,7 +401,7 @@ describe('Content Type Display Verification', () => {
     it('should validate repositories schema', () => {
       const result = loadRepositoriesData();
       expect(result.success).toBe(true);
-      
+
       if (result.data) {
         const schemaResult = repositoriesFileSchema.safeParse(result.data);
         expect(schemaResult.success).toBe(true);
@@ -397,7 +411,7 @@ describe('Content Type Display Verification', () => {
     it('should validate publications schema', () => {
       const result = loadPublicationsData();
       expect(result.success).toBe(true);
-      
+
       if (result.data) {
         const schemaResult = publicationsFileSchema.safeParse(result.data);
         expect(schemaResult.success).toBe(true);
@@ -407,7 +421,7 @@ describe('Content Type Display Verification', () => {
     it('should validate testimonials schema', () => {
       const result = loadTestimonialsData();
       expect(result.success).toBe(true);
-      
+
       if (result.data) {
         const schemaResult = testimonialsFileSchema.safeParse(result.data);
         expect(schemaResult.success).toBe(true);
@@ -418,54 +432,46 @@ describe('Content Type Display Verification', () => {
 
 /**
  * Interactive Features Testing
- * 
+ *
  * Tests all interactive features work correctly
  */
 describe('Interactive Features Testing', () => {
   describe('Navigation Functionality', () => {
-    const VALID_INTERNAL_PATHS = [
-      '/',
-      '/about',
-      '/contact',
-      '/services',
-      '/terms',
-      '/privacy',
-      '/blog',
-    ];
+    const VALID_INTERNAL_PATHS = ['/', '/about', '/contact', '/services', '/terms', '/privacy', '/blog'];
 
     function isValidInternalPath(path: string): boolean {
       if (path.startsWith('http://') || path.startsWith('https://')) return true;
       if (path.startsWith('#')) return true;
       if (path.includes('/rss.xml')) return true;
-      
+
       const normalizedPath = path.replace(/\/$/, '') || '/';
       if (VALID_INTERNAL_PATHS.includes(normalizedPath)) return true;
       if (normalizedPath.startsWith('/blog')) return true;
       if (normalizedPath.startsWith('/products')) return true;
-      
+
       return false;
     }
 
     it('should validate all main navigation paths', () => {
       const mainNavPaths = ['/', '/about', '/blog', '/services', '/contact'];
-      
-      mainNavPaths.forEach(path => {
+
+      mainNavPaths.forEach((path) => {
         expect(isValidInternalPath(path)).toBe(true);
       });
     });
 
     it('should validate footer navigation paths', () => {
       const footerPaths = ['/', '/about', '/blog', '/services', '/contact', '/terms', '/privacy'];
-      
-      footerPaths.forEach(path => {
+
+      footerPaths.forEach((path) => {
         expect(isValidInternalPath(path)).toBe(true);
       });
     });
 
     it('should validate dynamic product paths', () => {
       const productPaths = ['/products/aws-fundamentals', '/products/cloud-architecture'];
-      
-      productPaths.forEach(path => {
+
+      productPaths.forEach((path) => {
         expect(isValidInternalPath(path)).toBe(true);
       });
     });
@@ -541,7 +547,7 @@ describe('Interactive Features Testing', () => {
 
 /**
  * Accessibility and Responsive Design Integration
- * 
+ *
  * Verifies accessibility and responsive design requirements
  */
 describe('Accessibility and Responsive Design Integration', () => {
@@ -557,7 +563,7 @@ describe('Accessibility and Responsive Design Integration', () => {
           </body>
         </html>
       `;
-      
+
       const result = checkHeadingOrder(mockHtml);
       expect(result.valid).toBe(true);
     });
@@ -571,7 +577,7 @@ describe('Accessibility and Responsive Design Integration', () => {
           <input type="email" id="email" />
         </form>
       `;
-      
+
       const result = checkFormLabels(mockHtml);
       expect(result.valid).toBe(true);
     });
@@ -584,7 +590,7 @@ describe('Accessibility and Responsive Design Integration', () => {
           <button>Click me</button>
         </div>
       `;
-      
+
       const result = analyzeComponentAccessibility('TestComponent', mockContent);
       expect(result.passed).toBe(true);
     });
@@ -593,8 +599,8 @@ describe('Accessibility and Responsive Design Integration', () => {
   describe('Responsive Design Validation', () => {
     it('should validate responsive breakpoints exist', () => {
       expect(TAILWIND_BREAKPOINTS.length).toBeGreaterThan(0);
-      expect(TAILWIND_BREAKPOINTS.find(bp => bp.name === 'md')).toBeDefined();
-      expect(TAILWIND_BREAKPOINTS.find(bp => bp.name === 'lg')).toBeDefined();
+      expect(TAILWIND_BREAKPOINTS.find((bp) => bp.name === 'md')).toBeDefined();
+      expect(TAILWIND_BREAKPOINTS.find((bp) => bp.name === 'lg')).toBeDefined();
     });
 
     it('should analyze component responsiveness', () => {
@@ -603,7 +609,7 @@ describe('Accessibility and Responsive Design Integration', () => {
           <div class="p-4 md:p-6">Content</div>
         </div>
       `;
-      
+
       const result = analyzeComponentResponsiveness('TestComponent', mockContent);
       expect(result.hasResponsiveClasses).toBe(true);
       expect(result.breakpointsUsed).toContain('md');
@@ -616,7 +622,7 @@ describe('Accessibility and Responsive Design Integration', () => {
           Content
         </div>
       `;
-      
+
       const result = validateResponsivePatterns(mockContent);
       expect(result.patterns.hasResponsiveVisibility).toBe(true);
       expect(result.patterns.hasResponsiveText).toBe(true);
@@ -627,7 +633,7 @@ describe('Accessibility and Responsive Design Integration', () => {
 
 /**
  * Build and Deployment Integration
- * 
+ *
  * Verifies build and deployment configuration
  */
 describe('Build and Deployment Integration', () => {
@@ -635,7 +641,7 @@ describe('Build and Deployment Integration', () => {
     it('should have valid build configuration', () => {
       const astroConfigPath = path.join(process.cwd(), 'astro.config.ts');
       expect(fs.existsSync(astroConfigPath)).toBe(true);
-      
+
       const configContent = fs.readFileSync(astroConfigPath, 'utf-8');
       expect(configContent).toMatch(/build:\s*\{/);
       expect(configContent).toMatch(/assets:/);

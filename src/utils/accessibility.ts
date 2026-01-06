@@ -54,10 +54,10 @@ export const ACCESSIBILITY_RULES = {
  */
 export function checkImageAlt(imgTag: string): AccessibilityCheckResult {
   const issues: AccessibilityIssue[] = [];
-  
+
   // Check for alt attribute
   const hasAlt = /alt=["'][^"']*["']/.test(imgTag) || /alt=\{[^}]*\}/.test(imgTag);
-  
+
   if (!hasAlt) {
     issues.push({
       type: 'error',
@@ -67,11 +67,11 @@ export function checkImageAlt(imgTag: string): AccessibilityCheckResult {
       suggestion: 'Add alt="" for decorative images or descriptive alt text for informative images',
     });
   }
-  
+
   // Check for empty alt on non-decorative images
   const hasEmptyAlt = /alt=["']["']/.test(imgTag);
   const hasAriaHidden = /aria-hidden=["']true["']/.test(imgTag);
-  
+
   if (hasEmptyAlt && !hasAriaHidden) {
     // Empty alt is valid for decorative images, but we flag it as a warning
     issues.push({
@@ -81,8 +81,8 @@ export function checkImageAlt(imgTag: string): AccessibilityCheckResult {
       element: imgTag.substring(0, 100),
     });
   }
-  
-  return { valid: issues.filter(i => i.type === 'error').length === 0, issues };
+
+  return { valid: issues.filter((i) => i.type === 'error').length === 0, issues };
 }
 
 /**
@@ -90,17 +90,17 @@ export function checkImageAlt(imgTag: string): AccessibilityCheckResult {
  */
 export function checkLinkText(linkTag: string): AccessibilityCheckResult {
   const issues: AccessibilityIssue[] = [];
-  
+
   // Check for aria-label
   const hasAriaLabel = /aria-label=["'][^"']+["']/.test(linkTag);
-  
+
   // Check for text content (simplified check)
-  const hasTextContent = /<a[^>]*>[^<]+<\/a>/.test(linkTag) || 
-                         /<a[^>]*>.*<span[^>]*>[^<]+<\/span>.*<\/a>/s.test(linkTag);
-  
+  const hasTextContent =
+    /<a[^>]*>[^<]+<\/a>/.test(linkTag) || /<a[^>]*>.*<span[^>]*>[^<]+<\/span>.*<\/a>/s.test(linkTag);
+
   // Check for sr-only text
   const hasSrOnlyText = /sr-only/.test(linkTag);
-  
+
   if (!hasAriaLabel && !hasTextContent && !hasSrOnlyText) {
     // Check if it's an icon-only link
     const hasIcon = /Icon|icon|svg/.test(linkTag);
@@ -114,8 +114,8 @@ export function checkLinkText(linkTag: string): AccessibilityCheckResult {
       });
     }
   }
-  
-  return { valid: issues.filter(i => i.type === 'error').length === 0, issues };
+
+  return { valid: issues.filter((i) => i.type === 'error').length === 0, issues };
 }
 
 /**
@@ -123,26 +123,26 @@ export function checkLinkText(linkTag: string): AccessibilityCheckResult {
  */
 export function checkFormLabels(content: string): AccessibilityCheckResult {
   const issues: AccessibilityIssue[] = [];
-  
+
   // Find all input elements
   const inputMatches = content.matchAll(/<input[^>]*>/g);
-  
+
   for (const match of inputMatches) {
     const inputTag = match[0];
-    
+
     // Skip hidden inputs
     if (/type=["']hidden["']/.test(inputTag)) continue;
-    
+
     // Check for id attribute
     const idMatch = inputTag.match(/id=["']([^"']+)["']/);
-    
+
     if (idMatch) {
       const inputId = idMatch[1];
       // Check if there's a label with matching for attribute
       const hasLabel = new RegExp(`<label[^>]*for=["']${inputId}["']`).test(content);
       const hasAriaLabel = /aria-label=["'][^"']+["']/.test(inputTag);
       const hasAriaLabelledBy = /aria-labelledby=["'][^"']+["']/.test(inputTag);
-      
+
       if (!hasLabel && !hasAriaLabel && !hasAriaLabelledBy) {
         issues.push({
           type: 'error',
@@ -166,8 +166,8 @@ export function checkFormLabels(content: string): AccessibilityCheckResult {
       }
     }
   }
-  
-  return { valid: issues.filter(i => i.type === 'error').length === 0, issues };
+
+  return { valid: issues.filter((i) => i.type === 'error').length === 0, issues };
 }
 
 /**
@@ -175,17 +175,17 @@ export function checkFormLabels(content: string): AccessibilityCheckResult {
  */
 export function checkButtonNames(content: string): AccessibilityCheckResult {
   const issues: AccessibilityIssue[] = [];
-  
+
   // Find button elements
   const buttonMatches = content.matchAll(/<button[^>]*>([^<]*)<\/button>/g);
-  
+
   for (const match of buttonMatches) {
     const buttonTag = match[0];
     const buttonText = match[1].trim();
-    
+
     const hasAriaLabel = /aria-label=["'][^"']+["']/.test(buttonTag);
     const hasTextContent = buttonText.length > 0;
-    
+
     if (!hasAriaLabel && !hasTextContent) {
       issues.push({
         type: 'error',
@@ -196,8 +196,8 @@ export function checkButtonNames(content: string): AccessibilityCheckResult {
       });
     }
   }
-  
-  return { valid: issues.filter(i => i.type === 'error').length === 0, issues };
+
+  return { valid: issues.filter((i) => i.type === 'error').length === 0, issues };
 }
 
 /**
@@ -205,20 +205,20 @@ export function checkButtonNames(content: string): AccessibilityCheckResult {
  */
 export function checkHeadingOrder(content: string): AccessibilityCheckResult {
   const issues: AccessibilityIssue[] = [];
-  
+
   // Find all headings
   const headingMatches = content.matchAll(/<h([1-6])[^>]*>/g);
   const headingLevels: number[] = [];
-  
+
   for (const match of headingMatches) {
     headingLevels.push(parseInt(match[1], 10));
   }
-  
+
   // Check for skipped heading levels
   for (let i = 1; i < headingLevels.length; i++) {
     const current = headingLevels[i];
     const previous = headingLevels[i - 1];
-    
+
     // Heading level should not skip more than one level when going deeper
     if (current > previous + 1) {
       issues.push({
@@ -229,8 +229,8 @@ export function checkHeadingOrder(content: string): AccessibilityCheckResult {
       });
     }
   }
-  
-  return { valid: issues.filter(i => i.type === 'error').length === 0, issues };
+
+  return { valid: issues.filter((i) => i.type === 'error').length === 0, issues };
 }
 
 /**
@@ -238,9 +238,9 @@ export function checkHeadingOrder(content: string): AccessibilityCheckResult {
  */
 export function checkAriaAttributes(content: string): AccessibilityCheckResult {
   const issues: AccessibilityIssue[] = [];
-  
+
   // Check for common ARIA mistakes
-  
+
   // aria-hidden on focusable elements
   const ariaHiddenFocusable = content.match(/aria-hidden=["']true["'][^>]*(tabindex=["'][^-][^"']*["']|<button|<a\s)/g);
   if (ariaHiddenFocusable) {
@@ -251,7 +251,7 @@ export function checkAriaAttributes(content: string): AccessibilityCheckResult {
       suggestion: 'Remove aria-hidden or make element non-focusable',
     });
   }
-  
+
   // Check for aria-label on elements that don't support it
   const ariaLabelOnDiv = content.match(/<div[^>]*aria-label=["'][^"']+["'][^>]*>(?!.*role=)/g);
   if (ariaLabelOnDiv) {
@@ -262,42 +262,39 @@ export function checkAriaAttributes(content: string): AccessibilityCheckResult {
       suggestion: 'Add appropriate role attribute or use a semantic element',
     });
   }
-  
-  return { valid: issues.filter(i => i.type === 'error').length === 0, issues };
+
+  return { valid: issues.filter((i) => i.type === 'error').length === 0, issues };
 }
 
 /**
  * Analyzes a component for accessibility issues
  */
-export function analyzeComponentAccessibility(
-  componentName: string,
-  content: string
-): AccessibilityReport {
+export function analyzeComponentAccessibility(componentName: string, content: string): AccessibilityReport {
   const allIssues: AccessibilityIssue[] = [];
-  
+
   // Run all checks
   const imgCheck = checkImageAlt(content);
   allIssues.push(...imgCheck.issues);
-  
+
   const formCheck = checkFormLabels(content);
   allIssues.push(...formCheck.issues);
-  
+
   const buttonCheck = checkButtonNames(content);
   allIssues.push(...buttonCheck.issues);
-  
+
   const headingCheck = checkHeadingOrder(content);
   allIssues.push(...headingCheck.issues);
-  
+
   const ariaCheck = checkAriaAttributes(content);
   allIssues.push(...ariaCheck.issues);
-  
+
   // Calculate score (simplified)
-  const errorCount = allIssues.filter(i => i.type === 'error').length;
-  const warningCount = allIssues.filter(i => i.type === 'warning').length;
-  
+  const errorCount = allIssues.filter((i) => i.type === 'error').length;
+  const warningCount = allIssues.filter((i) => i.type === 'warning').length;
+
   // Score calculation: start at 100, subtract 10 for each error, 2 for each warning
-  const score = Math.max(0, 100 - (errorCount * 10) - (warningCount * 2));
-  
+  const score = Math.max(0, 100 - errorCount * 10 - warningCount * 2);
+
   return {
     componentName,
     issues: allIssues,
@@ -342,7 +339,7 @@ export interface SEOCheckResult {
  */
 export function checkSEORequirements(content: string): SEOCheckResult {
   const issues: SEOCheckResult['issues'] = [];
-  
+
   // Check for meta description
   if (!content.includes('meta') || !content.includes('description')) {
     issues.push({
@@ -352,7 +349,7 @@ export function checkSEORequirements(content: string): SEOCheckResult {
       suggestion: 'Add <meta name="description" content="..."> for better SEO',
     });
   }
-  
+
   // Check for title tag
   if (!content.includes('<title') && !content.includes('title=')) {
     issues.push({
@@ -362,7 +359,7 @@ export function checkSEORequirements(content: string): SEOCheckResult {
       suggestion: 'Ensure each page has a unique, descriptive title',
     });
   }
-  
+
   // Check for canonical URL
   if (!content.includes('canonical')) {
     issues.push({
@@ -372,7 +369,7 @@ export function checkSEORequirements(content: string): SEOCheckResult {
       suggestion: 'Add <link rel="canonical" href="..."> to prevent duplicate content issues',
     });
   }
-  
+
   // Check for Open Graph tags
   if (!content.includes('og:')) {
     issues.push({
@@ -382,9 +379,9 @@ export function checkSEORequirements(content: string): SEOCheckResult {
       suggestion: 'Add og:title, og:description, og:image for better social sharing',
     });
   }
-  
+
   return {
-    valid: issues.filter(i => i.type === 'error').length === 0,
+    valid: issues.filter((i) => i.type === 'error').length === 0,
     issues,
   };
 }

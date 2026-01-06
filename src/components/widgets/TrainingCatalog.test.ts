@@ -43,7 +43,9 @@ interface TestTestimonial {
  * Simulates dynamic route generation for products
  * This mirrors the getStaticPaths logic in [..slug].astro
  */
-function generateProductRoutes(products: TestProduct[]): Array<{ params: { slug: string }; props: { product: TestProduct } }> {
+function generateProductRoutes(
+  products: TestProduct[]
+): Array<{ params: { slug: string }; props: { product: TestProduct } }> {
   return products.map((product) => ({
     params: { slug: product.id },
     props: { product },
@@ -73,10 +75,11 @@ function validateProductDetailCompleteness(
   hasAverageRating: boolean;
   hasRequestTrainingButton: boolean;
 } {
-  const productTestimonials = testimonials.filter(t => t.courseSlug === product.id);
-  const averageRating = productTestimonials.length > 0
-    ? productTestimonials.reduce((sum, t) => sum + t.rating, 0) / productTestimonials.length
-    : null;
+  const productTestimonials = testimonials.filter((t) => t.courseSlug === product.id);
+  const averageRating =
+    productTestimonials.length > 0
+      ? productTestimonials.reduce((sum, t) => sum + t.rating, 0) / productTestimonials.length
+      : null;
 
   return {
     hasTitle: !!product.data.title && product.data.title.length > 0,
@@ -94,7 +97,7 @@ function validateProductDetailCompleteness(
  * Calculate average rating for a product
  */
 function calculateAverageRating(testimonials: TestTestimonial[], productId: string): number | null {
-  const productTestimonials = testimonials.filter(t => t.courseSlug === productId);
+  const productTestimonials = testimonials.filter((t) => t.courseSlug === productId);
   if (productTestimonials.length === 0) return null;
   return productTestimonials.reduce((sum, t) => sum + t.rating, 0) / productTestimonials.length;
 }
@@ -102,7 +105,7 @@ function calculateAverageRating(testimonials: TestTestimonial[], productId: stri
 describe('Training Catalog - Property Tests', () => {
   // Non-empty string generator
   const nonEmptyString = (maxLength: number) =>
-    fc.string({ minLength: 1, maxLength }).filter(s => s.trim().length > 0);
+    fc.string({ minLength: 1, maxLength }).filter((s) => s.trim().length > 0);
 
   // Slug generator (URL-safe string)
   const slugArbitrary = fc.stringMatching(/^[a-z][a-z0-9-]{0,49}$/);
@@ -152,10 +155,10 @@ describe('Training Catalog - Property Tests', () => {
       fc.assert(
         fc.property(productsArrayArbitrary, (products) => {
           const routes = generateProductRoutes(products);
-          
+
           // Every product should have a corresponding route
           expect(routes.length).toBe(products.length);
-          
+
           // Each route should have the correct slug
           products.forEach((product, index) => {
             expect(routes[index].params.slug).toBe(product.id);
@@ -169,7 +172,7 @@ describe('Training Catalog - Property Tests', () => {
       fc.assert(
         fc.property(productsArrayArbitrary, (products) => {
           const routes = generateProductRoutes(products);
-          
+
           // Each route should contain the full product data
           routes.forEach((route, index) => {
             expect(route.props.product).toEqual(products[index]);
@@ -184,16 +187,15 @@ describe('Training Catalog - Property Tests', () => {
     it('should generate unique slugs for each product', () => {
       fc.assert(
         fc.property(
-          fc.array(validProductArbitrary, { minLength: 2, maxLength: 10 })
-            .map(products => {
-              // Ensure unique IDs by appending index
-              return products.map((p, i) => ({ ...p, id: `${p.id}-${i}` }));
-            }),
+          fc.array(validProductArbitrary, { minLength: 2, maxLength: 10 }).map((products) => {
+            // Ensure unique IDs by appending index
+            return products.map((p, i) => ({ ...p, id: `${p.id}-${i}` }));
+          }),
           (products) => {
             const routes = generateProductRoutes(products);
-            const slugs = routes.map(r => r.params.slug);
+            const slugs = routes.map((r) => r.params.slug);
             const uniqueSlugs = new Set(slugs);
-            
+
             // All slugs should be unique
             expect(uniqueSlugs.size).toBe(slugs.length);
           }
@@ -207,7 +209,7 @@ describe('Training Catalog - Property Tests', () => {
         fc.property(validProductArbitrary, (product) => {
           const routes = generateProductRoutes([product]);
           const slug = routes[0].params.slug;
-          
+
           // Slug should be URL-safe (no spaces, special chars that need encoding)
           const urlPath = `/products/${slug}`;
           expect(urlPath).toBe(encodeURI(urlPath));
@@ -229,7 +231,7 @@ describe('Training Catalog - Property Tests', () => {
       fc.assert(
         fc.property(validProductArbitrary, testimonialsArrayArbitrary, (product, testimonials) => {
           const completeness = validateProductDetailCompleteness(product, testimonials);
-          
+
           // Required fields must always be present
           expect(completeness.hasTitle).toBe(true);
           expect(completeness.hasDescription).toBe(true);
@@ -248,13 +250,13 @@ describe('Training Catalog - Property Tests', () => {
           fc.array(validTestimonialArbitrary, { minLength: 1, maxLength: 5 }),
           (product, testimonials) => {
             // Link testimonials to this product
-            const linkedTestimonials = testimonials.map(t => ({
+            const linkedTestimonials = testimonials.map((t) => ({
               ...t,
               courseSlug: product.id,
             }));
-            
+
             const completeness = validateProductDetailCompleteness(product, linkedTestimonials);
-            
+
             expect(completeness.hasTestimonials).toBe(true);
             expect(completeness.hasAverageRating).toBe(true);
           }
@@ -270,14 +272,14 @@ describe('Training Catalog - Property Tests', () => {
           fc.array(validTestimonialArbitrary, { minLength: 1, maxLength: 10 }),
           (product, testimonials) => {
             // Link testimonials to this product
-            const linkedTestimonials = testimonials.map(t => ({
+            const linkedTestimonials = testimonials.map((t) => ({
               ...t,
               courseSlug: product.id,
             }));
-            
+
             const avgRating = calculateAverageRating(linkedTestimonials, product.id);
             const expectedAvg = linkedTestimonials.reduce((sum, t) => sum + t.rating, 0) / linkedTestimonials.length;
-            
+
             expect(avgRating).toBe(expectedAvg);
             // Rating should be between 1 and 5
             expect(avgRating).toBeGreaterThanOrEqual(1);
@@ -292,13 +294,13 @@ describe('Training Catalog - Property Tests', () => {
       fc.assert(
         fc.property(validProductArbitrary, (product) => {
           const contactUrl = buildContactUrl(product.id, product.data.title);
-          
+
           // URL should contain the product ID
           expect(contactUrl).toContain(encodeURIComponent(product.id));
-          
+
           // URL should contain the product title in subject
           expect(contactUrl).toContain(encodeURIComponent(`Training Inquiry: ${product.data.title}`));
-          
+
           // URL should start with /contact
           expect(contactUrl.startsWith('/contact?')).toBe(true);
         }),

@@ -2,107 +2,107 @@
 # This file contains research papers and publications for portfolio display
 
 publications:
-  - title: "Multi-Agent Coordination in Large Language Model Systems: A Hierarchical Planning Approach"
+  - title: 'Multi-Agent Coordination in Large Language Model Systems: A Hierarchical Planning Approach'
     authors:
-      - "Zuzu"
-      - "Dr. Sarah Chen"
-      - "Prof. Michael Roberts"
-    venue: "Neural Information Processing Systems (NeurIPS)"
+      - 'Zuzu'
+      - 'Dr. Sarah Chen'
+      - 'Prof. Michael Roberts'
+    venue: 'Neural Information Processing Systems (NeurIPS)'
     year: 2025
-    url: "https://doi.org/10.xxxx/neurips.2025.xxxxx"
-    downloadUrl: "https://arxiv.org/pdf/2501.xxxxx.pdf"
+    url: 'https://doi.org/10.xxxx/neurips.2025.xxxxx'
+    downloadUrl: 'https://arxiv.org/pdf/2501.xxxxx.pdf'
     abstract: |
       We present a novel hierarchical planning framework for coordinating multiple LLM agents 
       in complex task environments. Our approach decomposes high-level goals into subtasks 
       distributed among specialized agents, achieving 40% improvement in task completion 
       rates compared to single-agent baselines on the AgentBench benchmark.
 
-  - title: "Sim-to-Real Transfer for Deep Reinforcement Learning in Mobile Robot Navigation"
+  - title: 'Sim-to-Real Transfer for Deep Reinforcement Learning in Mobile Robot Navigation'
     authors:
-      - "Zuzu"
-      - "Dr. James Liu"
-    venue: "IEEE International Conference on Robotics and Automation (ICRA)"
+      - 'Zuzu'
+      - 'Dr. James Liu'
+    venue: 'IEEE International Conference on Robotics and Automation (ICRA)'
     year: 2025
-    url: "https://doi.org/10.xxxx/icra.2025.xxxxx"
-    downloadUrl: "https://arxiv.org/pdf/2501.xxxxx.pdf"
+    url: 'https://doi.org/10.xxxx/icra.2025.xxxxx'
+    downloadUrl: 'https://arxiv.org/pdf/2501.xxxxx.pdf'
     abstract: |
       This paper addresses the sim-to-real gap in deep RL for robot navigation. We propose 
       a domain randomization strategy combined with a learned dynamics model that enables 
       zero-shot transfer of navigation policies trained in simulation to real-world robots, 
       achieving 92% success rate in cluttered indoor environments.
 
-  - title: "Efficient Fine-Tuning of Large Language Models for Domain-Specific Applications"
+  - title: 'Efficient Fine-Tuning of Large Language Models for Domain-Specific Applications'
     authors:
-      - "Zuzu"
-      - "Dr. Emily Wang"
-      - "Dr. Alex Thompson"
-    venue: "Association for Computational Linguistics (ACL)"
+      - 'Zuzu'
+      - 'Dr. Emily Wang'
+      - 'Dr. Alex Thompson'
+    venue: 'Association for Computational Linguistics (ACL)'
     year: 2024
-    url: "https://doi.org/10.xxxx/acl.2024.xxxxx"
-    downloadUrl: "https://arxiv.org/pdf/2406.xxxxx.pdf"
+    url: 'https://doi.org/10.xxxx/acl.2024.xxxxx'
+    downloadUrl: 'https://arxiv.org/pdf/2406.xxxxx.pdf'
     abstract: |
       We introduce a parameter-efficient fine-tuning method that reduces memory requirements 
       by 70% while maintaining 98% of full fine-tuning performance. Our approach combines 
       LoRA with selective layer freezing based on gradient analysis, enabling fine-tuning 
       of 70B parameter models on consumer GPUs.
 
-  - title: "Vision-Language Models for Robotic Manipulation: A Survey and Benchmark"
+  - title: 'Vision-Language Models for Robotic Manipulation: A Survey and Benchmark'
     authors:
-      - "Zuzu"
-      - "Dr. Sarah Chen"
-    venue: "IEEE Robotics and Automation Letters (RA-L)"
+      - 'Zuzu'
+      - 'Dr. Sarah Chen'
+    venue: 'IEEE Robotics and Automation Letters (RA-L)'
     year: 2024
-    url: "https://doi.org/10.xxxx/ral.2024.xxxxx"
+    url: 'https://doi.org/10.xxxx/ral.2024.xxxxx'
     abstract: |
       A comprehensive survey of vision-language models applied to robotic manipulation tasks. 
       We introduce RoboVLM-Bench, a standardized benchmark for evaluating VLM-based robot 
       policies across 50 manipulation tasks with varying complexity levels.
 
-  - title: "Retrieval-Augmented Generation for Technical Documentation: Best Practices and Pitfalls"
+  - title: 'Retrieval-Augmented Generation for Technical Documentation: Best Practices and Pitfalls'
     authors:
-      - "Zuzu"
-    venue: "Conference on Empirical Methods in Natural Language Processing (EMNLP)"
+      - 'Zuzu'
+    venue: 'Conference on Empirical Methods in Natural Language Processing (EMNLP)'
     year: 2024
-    url: "https://doi.org/10.xxxx/emnlp.2024.xxxxx"
-    downloadUrl: "https://arxiv.org/pdf/2409.xxxxx.pdf"
+    url: 'https://doi.org/10.xxxx/emnlp.2024.xxxxx'
+    downloadUrl: 'https://arxiv.org/pdf/2409.xxxxx.pdf'
     abstract: |
       An empirical study of RAG systems for technical documentation retrieval. We identify 
       key failure modes and propose mitigation strategies including hybrid search, 
       query expansion, and confidence-based retrieval filtering, improving answer 
       accuracy by 25% on the TechQA benchmark.
 
-  - title: "Learning Dexterous Manipulation from Human Demonstrations with Transformers"
+  - title: 'Learning Dexterous Manipulation from Human Demonstrations with Transformers'
     authors:
-      - "Zuzu"
-      - "Dr. James Liu"
-      - "Prof. Michael Roberts"
-    venue: "Conference on Robot Learning (CoRL)"
+      - 'Zuzu'
+      - 'Dr. James Liu'
+      - 'Prof. Michael Roberts'
+    venue: 'Conference on Robot Learning (CoRL)'
     year: 2023
-    url: "https://doi.org/10.xxxx/corl.2023.xxxxx"
-    downloadUrl: "https://arxiv.org/pdf/2310.xxxxx.pdf"
+    url: 'https://doi.org/10.xxxx/corl.2023.xxxxx'
+    downloadUrl: 'https://arxiv.org/pdf/2310.xxxxx.pdf'
     abstract: |
       We present a transformer-based imitation learning approach for dexterous manipulation. 
       Our method learns from a small number of human demonstrations and generalizes to 
       novel objects, achieving 85% success rate on unseen manipulation tasks.
 
-  - title: "Autonomous Exploration in Unknown Environments using Curiosity-Driven Reinforcement Learning"
+  - title: 'Autonomous Exploration in Unknown Environments using Curiosity-Driven Reinforcement Learning'
     authors:
-      - "Zuzu"
-      - "Dr. Emily Wang"
-    venue: "AAAI Conference on Artificial Intelligence"
+      - 'Zuzu'
+      - 'Dr. Emily Wang'
+    venue: 'AAAI Conference on Artificial Intelligence'
     year: 2023
-    url: "https://doi.org/10.xxxx/aaai.2023.xxxxx"
+    url: 'https://doi.org/10.xxxx/aaai.2023.xxxxx'
     abstract: |
       A curiosity-driven exploration strategy for autonomous robots in unknown environments. 
       Our intrinsic motivation mechanism encourages efficient coverage while avoiding 
       dangerous areas, outperforming frontier-based exploration by 30% in coverage efficiency.
 
-  - title: "Prompt Engineering for Code Generation: A Systematic Study"
+  - title: 'Prompt Engineering for Code Generation: A Systematic Study'
     authors:
-      - "Zuzu"
-    venue: "arXiv Preprint"
+      - 'Zuzu'
+    venue: 'arXiv Preprint'
     year: 2023
-    downloadUrl: "https://arxiv.org/pdf/2308.xxxxx.pdf"
+    downloadUrl: 'https://arxiv.org/pdf/2308.xxxxx.pdf'
     abstract: |
       A systematic study of prompt engineering techniques for code generation with LLMs. 
       We evaluate 15 prompting strategies across 5 programming languages and identify 

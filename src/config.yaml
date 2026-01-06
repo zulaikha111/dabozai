@@ -11,7 +11,7 @@ metadata:
   title:
     default: Zuzu | AI/ML Engineer & Robotics Specialist
     template: '%s — Zuzu'
-  description: "Portfolio of Zuzu, a Software Engineering graduate from the University of Melbourne specializing in AI/ML, Large Language Models, Agentic Systems, and Robotics. Explore research publications, projects, and training courses."
+  description: 'Portfolio of Zuzu, a Software Engineering graduate from the University of Melbourne specializing in AI/ML, Large Language Models, Agentic Systems, and Robotics. Explore research publications, projects, and training courses.'
   robots:
     index: true
     follow: true

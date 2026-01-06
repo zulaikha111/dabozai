@@ -2,7 +2,7 @@
  * Property-based tests for ContactForm component
  * Feature: portfolio-training-website, Property 5: URL parameter form pre-population
  * Validates: Requirements 3.1, 3.5
- * 
+ *
  * Feature: portfolio-training-website, Property 6: Form submission state management
  * Validates: Requirements 3.3
  */
@@ -30,10 +30,10 @@ interface PrePopulatedFields {
 function prePopulateFormFields(params: URLParams): PrePopulatedFields {
   const productParam = params.product || '';
   const subjectParam = params.subject || '';
-  
+
   // Build pre-populated subject line (same logic as in ContactForm.astro)
   const prePopulatedSubject = subjectParam || (productParam ? `Training Inquiry: ${productParam}` : '');
-  
+
   return {
     subject: prePopulatedSubject,
     productHidden: productParam,
@@ -57,7 +57,7 @@ interface FormStateResult {
  * Simulates the form state management logic from ContactForm.astro
  * This is the core logic that manages form UI state during submission
  */
-function getFormStateResult(state: FormState, previousFormHadData: boolean = true): FormStateResult {
+function getFormStateResult(state: FormState, _previousFormHadData: boolean = true): FormStateResult {
   switch (state) {
     case 'submitting':
       return {
@@ -111,12 +111,10 @@ describe('ContactForm URL Parameter Pre-population - Property Tests', () => {
    */
 
   // Generator for product names (non-empty strings that could be product slugs)
-  const productNameArbitrary = fc.stringMatching(/^[a-zA-Z][a-zA-Z0-9\-_ ]{0,49}$/)
-    .filter(s => s.trim().length > 0);
+  const productNameArbitrary = fc.stringMatching(/^[a-zA-Z][a-zA-Z0-9\-_ ]{0,49}$/).filter((s) => s.trim().length > 0);
 
   // Generator for subject strings
-  const subjectArbitrary = fc.string({ minLength: 1, maxLength: 100 })
-    .filter(s => s.trim().length > 0);
+  const subjectArbitrary = fc.string({ minLength: 1, maxLength: 100 }).filter((s) => s.trim().length > 0);
 
   // Generator for URL parameters
   const urlParamsArbitrary: fc.Arbitrary<URLParams> = fc.record({
@@ -129,7 +127,7 @@ describe('ContactForm URL Parameter Pre-population - Property Tests', () => {
       fc.property(productNameArbitrary, (productName) => {
         const params: URLParams = { product: productName };
         const result = prePopulateFormFields(params);
-        
+
         // Subject should contain the product name in the expected format
         expect(result.subject).toBe(`Training Inquiry: ${productName}`);
         expect(result.productHidden).toBe(productName);
@@ -143,7 +141,7 @@ describe('ContactForm URL Parameter Pre-population - Property Tests', () => {
       fc.property(productNameArbitrary, subjectArbitrary, (productName, subject) => {
         const params: URLParams = { product: productName, subject: subject };
         const result = prePopulateFormFields(params);
-        
+
         // Explicit subject should take precedence
         expect(result.subject).toBe(subject);
         // Product should still be tracked in hidden field
@@ -158,7 +156,7 @@ describe('ContactForm URL Parameter Pre-population - Property Tests', () => {
       fc.property(subjectArbitrary, (subject) => {
         const params: URLParams = { subject: subject };
         const result = prePopulateFormFields(params);
-        
+
         expect(result.subject).toBe(subject);
         expect(result.productHidden).toBe('');
       }),
@@ -169,7 +167,7 @@ describe('ContactForm URL Parameter Pre-population - Property Tests', () => {
   it('should return empty subject when no params are provided', () => {
     const params: URLParams = {};
     const result = prePopulateFormFields(params);
-    
+
     expect(result.subject).toBe('');
     expect(result.productHidden).toBe('');
   });
@@ -178,7 +176,7 @@ describe('ContactForm URL Parameter Pre-population - Property Tests', () => {
     fc.assert(
       fc.property(urlParamsArbitrary, (params) => {
         const result = prePopulateFormFields(params);
-        
+
         // Invariant: subject is either from subject param, derived from product, or empty
         if (params.subject) {
           expect(result.subject).toBe(params.subject);
@@ -187,7 +185,7 @@ describe('ContactForm URL Parameter Pre-population - Property Tests', () => {
         } else {
           expect(result.subject).toBe('');
         }
-        
+
         // Invariant: productHidden always matches product param or is empty
         expect(result.productHidden).toBe(params.product || '');
       }),
@@ -438,7 +436,7 @@ describe('ContactForm State Management - Property Tests', () => {
     fc.assert(
       fc.property(formStateArbitrary, (state) => {
         const result = getFormStateResult(state);
-        
+
         // Loading text should only show during submitting state
         if (state === 'submitting') {
           expect(result.showLoadingText).toBe(true);
@@ -455,7 +453,7 @@ describe('ContactForm State Management - Property Tests', () => {
     fc.assert(
       fc.property(formStateArbitrary, (state) => {
         const result = getFormStateResult(state);
-        
+
         if (state === 'success') {
           expect(result.showSuccessMessage).toBe(true);
           expect(result.showErrorMessage).toBe(false);
@@ -472,7 +470,7 @@ describe('ContactForm State Management - Property Tests', () => {
     fc.assert(
       fc.property(formStateArbitrary, (state) => {
         const result = getFormStateResult(state);
-        
+
         if (state === 'error') {
           expect(result.showErrorMessage).toBe(true);
           expect(result.showSuccessMessage).toBe(false);
@@ -489,10 +487,10 @@ describe('ContactForm State Management - Property Tests', () => {
     fc.assert(
       fc.property(formStateArbitrary, (state) => {
         const result = getFormStateResult(state);
-        
+
         // Invariant: at most one message type should be shown
         expect(hasValidMessageState(result)).toBe(true);
-        
+
         // Stronger invariant: success and error are mutually exclusive
         expect(result.showSuccessMessage && result.showErrorMessage).toBe(false);
       }),
@@ -504,7 +502,7 @@ describe('ContactForm State Management - Property Tests', () => {
     fc.assert(
       fc.property(formStateArbitrary, (state) => {
         const result = getFormStateResult(state);
-        
+
         // Button should only be disabled during submission
         if (state === 'submitting') {
           expect(result.submitButtonDisabled).toBe(true);
@@ -520,7 +518,7 @@ describe('ContactForm State Management - Property Tests', () => {
     fc.assert(
       fc.property(formStateArbitrary, (state) => {
         const result = getFormStateResult(state);
-        
+
         // Form should only be reset on success
         expect(result.formReset).toBe(state === 'success');
       }),
@@ -536,15 +534,11 @@ describe('ContactForm State Management - Property Tests', () => {
     ];
 
     stateSequences.forEach((sequence) => {
-      let previousState: FormState = 'idle';
-      
       sequence.forEach((currentState) => {
         const result = getFormStateResult(currentState);
-        
+
         // Each state should have valid message state
         expect(hasValidMessageState(result)).toBe(true);
-        
-        previousState = currentState;
       });
     });
   });

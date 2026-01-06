@@ -30,9 +30,8 @@ const { Content } = await render(product);
 
 // Load testimonials for this product
 const testimonialsResult = loadTestimonialsData();
-const allTestimonials = testimonialsResult.success && testimonialsResult.data 
-  ? testimonialsResult.data.testimonials 
-  : [];
+const allTestimonials =
+  testimonialsResult.success && testimonialsResult.data ? testimonialsResult.data.testimonials : [];
 
 const productTestimonials = getTestimonialsForCourse(allTestimonials, product.id);
 const averageRating = calculateAverageRating(allTestimonials, product.id);
@@ -89,11 +88,13 @@ const metadata: MetaData = {
           width="640"
           height="360"
         />
-        {product.data.featured && (
-          <span class="absolute top-4 right-4 bg-primary text-white text-sm font-semibold px-4 py-2 rounded-full">
-            Featured Course
-          </span>
-        )}
+        {
+          product.data.featured && (
+            <span class="absolute top-4 right-4 bg-primary text-white text-sm font-semibold px-4 py-2 rounded-full">
+              Featured Course
+            </span>
+          )
+        }
       </div>
 
       <!-- Product Info -->
@@ -101,23 +102,25 @@ const metadata: MetaData = {
         <span class="text-primary font-medium text-sm uppercase tracking-wide mb-2">
           {product.data.category}
         </span>
-        
+
         <h1 class="text-3xl md:text-4xl font-bold mb-4">
           {product.data.title}
         </h1>
 
         {/* Rating Display */}
-        {averageRating !== null && (
-          <div class="flex items-center gap-3 mb-4">
-            <span class="text-yellow-500 text-xl" aria-label={`Rating: ${averageRating} out of 5 stars`}>
-              {renderStars(averageRating)}
-            </span>
-            <span class="text-lg font-semibold">{averageRating.toFixed(1)}</span>
-            <span class="text-muted">
-              ({productTestimonials.length} {productTestimonials.length === 1 ? 'review' : 'reviews'})
-            </span>
-          </div>
-        )}
+        {
+          averageRating !== null && (
+            <div class="flex items-center gap-3 mb-4">
+              <span class="text-yellow-500 text-xl" aria-label={`Rating: ${averageRating} out of 5 stars`}>
+                {renderStars(averageRating)}
+              </span>
+              <span class="text-lg font-semibold">{averageRating.toFixed(1)}</span>
+              <span class="text-muted">
+                ({productTestimonials.length} {productTestimonials.length === 1 ? 'review' : 'reviews'})
+              </span>
+            </div>
+          )
+        }
 
         <p class="text-muted text-lg mb-6">
           {product.data.description}
@@ -132,24 +135,22 @@ const metadata: MetaData = {
               <span class="font-semibold">{product.data.duration}</span>
             </div>
           </div>
-          
-          {product.data.price && (
-            <div class="flex items-center gap-3 p-4 bg-slate-100 dark:bg-slate-800 rounded-lg">
-              <Icon name="tabler:currency-dollar" class="w-6 h-6 text-primary" />
-              <div>
-                <span class="block text-sm text-muted">Price</span>
-                <span class="font-semibold text-xl">${product.data.price.toLocaleString()}</span>
+
+          {
+            product.data.price && (
+              <div class="flex items-center gap-3 p-4 bg-slate-100 dark:bg-slate-800 rounded-lg">
+                <Icon name="tabler:currency-dollar" class="w-6 h-6 text-primary" />
+                <div>
+                  <span class="block text-sm text-muted">Price</span>
+                  <span class="font-semibold text-xl">${product.data.price.toLocaleString()}</span>
+                </div>
               </div>
-            </div>
-          )}
+            )
+          }
         </div>
 
         <!-- CTA Button -->
-        <Button
-          variant="primary"
-          href={contactUrl}
-          class="w-full md:w-auto justify-center text-lg py-4 px-8"
-        >
+        <Button variant="primary" href={contactUrl} class="w-full md:w-auto justify-center text-lg py-4 px-8">
           <Icon name="tabler:send" class="w-5 h-5 mr-2" />
           Request Training
         </Button>
@@ -157,40 +158,44 @@ const metadata: MetaData = {
     </div>
 
     <!-- Learning Outcomes -->
-    {product.data.learningOutcomes && product.data.learningOutcomes.length > 0 && (
-      <section class="mb-16">
-        <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
-          <Icon name="tabler:target" class="w-7 h-7 text-primary" />
-          What You'll Learn
-        </h2>
-        <div class="grid md:grid-cols-2 gap-4">
-          {product.data.learningOutcomes.map((outcome) => (
-            <div class="flex items-start gap-3 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
-              <Icon name="tabler:check" class="w-5 h-5 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
-              <span>{outcome}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-    )}
+    {
+      product.data.learningOutcomes && product.data.learningOutcomes.length > 0 && (
+        <section class="mb-16">
+          <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+            <Icon name="tabler:target" class="w-7 h-7 text-primary" />
+            What You'll Learn
+          </h2>
+          <div class="grid md:grid-cols-2 gap-4">
+            {product.data.learningOutcomes.map((outcome) => (
+              <div class="flex items-start gap-3 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                <Icon name="tabler:check" class="w-5 h-5 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
+                <span>{outcome}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+      )
+    }
 
     <!-- Prerequisites -->
-    {product.data.prerequisites && product.data.prerequisites.length > 0 && (
-      <section class="mb-16">
-        <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
-          <Icon name="tabler:list-check" class="w-7 h-7 text-primary" />
-          Prerequisites
-        </h2>
-        <ul class="space-y-3">
-          {product.data.prerequisites.map((prereq) => (
-            <li class="flex items-start gap-3">
-              <Icon name="tabler:point" class="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
-              <span>{prereq}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
-    )}
+    {
+      product.data.prerequisites && product.data.prerequisites.length > 0 && (
+        <section class="mb-16">
+          <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+            <Icon name="tabler:list-check" class="w-7 h-7 text-primary" />
+            Prerequisites
+          </h2>
+          <ul class="space-y-3">
+            {product.data.prerequisites.map((prereq) => (
+              <li class="flex items-start gap-3">
+                <Icon name="tabler:point" class="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                <span>{prereq}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
 
     <!-- Course Content (from markdown body) -->
     <section class="mb-16">
@@ -204,37 +209,37 @@ const metadata: MetaData = {
     </section>
 
     <!-- Testimonials Section -->
-    {productTestimonials.length > 0 && (
-      <section class="mb-16">
-        <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
-          <Icon name="tabler:message-star" class="w-7 h-7 text-primary" />
-          What Participants Say
-        </h2>
-        <div class="grid md:grid-cols-2 gap-6">
-          {productTestimonials.map((testimonial) => (
-            <div class="bg-slate-50 dark:bg-slate-800 rounded-xl p-6">
-              <div class="flex items-center gap-2 mb-3">
-                <span class="text-yellow-500" aria-label={`Rating: ${testimonial.rating} out of 5 stars`}>
-                  {renderStars(testimonial.rating)}
-                </span>
-                {testimonial.verified && (
-                  <span class="text-xs bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 px-2 py-0.5 rounded-full">
-                    Verified
+    {
+      productTestimonials.length > 0 && (
+        <section class="mb-16">
+          <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+            <Icon name="tabler:message-star" class="w-7 h-7 text-primary" />
+            What Participants Say
+          </h2>
+          <div class="grid md:grid-cols-2 gap-6">
+            {productTestimonials.map((testimonial) => (
+              <div class="bg-slate-50 dark:bg-slate-800 rounded-xl p-6">
+                <div class="flex items-center gap-2 mb-3">
+                  <span class="text-yellow-500" aria-label={`Rating: ${testimonial.rating} out of 5 stars`}>
+                    {renderStars(testimonial.rating)}
                   </span>
-                )}
+                  {testimonial.verified && (
+                    <span class="text-xs bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 px-2 py-0.5 rounded-full">
+                      Verified
+                    </span>
+                  )}
+                </div>
+                <blockquote class="text-muted mb-4 italic">"{testimonial.text.trim()}"</blockquote>
+                <div class="flex items-center justify-between">
+                  <span class="font-semibold">{testimonial.authorName}</span>
+                  <span class="text-sm text-muted">{testimonial.date}</span>
+                </div>
               </div>
-              <blockquote class="text-muted mb-4 italic">
-                "{testimonial.text.trim()}"
-              </blockquote>
-              <div class="flex items-center justify-between">
-                <span class="font-semibold">{testimonial.authorName}</span>
-                <span class="text-sm text-muted">{testimonial.date}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-    )}
+            ))}
+          </div>
+        </section>
+      )
+    }
 
     <!-- Bottom CTA -->
     <section class="text-center py-12 bg-slate-100 dark:bg-slate-800 rounded-xl">
@@ -242,11 +247,7 @@ const metadata: MetaData = {
       <p class="text-muted mb-6 max-w-2xl mx-auto">
         Contact us to schedule this training for your team or inquire about upcoming public sessions.
       </p>
-      <Button
-        variant="primary"
-        href={contactUrl}
-        class="text-lg py-4 px-8"
-      >
+      <Button variant="primary" href={contactUrl} class="text-lg py-4 px-8">
         <Icon name="tabler:send" class="w-5 h-5 mr-2" />
         Request Training
       </Button>
