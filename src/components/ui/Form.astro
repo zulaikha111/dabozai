@@ -5,17 +5,14 @@ import Button from '~/components/ui/Button.astro';
 const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } = Astro.props;
 
 // Configure your form submission service here
-// Option 1: Formspree - Replace YOUR_FORM_ID with your Formspree form ID
-// Sign up at https://formspree.io to get your form ID
+// Formspree - Sign up at https://formspree.io to get your form ID
 const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mjgkqdzq';
 
 // hCaptcha Configuration (Free spam protection)
-// 1. Sign up at https://www.hcaptcha.com/ (free)
-// 2. Add your domain to your hCaptcha account
-// 3. Replace YOUR_HCAPTCHA_SITE_KEY with your site key
+// Sign up at https://www.hcaptcha.com/ and add your domain
 // Set to empty string '' to disable captcha
 const HCAPTCHA_SITE_KEY = '776c6d46-429a-43b8-9d2a-69e62b20a61c';
-const enableCaptcha = HCAPTCHA_SITE_KEY && HCAPTCHA_SITE_KEY !== 'YOUR_HCAPTCHA_SITE_KEY';
+const enableCaptcha = Boolean(HCAPTCHA_SITE_KEY);
 ---
 
 <form action={FORMSPREE_ENDPOINT} method="POST">
@@ -81,11 +78,7 @@ const enableCaptcha = HCAPTCHA_SITE_KEY && HCAPTCHA_SITE_KEY !== 'YOUR_HCAPTCHA_
   }
 
   {/* hCaptcha widget - renders only when configured */}
-  {
-    enableCaptcha && (
-      <div class="mt-6 h-captcha" data-sitekey={HCAPTCHA_SITE_KEY}></div>
-    )
-  }
+  {enableCaptcha && <div class="mt-6 h-captcha" data-sitekey={HCAPTCHA_SITE_KEY} />}
 
   {
     button && (
@@ -107,4 +100,4 @@ const enableCaptcha = HCAPTCHA_SITE_KEY && HCAPTCHA_SITE_KEY !== 'YOUR_HCAPTCHA_
 </form>
 
 {/* Load hCaptcha script only when enabled */}
-{enableCaptcha && <script src="https://js.hcaptcha.com/1/api.js" async defer></script>}
+{enableCaptcha && <script is:inline src="https://js.hcaptcha.com/1/api.js" async defer />}

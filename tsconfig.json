@@ -16,5 +16,5 @@
     "skipLibCheck": true
   },
   "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist/", "node_modules/"]
+  "exclude": ["dist/", "node_modules/", "src/components/widgets/Portfolio.astro"]
 }
