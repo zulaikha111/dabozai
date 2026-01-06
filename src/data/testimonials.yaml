@@ -1,0 +1,47 @@
+# Course Testimonials and Ratings Data
+# This file contains testimonials from training course participants
+# Validates: Requirements 10.2
+
+testimonials:
+  - id: "testimonial-001"
+    authorName: "John Smith"
+    courseSlug: "sample-training-course"
+    rating: 5
+    text: |
+      Excellent training course! The instructor was knowledgeable and 
+      the hands-on exercises really helped solidify the concepts. 
+      Highly recommended for anyone looking to improve their skills.
+    date: "2024-01-15"
+    verified: true
+
+  - id: "testimonial-002"
+    authorName: "Jane Doe"
+    courseSlug: "sample-training-course"
+    rating: 4
+    text: |
+      Great content and well-structured curriculum. The practical 
+      examples were particularly useful. Would have liked more time 
+      for Q&A sessions.
+    date: "2024-02-20"
+    verified: true
+
+  - id: "testimonial-003"
+    authorName: "Michael Johnson"
+    courseSlug: "sample-training-course"
+    rating: 5
+    text: |
+      This course exceeded my expectations. The instructor's real-world 
+      experience added tremendous value to the learning experience. 
+      I've already applied what I learned in my daily work.
+    date: "2024-03-10"
+    verified: true
+
+  - id: "testimonial-004"
+    authorName: "Sarah Williams"
+    courseSlug: "sample-training-course"
+    rating: 4
+    text: |
+      Very informative and engaging. The course materials were 
+      comprehensive and the pace was appropriate for all skill levels.
+    date: "2024-04-05"
+    verified: false

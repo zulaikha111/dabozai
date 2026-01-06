@@ -1,0 +1,158 @@
+---
+/**
+ * Portfolio Display Component
+ * Displays professional credentials using AstroWind Features and Steps widgets
+ * Requirements: 1.1, 1.4
+ */
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import Headline from '~/components/ui/Headline.astro';
+import Timeline from '~/components/ui/Timeline.astro';
+import ItemGrid from '~/components/ui/ItemGrid.astro';
+import { Icon } from 'astro-icon/components';
+import type { Widget } from '~/types';
+import type { ResumeData } from '~/utils/schemas';
+
+export interface Props extends Widget {
+  resumeData: ResumeData;
+}
+
+const {
+  resumeData,
+  id,
+  isDark = false,
+  classes = {},
+  bg = await Astro.slots.render('bg'),
+} = Astro.props;
+
+const { personalInfo, experience = [], certifications = [], skills = [] } = resumeData;
+
+// Transform experience data for Timeline component
+const experienceItems = experience.map((exp) => ({
+  title: `${exp.position} at ${exp.company}`,
+  description: `
+    <span class="text-sm text-muted">${exp.startDate} - ${exp.endDate || 'Present'}</span>
+    ${exp.description ? `<p class="mt-2">${exp.description}</p>` : ''}
+    ${exp.achievements && exp.achievements.length > 0 
+      ? `<ul class="mt-2 list-disc list-inside text-sm">
+          ${exp.achievements.map(a => `<li>${a}</li>`).join('')}
+        </ul>` 
+      : ''}
+  `,
+  icon: 'tabler:briefcase',
+}));
+
+// Transform certifications for ItemGrid component
+const certificationItems = certifications.map((cert) => ({
+  title: cert.name,
+  description: `
+    <span class="block text-sm">${cert.issuer}</span>
+    <span class="block text-sm text-muted">${cert.date}</span>
+    ${cert.credentialUrl 
+      ? `<a href="${cert.credentialUrl}" target="_blank" rel="noopener noreferrer" 
+          class="inline-flex items-center mt-2 text-sm text-primary hover:underline">
+          View Badge <span class="ml-1">→</span>
+        </a>` 
+      : ''}
+  `,
+  icon: 'tabler:certificate',
+}));
+
+// Transform skills for display
+const skillItems = skills.map((skillCategory) => ({
+  title: skillCategory.category,
+  description: skillCategory.items.join(' • '),
+  icon: 'tabler:star',
+}));
+---
+
+<WidgetWrapper id={id} isDark={isDark} containerClass={`max-w-6xl ${classes?.container ?? ''}`} bg={bg}>
+  <!-- Personal Info Section -->
+  <div class="text-center mb-12">
+    <h1 class="text-4xl md:text-5xl font-bold mb-4">{personalInfo.name}</h1>
+    <p class="text-xl text-primary font-semibold mb-4">{personalInfo.title}</p>
+    {personalInfo.summary && (
+      <p class="text-muted max-w-3xl mx-auto">{personalInfo.summary}</p>
+    )}
+    <div class="flex flex-wrap justify-center gap-4 mt-6 text-sm text-muted">
+      {personalInfo.email && (
+        <a href={`mailto:${personalInfo.email}`} class="flex items-center gap-1 hover:text-primary">
+          <Icon name="tabler:mail" class="w-4 h-4" />
+          {personalInfo.email}
+        </a>
+      )}
+      {personalInfo.phone && (
+        <span class="flex items-center gap-1">
+          <Icon name="tabler:phone" class="w-4 h-4" />
+          {personalInfo.phone}
+        </span>
+      )}
+      {personalInfo.location && (
+        <span class="flex items-center gap-1">
+          <Icon name="tabler:map-pin" class="w-4 h-4" />
+          {personalInfo.location}
+        </span>
+      )}
+    </div>
+  </div>
+
+  <!-- Experience Section -->
+  {experienceItems.length > 0 && (
+    <div class="mb-16">
+      <Headline
+        title="Professional Experience"
+        classes={{
+          container: 'text-center mb-8',
+          title: 'text-3xl font-bold',
+        }}
+      />
+      <Timeline 
+        items={experienceItems}
+        classes={{
+          container: 'max-w-3xl mx-auto',
+        }}
+      />
+    </div>
+  )}
+
+  <!-- Certifications Section -->
+  {certificationItems.length > 0 && (
+    <div class="mb-16">
+      <Headline
+        title="Certifications"
+        classes={{
+          container: 'text-center mb-8',
+          title: 'text-3xl font-bold',
+        }}
+      />
+      <ItemGrid
+        items={certificationItems}
+        columns={2}
+        classes={{
+          container: 'max-w-4xl mx-auto',
+          icon: 'text-white bg-primary rounded-full w-10 h-10 p-2',
+        }}
+      />
+    </div>
+  )}
+
+  <!-- Skills Section -->
+  {skillItems.length > 0 && (
+    <div>
+      <Headline
+        title="Skills & Expertise"
+        classes={{
+          container: 'text-center mb-8',
+          title: 'text-3xl font-bold',
+        }}
+      />
+      <ItemGrid
+        items={skillItems}
+        columns={3}
+        classes={{
+          container: 'max-w-5xl mx-auto',
+          icon: 'text-white bg-primary rounded-full w-10 h-10 p-2',
+        }}
+      />
+    </div>
+  )}
+</WidgetWrapper>

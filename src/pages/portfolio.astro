@@ -1,0 +1,184 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Features2 from '~/components/widgets/Features2.astro';
+import Content from '~/components/widgets/Content.astro';
+import Stats from '~/components/widgets/Stats.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+
+const metadata = {
+  title: 'Portfolio — Zuzu',
+  description: 'Explore Zuzu\'s AI/ML projects, research publications, and open-source contributions.',
+};
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero Widget ******************* -->
+
+  <Hero
+    tagline="Portfolio"
+    title="Projects & Research"
+    subtitle="A collection of my work in AI/ML, robotics, and autonomous systems. From production LLM applications to cutting-edge research publications."
+    image={{
+      src: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+      alt: 'AI and Machine Learning Projects',
+    }}
+  />
+
+  <!-- Featured Projects ************** -->
+
+  <Features2
+    title="Featured Projects"
+    subtitle="Open-source tools and frameworks I've built for the AI/ML community"
+    tagline="GitHub Repositories"
+    columns={3}
+    items={[
+      {
+        title: 'Agentic LLM Framework',
+        description: 'A modular framework for building autonomous LLM agents with planning, memory, and tool-use capabilities. 1,250+ GitHub stars.',
+        icon: 'tabler:robot',
+      },
+      {
+        title: 'ROS2 Deep RL Navigation',
+        description: 'Deep reinforcement learning-based autonomous navigation for mobile robots using ROS2. Implements PPO and SAC with sim-to-real transfer.',
+        icon: 'tabler:drone',
+      },
+      {
+        title: 'Multimodal RAG System',
+        description: 'Production-ready RAG system supporting text, images, and code with hybrid search, reranking, and streaming responses.',
+        icon: 'tabler:database',
+      },
+      {
+        title: 'Robotic Manipulation Transformer',
+        description: 'Transformer-based policy for robotic manipulation tasks with strong generalization to novel objects.',
+        icon: 'tabler:hand-grab',
+      },
+      {
+        title: 'LLM Code Reviewer',
+        description: 'Automated code review tool powered by LLMs. Analyzes PRs for bugs, security issues, and style violations.',
+        icon: 'tabler:code',
+      },
+      {
+        title: 'Vision-Language Robotics',
+        description: 'Vision-language models for robotic task understanding. Enables natural language instruction following.',
+        icon: 'tabler:eye',
+      },
+    ]}
+  >
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+    </Fragment>
+  </Features2>
+
+  <!-- Research Publications **************** -->
+
+  <Content
+    isReversed
+    tagline="Research"
+    title="Selected Publications"
+    items={[
+      {
+        title: 'Multi-Agent Coordination in LLM Systems (NeurIPS 2025)',
+        description: 'A hierarchical planning framework for coordinating multiple LLM agents, achieving 40% improvement in task completion rates.',
+      },
+      {
+        title: 'Sim-to-Real Transfer for Robot Navigation (ICRA 2025)',
+        description: 'Domain randomization strategy enabling zero-shot transfer of navigation policies with 92% success rate.',
+      },
+      {
+        title: 'Efficient Fine-Tuning of LLMs (ACL 2024)',
+        description: 'Parameter-efficient fine-tuning reducing memory by 70% while maintaining 98% performance.',
+      },
+      {
+        title: 'Vision-Language Models for Robotics (RA-L 2024)',
+        description: 'Comprehensive survey and RoboVLM-Bench benchmark for evaluating VLM-based robot policies.',
+      },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+      alt: 'Research Publications',
+    }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">8 Publications</h3>
+      Published at top-tier venues including NeurIPS, ICRA, ACL, EMNLP, CoRL, and AAAI.
+    </Fragment>
+
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+    </Fragment>
+  </Content>
+
+  <!-- Project Highlights **************** -->
+
+  <Content
+    isAfterContent
+    items={[
+      {
+        title: 'Production LLM Pipeline',
+        description: 'Built and deployed an LLM pipeline serving 10K+ daily requests at Melbourne AI Lab.',
+      },
+      {
+        title: 'SLAM Navigation System',
+        description: 'Implemented SLAM-based navigation reducing localization error by 35% for mobile robots.',
+      },
+      {
+        title: 'Deep RL Manipulation',
+        description: 'Designed deep RL policy for robotic arm manipulation achieving 95% success rate.',
+      },
+      {
+        title: 'Computer Vision QA System',
+        description: 'Developed computer vision system for quality inspection with 98% accuracy.',
+      },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+      alt: 'Robotics Projects',
+    }}
+  >
+    <Fragment slot="content">Real-world impact through production deployments.</Fragment>
+
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+    </Fragment>
+  </Content>
+
+  <!-- Stats Widget ****************** -->
+
+  <Stats
+    title="By the Numbers"
+    stats={[
+      { title: 'Research Papers', amount: '8' },
+      { title: 'GitHub Stars', amount: '2.5K+' },
+      { title: 'Projects Completed', amount: '25+' },
+      { title: 'Conference Talks', amount: '12' },
+    ]}
+  />
+
+  <!-- CallToAction Widget *********** -->
+
+  <CallToAction
+    actions={[
+      {
+        variant: 'primary',
+        text: 'View on GitHub',
+        href: 'https://github.com/zuzu-ai',
+        target: '_blank',
+        icon: 'tabler:brand-github',
+      },
+      {
+        text: 'Contact Me',
+        href: '/contact',
+        icon: 'tabler:mail',
+      },
+    ]}
+  >
+    <Fragment slot="title">
+      Interested in Collaboration?
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      I'm always open to discussing new projects, research collaborations, or consulting opportunities.
+    </Fragment>
+  </CallToAction>
+</Layout>

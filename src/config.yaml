@@ -1,0 +1,78 @@
+site:
+  name: Zuzu | AI/ML Engineer
+  site: 'https://dabozai.com'
+  base: '/'
+  trailingSlash: false
+
+  googleSiteVerificationId: ''
+
+# Default SEO metadata
+metadata:
+  title:
+    default: Zuzu | AI/ML Engineer & Robotics Specialist
+    template: '%s — Zuzu'
+  description: "Portfolio of Zuzu, a Software Engineering graduate from the University of Melbourne specializing in AI/ML, Large Language Models, Agentic Systems, and Robotics. Explore research publications, projects, and training courses."
+  robots:
+    index: true
+    follow: true
+  openGraph:
+    site_name: Zuzu | AI/ML Engineer
+    images:
+      - url: '~/assets/images/default.png'
+        width: 1200
+        height: 628
+    type: website
+  twitter:
+    handle: '@zuzu_ai'
+    site: '@zuzu_ai'
+    cardType: summary_large_image
+
+i18n:
+  language: en
+  textDirection: ltr
+
+apps:
+  blog:
+    isEnabled: true
+    postsPerPage: 6
+
+    post:
+      isEnabled: true
+      permalink: '/%slug%'
+      robots:
+        index: true
+
+    list:
+      isEnabled: true
+      pathname: 'blog'
+      robots:
+        index: true
+
+    category:
+      isEnabled: true
+      pathname: 'category'
+      robots:
+        index: true
+
+    tag:
+      isEnabled: true
+      pathname: 'tag'
+      robots:
+        index: false
+
+    isRelatedPostsEnabled: true
+    relatedPostsCount: 4
+
+analytics:
+  vendors:
+    googleAnalytics:
+      id: null
+
+ui:
+  theme: 'system'
+
+# Social links for Zuzu's portfolio
+social:
+  github: 'https://github.com/zuzu-ai'
+  linkedin: 'https://linkedin.com/in/zuzu-ai'
+  twitter: 'https://twitter.com/zuzu_ai'

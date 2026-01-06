@@ -1,0 +1,248 @@
+---
+/**
+ * Testimonials Component
+ * Displays testimonials with star ratings and author information
+ * Calculates and displays average ratings for products
+ * Requirements: 10.1, 10.3, 10.4
+ */
+import Headline from '~/components/ui/Headline.astro';
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import Button from '~/components/ui/Button.astro';
+import Image from '~/components/common/Image.astro';
+import { Icon } from 'astro-icon/components';
+import type { Testimonials as BaseProps } from '~/types';
+import { loadTestimonialsData, getTestimonialsForCourse } from '~/utils/dataLoader';
+import type { Testimonial } from '~/utils/schemas';
+
+export interface Props extends Omit<BaseProps, 'testimonials'> {
+  /** Filter testimonials by course slug */
+  courseSlug?: string;
+  /** Show average rating summary */
+  showAverageRating?: boolean;
+  /** Maximum number of testimonials to display */
+  maxItems?: number;
+  /** Use data from YAML file instead of props */
+  useDataFile?: boolean;
+  /** Legacy testimonials prop for backward compatibility */
+  testimonials?: Array<{
+    title?: string;
+    testimonial?: string;
+    name?: string;
+    job?: string;
+    image?: string | unknown;
+  }>;
+}
+
+const {
+  title = '',
+  subtitle = '',
+  tagline = '',
+  testimonials: propTestimonials = [],
+  callToAction,
+  courseSlug,
+  showAverageRating = true,
+  maxItems,
+  useDataFile = true,
+  id,
+  isDark = false,
+  classes = {},
+  bg = await Astro.slots.render('bg'),
+} = Astro.props;
+
+// Type for display testimonials (with optional verified field)
+type DisplayTestimonial = Omit<Testimonial, 'verified'> & { verified?: boolean };
+
+// Load testimonials from YAML file or use props
+let displayTestimonials: DisplayTestimonial[] = [];
+let averageRating: number | null = null;
+let testimonialCount = 0;
+
+if (useDataFile) {
+  const testimonialsResult = loadTestimonialsData();
+  
+  if (testimonialsResult.success && testimonialsResult.data) {
+    const allTestimonials = testimonialsResult.data.testimonials;
+    
+    // Filter by course if specified
+    if (courseSlug) {
+      displayTestimonials = getTestimonialsForCourse(allTestimonials, courseSlug) as DisplayTestimonial[];
+    } else {
+      displayTestimonials = allTestimonials as DisplayTestimonial[];
+    }
+    
+    // Calculate average rating
+    if (displayTestimonials.length > 0) {
+      const sum = displayTestimonials.reduce((acc, t) => acc + t.rating, 0);
+      averageRating = Math.round((sum / displayTestimonials.length) * 10) / 10;
+      testimonialCount = displayTestimonials.length;
+    }
+    
+    // Limit items if specified
+    if (maxItems && displayTestimonials.length > maxItems) {
+      displayTestimonials = displayTestimonials.slice(0, maxItems);
+    }
+  }
+}
+
+// Helper function to render star rating
+function renderStarRating(rating: number): { full: number; half: boolean; empty: number } {
+  const fullStars = Math.floor(rating);
+  const hasHalfStar = rating % 1 >= 0.5;
+  const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+  return { full: fullStars, half: hasHalfStar, empty: emptyStars };
+}
+
+// Format date for display
+function formatDate(dateString: string): string {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', { 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+  });
+}
+
+// Check if we should use legacy mode (props-based testimonials)
+const useLegacyMode = !useDataFile && propTestimonials && propTestimonials.length > 0;
+---
+
+<WidgetWrapper id={id} isDark={isDark} containerClass={`max-w-6xl mx-auto ${classes?.container ?? ''}`} bg={bg}>
+  <Headline title={title} subtitle={subtitle} tagline={tagline} />
+
+  {/* Average Rating Summary */}
+  {showAverageRating && averageRating !== null && testimonialCount > 0 && (
+    <div class="flex flex-col items-center mb-8 p-6 bg-slate-50 dark:bg-slate-800 rounded-xl">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="text-4xl font-bold text-primary">{averageRating.toFixed(1)}</span>
+        <span class="text-2xl text-muted">/5</span>
+      </div>
+      <div class="flex items-center gap-1 mb-2" aria-label={`Average rating: ${averageRating} out of 5 stars`}>
+        {Array.from({ length: renderStarRating(averageRating).full }).map(() => (
+          <Icon name="tabler:star-filled" class="w-6 h-6 text-yellow-500" />
+        ))}
+        {renderStarRating(averageRating).half && (
+          <Icon name="tabler:star-half-filled" class="w-6 h-6 text-yellow-500" />
+        )}
+        {Array.from({ length: renderStarRating(averageRating).empty }).map(() => (
+          <Icon name="tabler:star" class="w-6 h-6 text-yellow-500" />
+        ))}
+      </div>
+      <p class="text-muted text-sm">
+        Based on {testimonialCount} {testimonialCount === 1 ? 'review' : 'reviews'}
+      </p>
+    </div>
+  )}
+
+  {/* Data File Testimonials (with star ratings) */}
+  {!useLegacyMode && displayTestimonials.length > 0 && (
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {displayTestimonials.map((testimonial) => {
+        const stars = renderStarRating(testimonial.rating);
+        return (
+          <div class="flex h-auto intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter">
+            <div class="flex flex-col p-4 md:p-6 rounded-md shadow-xl dark:shadow-none dark:border dark:border-slate-600 bg-white dark:bg-slate-900">
+              {/* Star Rating */}
+              <div class="flex items-center gap-1 mb-3" aria-label={`Rating: ${testimonial.rating} out of 5 stars`}>
+                {Array.from({ length: stars.full }).map(() => (
+                  <Icon name="tabler:star-filled" class="w-5 h-5 text-yellow-500" />
+                ))}
+                {stars.half && (
+                  <Icon name="tabler:star-half-filled" class="w-5 h-5 text-yellow-500" />
+                )}
+                {Array.from({ length: stars.empty }).map(() => (
+                  <Icon name="tabler:star" class="w-5 h-5 text-yellow-500" />
+                ))}
+                <span class="ml-2 text-sm text-muted">{testimonial.rating}/5</span>
+              </div>
+
+              {/* Testimonial Text */}
+              <blockquote class="flex-auto mb-4">
+                <p class="text-muted italic">" {testimonial.text.trim()} "</p>
+              </blockquote>
+
+              <hr class="border-slate-200 dark:border-slate-600 my-4" />
+
+              {/* Author Info */}
+              <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                  <div class="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
+                    <Icon name="tabler:user" class="w-5 h-5 text-primary" />
+                  </div>
+                  <div class="ml-3">
+                    <p class="text-base font-semibold">{testimonial.authorName}</p>
+                    <p class="text-xs text-muted">{formatDate(testimonial.date)}</p>
+                  </div>
+                </div>
+                {testimonial.verified && (
+                  <span class="flex items-center gap-1 text-xs text-green-600 dark:text-green-400">
+                    <Icon name="tabler:circle-check" class="w-4 h-4" />
+                    Verified
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  )}
+
+  {/* Legacy Mode Testimonials (backward compatibility) */}
+  {useLegacyMode && (
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {propTestimonials.map(({ title: itemTitle, testimonial, name, job, image }) => (
+        <div class="flex h-auto intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter">
+          <div class="flex flex-col p-4 md:p-6 rounded-md shadow-xl dark:shadow-none dark:border dark:border-slate-600">
+            {itemTitle && <h2 class="text-lg font-medium leading-6 pb-4">{itemTitle}</h2>}
+            {testimonial && (
+              <blockquote class="flex-auto">
+                <p class="text-muted">" {testimonial} "</p>
+              </blockquote>
+            )}
+
+            <hr class="border-slate-200 dark:border-slate-600 my-4" />
+
+            <div class="flex items-center">
+              {image && (
+                <div class="h-10 w-10 rounded-full border border-slate-200 dark:border-slate-600">
+                  {typeof image === 'string' ? (
+                    <Fragment set:html={image} />
+                  ) : (
+                    <Image
+                      class="h-10 w-10 rounded-full border border-slate-200 dark:border-slate-600 min-w-full min-h-full"
+                      width={40}
+                      height={40}
+                      widths={[400, 768]}
+                      layout="fixed"
+                      {...(image as any)}
+                    />
+                  )}
+                </div>
+              )}
+
+              <div class="grow ml-3 rtl:ml-0 rtl:mr-3">
+                {name && <p class="text-base font-semibold">{name}</p>}
+                {job && <p class="text-xs text-muted">{job}</p>}
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  )}
+
+  {/* Empty State */}
+  {!useLegacyMode && displayTestimonials.length === 0 && (
+    <div class="text-center py-12">
+      <Icon name="tabler:message-off" class="w-16 h-16 mx-auto text-muted mb-4" />
+      <p class="text-muted text-lg">No testimonials available yet.</p>
+      <p class="text-muted text-sm mt-2">Be the first to share your experience!</p>
+    </div>
+  )}
+
+  {callToAction && (
+    <div class="flex justify-center mx-auto w-fit mt-8 md:mt-12 font-medium">
+      <Button {...callToAction} />
+    </div>
+  )}
+</WidgetWrapper>

@@ -1,0 +1,68 @@
+# GitHub Repository Showcase Data for Zuzu
+# This file contains curated GitHub repositories for portfolio display
+
+repositories:
+  - name: "agentic-llm-framework"
+    description: "A modular framework for building autonomous LLM agents with planning, memory, and tool-use capabilities. Supports multiple LLM backends including GPT-4, Claude, and open-source models."
+    url: "https://github.com/zuzu-ai/agentic-llm-framework"
+    technologies:
+      - "Python"
+      - "LangChain"
+      - "OpenAI"
+      - "FastAPI"
+    featured: true
+    stars: 1250
+
+  - name: "ros2-deep-rl-navigation"
+    description: "Deep reinforcement learning-based autonomous navigation for mobile robots using ROS2. Implements PPO and SAC algorithms with sim-to-real transfer."
+    url: "https://github.com/zuzu-ai/ros2-deep-rl-navigation"
+    technologies:
+      - "Python"
+      - "ROS2"
+      - "PyTorch"
+      - "Gazebo"
+    featured: true
+    stars: 680
+
+  - name: "multimodal-rag-system"
+    description: "Production-ready RAG system supporting text, images, and code. Features hybrid search, reranking, and streaming responses with citation tracking."
+    url: "https://github.com/zuzu-ai/multimodal-rag-system"
+    technologies:
+      - "Python"
+      - "LlamaIndex"
+      - "Qdrant"
+      - "FastAPI"
+    featured: true
+    stars: 420
+
+  - name: "robotic-manipulation-transformer"
+    description: "Transformer-based policy for robotic manipulation tasks. Trained on diverse demonstration data with strong generalization to novel objects."
+    url: "https://github.com/zuzu-ai/robotic-manipulation-transformer"
+    technologies:
+      - "Python"
+      - "PyTorch"
+      - "ROS2"
+      - "MuJoCo"
+    featured: true
+    stars: 310
+
+  - name: "llm-code-reviewer"
+    description: "Automated code review tool powered by LLMs. Analyzes PRs for bugs, security issues, and style violations with inline suggestions."
+    url: "https://github.com/zuzu-ai/llm-code-reviewer"
+    technologies:
+      - "TypeScript"
+      - "OpenAI"
+      - "GitHub Actions"
+    featured: false
+    stars: 185
+
+  - name: "vision-language-robotics"
+    description: "Vision-language models for robotic task understanding. Enables natural language instruction following for manipulation tasks."
+    url: "https://github.com/zuzu-ai/vision-language-robotics"
+    technologies:
+      - "Python"
+      - "PyTorch"
+      - "CLIP"
+      - "ROS2"
+    featured: false
+    stars: 145

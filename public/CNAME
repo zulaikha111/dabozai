@@ -1,0 +1,5 @@
+# Custom domain configuration for GitHub Pages
+# Replace 'yourdomain.com' with your actual custom domain
+# This file is automatically deployed to the root of your GitHub Pages site
+# Validates: Requirement 8.2, 8.4 - Custom domain with HTTPS enforcement
+dabozai.com

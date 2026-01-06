@@ -1,0 +1,339 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+
+import Hero from '~/components/widgets/Hero.astro';
+import Note from '~/components/widgets/Note.astro';
+import Features from '~/components/widgets/Features.astro';
+import Features2 from '~/components/widgets/Features2.astro';
+import Steps from '~/components/widgets/Steps.astro';
+import Content from '~/components/widgets/Content.astro';
+import FAQs from '~/components/widgets/FAQs.astro';
+import Stats from '~/components/widgets/Stats.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+
+const metadata = {
+  title: 'Zuzu — AI/ML Engineer & Robotics Specialist',
+  ignoreTitleTemplate: true,
+};
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero Widget ******************* -->
+
+  <Hero
+    actions={[
+      {
+        variant: 'primary',
+        text: 'View Portfolio',
+        href: '/portfolio',
+        icon: 'tabler:briefcase',
+      },
+      { text: 'Contact Me', href: '/contact', icon: 'tabler:mail' },
+    ]}
+    image={{ src: '~/assets/images/hero-image.png', alt: 'Zuzu - AI/ML Engineer' }}
+  >
+    <Fragment slot="title">
+      Hi, I'm <span class="text-accent dark:text-white">Zuzu</span><br />
+      <span class="text-3xl sm:text-4xl">AI/ML Engineer & Robotics Specialist</span>
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      <span class="hidden sm:inline">
+        Software Engineering graduate from the <span class="font-semibold">University of Melbourne</span>, 
+        specializing in Artificial Intelligence, Machine Learning, Large Language Models, and Robotics.
+      </span>
+      <span class="block mb-1 sm:hidden font-bold text-blue-600">University of Melbourne Graduate</span>
+      Building intelligent systems that bridge the gap between cutting-edge AI research and real-world applications.
+    </Fragment>
+  </Hero>
+
+  <!-- Note Widget ******************* -->
+
+  <Note title="Mission:" description="Advancing AI to create intelligent, autonomous systems that enhance human capabilities" />
+
+  <!-- Features Widget *************** -->
+
+  <Features
+    id="expertise"
+    tagline="Expertise"
+    title="Areas of Specialization"
+    subtitle="Combining deep technical knowledge with practical experience to deliver innovative AI solutions."
+    items={[
+      {
+        title: 'Large Language Models (LLMs)',
+        description:
+          'Expert in fine-tuning, prompt engineering, and deploying LLMs for various applications including chatbots, code generation, and knowledge retrieval systems.',
+        icon: 'tabler:message-chatbot',
+      },
+      {
+        title: 'Agentic AI Systems',
+        description:
+          'Building autonomous AI agents that can reason, plan, and execute complex tasks using frameworks like LangChain, AutoGPT, and custom agent architectures.',
+        icon: 'tabler:robot',
+      },
+      {
+        title: 'Machine Learning & Deep Learning',
+        description:
+          'Proficient in designing and training neural networks for computer vision, NLP, and reinforcement learning using PyTorch and TensorFlow.',
+        icon: 'tabler:brain',
+      },
+      {
+        title: 'Robotics & Autonomous Systems',
+        description:
+          'Experience with ROS/ROS2, motion planning, SLAM, and sensor fusion for building intelligent robotic systems.',
+        icon: 'tabler:drone',
+      },
+      {
+        title: 'MLOps & Model Deployment',
+        description:
+          'Skilled in deploying ML models at scale using Docker, Kubernetes, and cloud platforms (AWS, GCP) with proper monitoring and CI/CD pipelines.',
+        icon: 'tabler:cloud-computing',
+      },
+      {
+        title: 'Research & Innovation',
+        description:
+          'Published researcher with contributions to top-tier conferences, passionate about pushing the boundaries of AI capabilities.',
+        icon: 'tabler:bulb',
+      },
+    ]}
+  />
+
+  <!-- Content Widget **************** -->
+
+  <Content
+    isReversed
+    tagline="Background"
+    title="Education & Research Foundation"
+    items={[
+      {
+        title: 'University of Melbourne',
+        description:
+          'Bachelor of Science in Software Engineering with Honours, specializing in Artificial Intelligence and Machine Learning.',
+      },
+      {
+        title: 'Research Experience',
+        description:
+          'Conducted research at the Melbourne AI Lab, focusing on multi-agent systems and robotic manipulation.',
+      },
+      {
+        title: 'Industry Collaboration',
+        description:
+          'Collaborated with leading tech companies on real-world AI applications during internships and research projects.',
+      },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&auto=format&fit=crop&w=1965&q=80',
+      alt: 'AI and Machine Learning',
+    }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Building on Strong Foundations</h3>
+      Combining academic excellence with hands-on experience in cutting-edge AI technologies.
+    </Fragment>
+
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+    </Fragment>
+  </Content>
+
+  <!-- Content Widget **************** -->
+
+  <Content
+    isAfterContent
+    items={[
+      {
+        title: 'LLM-Powered Applications',
+        description: 'Developed production-ready applications using GPT-4, Claude, and open-source models like LLaMA and Mistral.',
+      },
+      {
+        title: 'Autonomous Robot Navigation',
+        description: 'Built navigation systems for mobile robots using deep reinforcement learning and classical planning algorithms.',
+      },
+      {
+        title: 'Multi-Agent Coordination',
+        description: 'Designed systems where multiple AI agents collaborate to solve complex tasks through communication and planning.',
+      },
+      {
+        title: 'Computer Vision Systems',
+        description: 'Implemented object detection, segmentation, and pose estimation for robotic manipulation tasks.',
+      },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+      alt: 'Robotics',
+    }}
+  >
+    <Fragment slot="content">Turning research into real-world impact.</Fragment>
+
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+    </Fragment>
+  </Content>
+
+  <!-- Steps Widget ****************** -->
+
+  <Steps
+    title="How I Can Help You"
+    items={[
+      {
+        title: 'Step 1: <span class="font-medium">Consultation</span>',
+        description:
+          'We discuss your AI/ML needs, whether it\'s building an LLM application, implementing computer vision, or developing robotic systems.',
+        icon: 'tabler:message-circle',
+      },
+      {
+        title: 'Step 2: <span class="font-medium">Solution Design</span>',
+        description:
+          'I design a tailored solution architecture, selecting the right models, frameworks, and infrastructure for your use case.',
+        icon: 'tabler:clipboard-list',
+      },
+      {
+        title: 'Step 3: <span class="font-medium">Development & Training</span>',
+        description:
+          'Building and training models, developing applications, and integrating AI capabilities into your existing systems.',
+        icon: 'tabler:code',
+      },
+      {
+        title: 'Deployed & Supported!',
+        icon: 'tabler:check',
+      },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+      alt: 'Collaboration',
+    }}
+  />
+
+  <!-- Features2 Widget ************** -->
+
+  <Features2
+    title="Technical Skills"
+    subtitle="Technologies and frameworks I work with daily"
+    tagline="Tech Stack"
+    items={[
+      {
+        title: 'Python & PyTorch',
+        description: 'Primary language for ML development with deep expertise in PyTorch ecosystem.',
+        icon: 'tabler:brand-python',
+      },
+      {
+        title: 'LangChain & LlamaIndex',
+        description: 'Building RAG systems, agents, and LLM-powered applications.',
+        icon: 'tabler:link',
+      },
+      {
+        title: 'TensorFlow & JAX',
+        description: 'Experience with multiple deep learning frameworks for diverse projects.',
+        icon: 'tabler:brand-google',
+      },
+      {
+        title: 'ROS/ROS2',
+        description: 'Robot Operating System for building robotic applications and simulations.',
+        icon: 'tabler:robot',
+      },
+      {
+        title: 'Docker & Kubernetes',
+        description: 'Containerization and orchestration for scalable ML deployments.',
+        icon: 'tabler:brand-docker',
+      },
+      {
+        title: 'AWS & GCP',
+        description: 'Cloud platforms for training, deploying, and serving ML models.',
+        icon: 'tabler:cloud',
+      },
+      {
+        title: 'Hugging Face',
+        description: 'Transformers library and model hub for NLP and multimodal AI.',
+        icon: 'tabler:mood-smile',
+      },
+      {
+        title: 'OpenCV & CUDA',
+        description: 'Computer vision and GPU-accelerated computing.',
+        icon: 'tabler:eye',
+      },
+      {
+        title: 'Git & MLflow',
+        description: 'Version control and experiment tracking for reproducible ML.',
+        icon: 'tabler:git-branch',
+      },
+    ]}
+  >
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+    </Fragment>
+  </Features2>
+
+  <!-- FAQs Widget ******************* -->
+
+  <FAQs
+    title="Frequently Asked Questions"
+    subtitle="Common questions about my services and expertise"
+    tagline="FAQs"
+    classes={{ container: 'max-w-6xl' }}
+    items={[
+      {
+        title: 'What types of AI projects do you work on?',
+        description:
+          'I specialize in LLM applications (chatbots, RAG systems, agents), computer vision, robotics, and general ML/DL projects. I can help with everything from proof-of-concept to production deployment.',
+      },
+      {
+        title: 'Do you offer training courses?',
+        description:
+          'Yes! I offer in-person and virtual training on AI/ML topics including LLM development, prompt engineering, PyTorch, and robotics programming. Check out my training catalog for available courses.',
+      },
+      {
+        title: 'Can you help with existing AI projects?',
+        description:
+          'Absolutely. I can help optimize existing models, improve inference speed, reduce costs, or add new capabilities to your current AI systems.',
+      },
+      {
+        title: 'What is your approach to AI safety and ethics?',
+        description:
+          'I prioritize responsible AI development, including bias testing, safety guardrails for LLMs, and transparent documentation of model limitations and potential risks.',
+      },
+      {
+        title: 'Do you work with open-source or proprietary models?',
+        description:
+          'Both! I have experience with OpenAI, Anthropic, and Google models, as well as open-source alternatives like LLaMA, Mistral, and Falcon. The choice depends on your requirements for cost, privacy, and performance.',
+      },
+      {
+        title: 'How can I get started?',
+        description:
+          'Simply reach out through the contact form or email me directly. We\'ll schedule a free consultation to discuss your project needs and how I can help.',
+      },
+    ]}
+  />
+
+  <!-- Stats Widget ****************** -->
+
+  <Stats
+    stats={[
+      { title: 'Research Papers', amount: '8' },
+      { title: 'Projects Completed', amount: '25+' },
+      { title: 'GitHub Stars', amount: '2.5K' },
+      { title: 'Training Hours', amount: '500+' },
+    ]}
+  />
+
+  <!-- CallToAction Widget *********** -->
+
+  <CallToAction
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Get in Touch',
+        href: '/contact',
+        icon: 'tabler:mail',
+      },
+    ]}
+  >
+    <Fragment slot="title">
+      Ready to Build Something<br class="block sm:hidden" /><span class="sm:whitespace-nowrap"> Amazing with AI?</span>
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      Let's discuss how AI can transform your business or bring your ideas to life.<br class="hidden md:inline" />
+      I'm always excited to work on challenging and innovative projects.
+    </Fragment>
+  </CallToAction>
+</Layout>

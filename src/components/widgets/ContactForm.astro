@@ -1,0 +1,304 @@
+---
+/**
+ * ContactForm Component
+ * 
+ * A contact form with Web3Forms integration for static site lead generation.
+ * Features:
+ * - Web3Forms API integration for email delivery
+ * - Honeypot field for spam prevention
+ * - hCaptcha integration for bot protection
+ * - URL parameter pre-population for product-specific inquiries
+ * - Client-side form handling without page refresh
+ * 
+ * Requirements: 3.1, 3.2, 3.4, 3.5
+ */
+import Headline from '~/components/ui/Headline.astro';
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import Button from '~/components/ui/Button.astro';
+
+export interface Props {
+  title?: string;
+  subtitle?: string;
+  tagline?: string;
+  description?: string;
+  id?: string;
+  isDark?: boolean;
+  classes?: Record<string, string>;
+  bg?: string;
+  web3formsAccessKey?: string;
+  hcaptchaSiteKey?: string;
+}
+
+const {
+  title = await Astro.slots.render('title'),
+  subtitle = await Astro.slots.render('subtitle'),
+  tagline = await Astro.slots.render('tagline'),
+  description = '',
+  id,
+  isDark = false,
+  classes = {},
+  bg = await Astro.slots.render('bg'),
+  web3formsAccessKey = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY || '',
+  hcaptchaSiteKey = import.meta.env.PUBLIC_HCAPTCHA_SITE_KEY || '',
+} = Astro.props;
+
+// Get URL parameters for pre-population
+const url = Astro.url;
+const productParam = url.searchParams.get('product') || '';
+const subjectParam = url.searchParams.get('subject') || '';
+
+// Build pre-populated subject line
+const prePopulatedSubject = subjectParam || (productParam ? `Training Inquiry: ${productParam}` : '');
+---
+
+<WidgetWrapper id={id} isDark={isDark} containerClass={`max-w-7xl mx-auto ${classes?.container ?? ''}`} bg={bg}>
+  <Headline title={title} subtitle={subtitle} tagline={tagline} />
+
+  <div class="flex flex-col max-w-xl mx-auto rounded-lg backdrop-blur border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900 shadow p-4 sm:p-6 lg:p-8 w-full">
+    <form 
+      id="contact-form" 
+      class="contact-form"
+      data-web3forms-key={web3formsAccessKey}
+      data-hcaptcha-key={hcaptchaSiteKey}
+    >
+      <!-- Web3Forms Access Key (hidden) -->
+      <input type="hidden" name="access_key" value={web3formsAccessKey} />
+      
+      <!-- Honeypot field for spam prevention (hidden from users) -->
+      <div class="hidden" aria-hidden="true">
+        <label for="botcheck">
+          Don't fill this out if you're human:
+          <input type="text" name="botcheck" id="botcheck" autocomplete="off" tabindex="-1" />
+        </label>
+      </div>
+
+      <!-- Name Field -->
+      <div class="mb-6">
+        <label for="name" class="block text-sm font-medium mb-2">
+          Name <span class="text-red-500">*</span>
+        </label>
+        <input
+          type="text"
+          name="name"
+          id="name"
+          required
+          autocomplete="name"
+          placeholder="Your name"
+          class="py-3 px-4 block w-full text-md rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        />
+      </div>
+
+      <!-- Email Field -->
+      <div class="mb-6">
+        <label for="email" class="block text-sm font-medium mb-2">
+          Email <span class="text-red-500">*</span>
+        </label>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          required
+          autocomplete="email"
+          placeholder="your.email@example.com"
+          class="py-3 px-4 block w-full text-md rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        />
+      </div>
+
+      <!-- Subject Field (pre-populated from URL params) -->
+      <div class="mb-6">
+        <label for="subject" class="block text-sm font-medium mb-2">
+          Subject <span class="text-red-500">*</span>
+        </label>
+        <input
+          type="text"
+          name="subject"
+          id="subject"
+          required
+          value={prePopulatedSubject}
+          placeholder="What is this regarding?"
+          class="py-3 px-4 block w-full text-md rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        />
+      </div>
+
+      <!-- Hidden product field for tracking -->
+      {productParam && (
+        <input type="hidden" name="product" value={productParam} />
+      )}
+
+      <!-- Message Field -->
+      <div class="mb-6">
+        <label for="message" class="block text-sm font-medium mb-2">
+          Message <span class="text-red-500">*</span>
+        </label>
+        <textarea
+          id="message"
+          name="message"
+          rows={5}
+          required
+          placeholder="Your message..."
+          class="py-3 px-4 block w-full text-md rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-y"
+        ></textarea>
+      </div>
+
+      <!-- hCaptcha Widget -->
+      {hcaptchaSiteKey && (
+        <div class="mb-6">
+          <div class="h-captcha" data-sitekey={hcaptchaSiteKey}></div>
+        </div>
+      )}
+
+      <!-- Privacy Disclaimer -->
+      <div class="mb-6 flex items-start">
+        <div class="flex mt-0.5">
+          <input
+            id="privacy"
+            name="privacy"
+            type="checkbox"
+            required
+            class="cursor-pointer mt-1 h-4 w-4 rounded border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900"
+          />
+        </div>
+        <div class="ml-3">
+          <label for="privacy" class="cursor-pointer select-none text-sm text-gray-600 dark:text-gray-400">
+            I agree to the collection and processing of my personal information for the purpose of responding to my inquiry.
+          </label>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="mt-6 grid">
+        <Button variant="primary" type="submit" id="submit-btn">
+          <span class="submit-text">Send Message</span>
+          <span class="loading-text hidden">Sending...</span>
+        </Button>
+      </div>
+
+      <!-- Status Messages -->
+      <div id="form-status" class="mt-4 text-center hidden">
+        <div id="success-message" class="hidden p-4 rounded-lg bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300">
+          <p class="font-medium">Thank you for your message!</p>
+          <p class="text-sm mt-1">We'll get back to you as soon as possible.</p>
+        </div>
+        <div id="error-message" class="hidden p-4 rounded-lg bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300">
+          <p class="font-medium">Something went wrong.</p>
+          <p class="text-sm mt-1">Please try again or contact us directly.</p>
+        </div>
+      </div>
+
+      {description && (
+        <div class="mt-4 text-center">
+          <p class="text-sm text-gray-600 dark:text-gray-400">{description}</p>
+        </div>
+      )}
+    </form>
+  </div>
+</WidgetWrapper>
+
+<!-- hCaptcha Script (loaded only if site key is provided) -->
+{hcaptchaSiteKey && (
+  <script is:inline src="https://js.hcaptcha.com/1/api.js" async defer></script>
+)}
+
+<script>
+  /**
+   * Contact Form Client-Side Handler
+   * Handles form submission via Web3Forms API without page refresh
+   * Requirements: 3.3
+   */
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('contact-form') as HTMLFormElement;
+    if (!form) return;
+
+    const submitBtn = document.getElementById('submit-btn');
+    const submitText = submitBtn?.querySelector('.submit-text');
+    const loadingText = submitBtn?.querySelector('.loading-text');
+    const formStatus = document.getElementById('form-status');
+    const successMessage = document.getElementById('success-message');
+    const errorMessage = document.getElementById('error-message');
+
+    // Form state management
+    type FormState = 'idle' | 'submitting' | 'success' | 'error';
+    
+    function setFormState(state: FormState) {
+      // Reset visibility
+      formStatus?.classList.add('hidden');
+      successMessage?.classList.add('hidden');
+      errorMessage?.classList.add('hidden');
+      submitText?.classList.remove('hidden');
+      loadingText?.classList.add('hidden');
+
+      switch (state) {
+        case 'submitting':
+          submitText?.classList.add('hidden');
+          loadingText?.classList.remove('hidden');
+          if (submitBtn) (submitBtn as HTMLButtonElement).disabled = true;
+          break;
+        case 'success':
+          formStatus?.classList.remove('hidden');
+          successMessage?.classList.remove('hidden');
+          if (submitBtn) (submitBtn as HTMLButtonElement).disabled = false;
+          form.reset();
+          break;
+        case 'error':
+          formStatus?.classList.remove('hidden');
+          errorMessage?.classList.remove('hidden');
+          if (submitBtn) (submitBtn as HTMLButtonElement).disabled = false;
+          break;
+        case 'idle':
+        default:
+          if (submitBtn) (submitBtn as HTMLButtonElement).disabled = false;
+          break;
+      }
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      // Check honeypot field (spam prevention)
+      const honeypot = form.querySelector('input[name="botcheck"]') as HTMLInputElement;
+      if (honeypot && honeypot.value) {
+        // Bot detected, silently fail
+        setFormState('success');
+        return;
+      }
+
+      setFormState('submitting');
+
+      const formData = new FormData(form);
+      
+      // Remove honeypot and privacy checkbox from submission
+      formData.delete('botcheck');
+      formData.delete('privacy');
+
+      try {
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: formData,
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          setFormState('success');
+        } else {
+          console.error('Form submission error:', result);
+          setFormState('error');
+        }
+      } catch (error) {
+        console.error('Form submission error:', error);
+        setFormState('error');
+      }
+    });
+  });
+</script>
+
+<style>
+  .hidden {
+    display: none !important;
+  }
+  
+  .h-captcha {
+    display: flex;
+    justify-content: center;
+  }
+</style>

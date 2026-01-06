@@ -1,0 +1,268 @@
+---
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import Content from '~/components/widgets/Content.astro';
+import Features2 from '~/components/widgets/Features2.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Testimonials from '~/components/widgets/Testimonials.astro';
+import Pricing from '~/components/widgets/Pricing.astro';
+import Layout from '~/layouts/PageLayout.astro';
+
+const metadata = {
+  title: 'Training & Services — Zuzu',
+  description: 'AI/ML training courses and consulting services. Learn LLM development, robotics programming, and machine learning from an expert.',
+};
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero Widget ******************* -->
+
+  <Hero
+    tagline="Training & Services"
+    title="Level Up Your AI/ML Skills"
+    subtitle="Hands-on training courses and consulting services in AI, Machine Learning, Large Language Models, and Robotics. From beginner workshops to advanced masterclasses."
+    actions={[{ variant: 'primary', text: 'View Courses', href: '#courses' }]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+      alt: 'AI Training Workshop',
+    }}
+  />
+
+  <!-- Training Courses ************** -->
+
+  <Features2
+    id="courses"
+    title="Training Courses"
+    subtitle="Comprehensive courses designed for different skill levels"
+    tagline="Learn AI/ML"
+    columns={3}
+    items={[
+      {
+        title: 'LLM Development Fundamentals',
+        description: 'Learn to build applications with GPT-4, Claude, and open-source models. Covers prompt engineering, fine-tuning, and deployment. 2-day workshop.',
+        icon: 'tabler:message-chatbot',
+      },
+      {
+        title: 'Building AI Agents',
+        description: 'Master autonomous AI agents using LangChain and custom architectures. Includes planning, memory, and tool-use patterns. 3-day intensive.',
+        icon: 'tabler:robot',
+      },
+      {
+        title: 'RAG Systems Masterclass',
+        description: 'Build production-ready Retrieval-Augmented Generation systems. Covers vector databases, hybrid search, and evaluation. 2-day workshop.',
+        icon: 'tabler:database',
+      },
+      {
+        title: 'PyTorch Deep Learning',
+        description: 'From basics to advanced architectures. CNNs, Transformers, and training best practices. Hands-on projects included. 5-day course.',
+        icon: 'tabler:brain',
+      },
+      {
+        title: 'ROS2 for AI Robotics',
+        description: 'Integrate AI with robotic systems using ROS2. Navigation, manipulation, and perception pipelines. 3-day workshop.',
+        icon: 'tabler:drone',
+      },
+      {
+        title: 'MLOps & Deployment',
+        description: 'Deploy ML models at scale. Docker, Kubernetes, CI/CD, monitoring, and cloud platforms. 2-day workshop.',
+        icon: 'tabler:cloud-computing',
+      },
+    ]}
+  >
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+    </Fragment>
+  </Features2>
+
+  <!-- Course Features **************** -->
+
+  <Content
+    isReversed
+    items={[
+      {
+        title: 'Hands-On Learning',
+        description: 'Every course includes practical exercises and real-world projects. You\'ll build working systems, not just watch slides.',
+        icon: 'tabler:code',
+      },
+      {
+        title: 'Small Class Sizes',
+        description: 'Maximum 15 participants per session ensures personalized attention and meaningful Q&A time.',
+        icon: 'tabler:users',
+      },
+      {
+        title: 'Industry-Relevant Content',
+        description: 'Curriculum based on real production systems and current best practices from my research and industry experience.',
+        icon: 'tabler:briefcase',
+      },
+      {
+        title: 'Post-Course Support',
+        description: '30 days of email support after each course. Get help implementing what you\'ve learned in your own projects.',
+        icon: 'tabler:headset',
+      },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+      alt: 'Training Workshop',
+    }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Why Train With Me?</h3>
+      Learn from someone who builds these systems professionally and publishes research at top conferences.
+    </Fragment>
+  </Content>
+
+  <!-- Consulting Services **************** -->
+
+  <Content
+    isAfterContent
+    items={[
+      {
+        title: 'AI Strategy Consulting',
+        description: 'Help your organization identify AI opportunities and develop a roadmap for implementation.',
+        icon: 'tabler:chart-line',
+      },
+      {
+        title: 'Custom AI Development',
+        description: 'Build bespoke AI solutions tailored to your specific business needs and technical requirements.',
+        icon: 'tabler:settings',
+      },
+      {
+        title: 'Model Optimization',
+        description: 'Improve existing AI systems for better performance, lower costs, and faster inference.',
+        icon: 'tabler:rocket',
+      },
+      {
+        title: 'Technical Due Diligence',
+        description: 'Evaluate AI capabilities and technical feasibility for investments or acquisitions.',
+        icon: 'tabler:search',
+      },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+      alt: 'Consulting Services',
+    }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Consulting Services</h3>
+      Beyond training, I offer consulting to help organizations implement AI effectively.
+    </Fragment>
+
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+    </Fragment>
+  </Content>
+
+  <!-- Pricing Widget ****************** -->
+
+  <Pricing
+    title="Training Packages"
+    subtitle="Flexible options for individuals and teams"
+    prices={[
+      {
+        title: 'Individual',
+        subtitle: 'Join public workshops',
+        price: 'From $499',
+        period: 'per course',
+        items: [
+          { description: 'Access to scheduled public workshops' },
+          { description: 'Course materials and code samples' },
+          { description: '30-day email support' },
+          { description: 'Certificate of completion' },
+        ],
+        callToAction: {
+          text: 'View Schedule',
+          href: '/contact',
+        },
+      },
+      {
+        title: 'Team',
+        subtitle: 'Private training for your team',
+        price: 'From $3,999',
+        period: 'per workshop',
+        items: [
+          { description: 'Private session for up to 15 people' },
+          { description: 'Customized content for your use cases' },
+          { description: 'On-site or virtual delivery' },
+          { description: '60-day team support' },
+        ],
+        callToAction: {
+          text: 'Get Quote',
+          href: '/contact',
+        },
+        hasRibbon: true,
+        ribbonTitle: 'Popular',
+      },
+      {
+        title: 'Enterprise',
+        subtitle: 'Comprehensive AI enablement',
+        price: 'Custom',
+        period: 'contact for pricing',
+        items: [
+          { description: 'Multi-course training programs' },
+          { description: 'Ongoing consulting support' },
+          { description: 'Custom curriculum development' },
+          { description: 'Dedicated account manager' },
+        ],
+        callToAction: {
+          text: 'Contact Sales',
+          href: '/contact',
+        },
+      },
+    ]}
+  />
+
+  <!-- Testimonials Widget *********** -->
+
+  <Testimonials
+    title="What Participants Say"
+    testimonials={[
+      {
+        testimonial: `Zuzu's LLM workshop was exactly what our team needed. The hands-on approach meant we could immediately apply what we learned to our product. Highly recommended!`,
+        name: 'Sarah Chen',
+        job: 'Engineering Manager, TechCorp',
+        image: {
+          src: 'https://images.unsplash.com/photo-1618835962148-cf177563c6c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=930&q=80',
+          alt: 'Sarah Chen',
+        },
+      },
+      {
+        testimonial: `The RAG masterclass gave me the confidence to build our company's knowledge base system. Zuzu explains complex concepts clearly and provides practical code examples.`,
+        name: 'Michael Roberts',
+        job: 'Senior Developer, DataFlow',
+        image: {
+          src: 'https://images.unsplash.com/photo-1545167622-3a6ac756afa4?ixlib=rb-4.0.3&auto=format&fit=crop&w=824&q=80',
+          alt: 'Michael Roberts',
+        },
+      },
+      {
+        testimonial: `As a robotics startup, finding someone who understands both AI and ROS2 is rare. Zuzu's training accelerated our development by months.`,
+        name: 'Emily Wang',
+        job: 'CTO, RoboStartup',
+        image: {
+          src: 'https://images.unsplash.com/photo-1561406636-b80293969660?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80',
+          alt: 'Emily Wang',
+        },
+      },
+    ]}
+  />
+
+  <!-- CallToAction Widget *********** -->
+
+  <CallToAction
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Book a Consultation',
+        href: '/contact',
+        icon: 'tabler:calendar',
+      },
+    ]}
+  >
+    <Fragment slot="title">
+      Ready to Get Started?
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      Let's discuss your training needs or project requirements. Free 30-minute consultation to understand how I can help.
+    </Fragment>
+  </CallToAction>
+</Layout>

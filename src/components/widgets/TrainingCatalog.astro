@@ -1,0 +1,161 @@
+---
+/**
+ * Training Catalog Component
+ * Displays grid of training products with basic information and average ratings
+ * Requirements: 2.1
+ */
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import Headline from '~/components/ui/Headline.astro';
+import Button from '~/components/ui/Button.astro';
+import { Icon } from 'astro-icon/components';
+import type { Widget } from '~/types';
+import { getCollection } from 'astro:content';
+import { loadTestimonialsData, calculateAverageRating } from '~/utils/dataLoader';
+
+export interface Props extends Widget {
+  title?: string;
+  subtitle?: string;
+  tagline?: string;
+  showFeaturedOnly?: boolean;
+}
+
+const {
+  title = 'Training Courses',
+  subtitle = 'Professional development courses designed to enhance your skills',
+  tagline,
+  showFeaturedOnly = false,
+  id,
+  isDark = false,
+  classes = {},
+  bg = await Astro.slots.render('bg'),
+} = Astro.props;
+
+// Load products from content collection
+const allProducts = await getCollection('products');
+
+// Filter to featured only if requested
+const products = showFeaturedOnly 
+  ? allProducts.filter(product => product.data.featured)
+  : allProducts;
+
+// Load testimonials for rating calculation
+const testimonialsResult = loadTestimonialsData();
+const testimonials = testimonialsResult.success && testimonialsResult.data 
+  ? testimonialsResult.data.testimonials 
+  : [];
+
+// Calculate ratings for each product
+const productsWithRatings = products.map(product => {
+  const avgRating = calculateAverageRating(testimonials, product.id);
+  const testimonialCount = testimonials.filter(t => t.courseSlug === product.id).length;
+  return {
+    ...product,
+    averageRating: avgRating,
+    testimonialCount,
+  };
+});
+
+// Helper function to render star rating
+function renderStars(rating: number | null): string {
+  if (rating === null) return '';
+  const fullStars = Math.floor(rating);
+  const hasHalfStar = rating % 1 >= 0.5;
+  const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+  return '★'.repeat(fullStars) + (hasHalfStar ? '½' : '') + '☆'.repeat(emptyStars);
+}
+---
+
+<WidgetWrapper id={id} isDark={isDark} containerClass={`max-w-6xl ${classes?.container ?? ''}`} bg={bg}>
+  <Headline
+    title={title}
+    subtitle={subtitle}
+    tagline={tagline}
+    classes={{
+      container: 'text-center mb-12',
+      title: 'text-3xl md:text-4xl font-bold',
+      subtitle: 'text-muted mt-4',
+    }}
+  />
+
+  {productsWithRatings.length > 0 ? (
+    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      {productsWithRatings.map((product) => (
+        <article class="group relative flex flex-col bg-white dark:bg-slate-900 rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+          {/* Product Image */}
+          <div class="relative h-48 overflow-hidden">
+            <img
+              src={product.data.image}
+              alt={product.data.title}
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              loading="lazy"
+            />
+            {product.data.featured && (
+              <span class="absolute top-3 right-3 bg-primary text-white text-xs font-semibold px-3 py-1 rounded-full">
+                Featured
+              </span>
+            )}
+            <span class="absolute top-3 left-3 bg-slate-800/80 text-white text-xs font-medium px-3 py-1 rounded-full">
+              {product.data.category}
+            </span>
+          </div>
+
+          {/* Product Content */}
+          <div class="flex flex-col flex-grow p-6">
+            <h3 class="text-xl font-bold mb-2 group-hover:text-primary transition-colors">
+              {product.data.title}
+            </h3>
+            
+            <p class="text-muted text-sm mb-4 line-clamp-2">
+              {product.data.description}
+            </p>
+
+            {/* Rating Display */}
+            {product.averageRating !== null && (
+              <div class="flex items-center gap-2 mb-4">
+                <span class="text-yellow-500 text-sm" aria-label={`Rating: ${product.averageRating} out of 5 stars`}>
+                  {renderStars(product.averageRating)}
+                </span>
+                <span class="text-sm text-muted">
+                  {product.averageRating.toFixed(1)} ({product.testimonialCount} {product.testimonialCount === 1 ? 'review' : 'reviews'})
+                </span>
+              </div>
+            )}
+
+            {/* Product Meta */}
+            <div class="flex flex-wrap gap-4 text-sm text-muted mb-4">
+              <span class="flex items-center gap-1">
+                <Icon name="tabler:clock" class="w-4 h-4" />
+                {product.data.duration}
+              </span>
+              {product.data.price && (
+                <span class="flex items-center gap-1">
+                  <Icon name="tabler:currency-dollar" class="w-4 h-4" />
+                  ${product.data.price.toLocaleString()}
+                </span>
+              )}
+            </div>
+
+            {/* Spacer to push button to bottom */}
+            <div class="flex-grow"></div>
+
+            {/* Action Button */}
+            <Button
+              variant="primary"
+              href={`/products/${product.id}`}
+              class="w-full justify-center"
+            >
+              View Details
+              <Icon name="tabler:arrow-right" class="w-4 h-4 ml-2" />
+            </Button>
+          </div>
+        </article>
+      ))}
+    </div>
+  ) : (
+    <div class="text-center py-12">
+      <Icon name="tabler:package-off" class="w-16 h-16 mx-auto text-muted mb-4" />
+      <p class="text-muted text-lg">No training courses available at the moment.</p>
+      <p class="text-muted text-sm mt-2">Please check back later for upcoming courses.</p>
+    </div>
+  )}
+</WidgetWrapper>

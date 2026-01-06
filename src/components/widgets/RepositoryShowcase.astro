@@ -1,0 +1,185 @@
+---
+/**
+ * Repository Showcase Component
+ * Displays GitHub repositories and research publications
+ * Requirements: 9.1, 9.3, 9.4
+ */
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import Headline from '~/components/ui/Headline.astro';
+import { Icon } from 'astro-icon/components';
+import type { Widget } from '~/types';
+import type { Repository, Publication } from '~/utils/schemas';
+
+export interface Props extends Widget {
+  repositories?: Repository[];
+  publications?: Publication[];
+  showRepositories?: boolean;
+  showPublications?: boolean;
+}
+
+const {
+  repositories = [],
+  publications = [],
+  showRepositories = true,
+  showPublications = true,
+  id,
+  isDark = false,
+  classes = {},
+  bg = await Astro.slots.render('bg'),
+} = Astro.props;
+
+// Sort repositories: featured first, then by stars
+const sortedRepositories = [...repositories].sort((a, b) => {
+  if (a.featured !== b.featured) return b.featured ? 1 : -1;
+  return (b.stars || 0) - (a.stars || 0);
+});
+
+// Sort publications by year (newest first)
+const sortedPublications = [...publications].sort((a, b) => b.year - a.year);
+---
+
+<WidgetWrapper id={id} isDark={isDark} containerClass={`max-w-6xl ${classes?.container ?? ''}`} bg={bg}>
+  <!-- Repositories Section -->
+  {showRepositories && sortedRepositories.length > 0 && (
+    <div class="mb-16">
+      <Headline
+        title="GitHub Repositories"
+        subtitle="Open source projects and contributions"
+        classes={{
+          container: 'text-center mb-8',
+          title: 'text-3xl font-bold',
+        }}
+      />
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {sortedRepositories.map((repo) => (
+          <a
+            href={repo.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group block p-6 bg-white dark:bg-slate-800 rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-200 dark:border-slate-700"
+          >
+            <div class="flex items-start justify-between mb-3">
+              <div class="flex items-center gap-2">
+                <Icon name="tabler:brand-github" class="w-5 h-5 text-gray-600 dark:text-gray-400" />
+                <h3 class="font-semibold text-lg group-hover:text-primary transition-colors">
+                  {repo.name}
+                </h3>
+              </div>
+              {repo.featured && (
+                <span class="px-2 py-1 text-xs font-medium bg-primary/10 text-primary rounded">
+                  Featured
+                </span>
+              )}
+            </div>
+            
+            <p class="text-muted text-sm mb-4 line-clamp-2">
+              {repo.description}
+            </p>
+            
+            <div class="flex flex-wrap gap-2 mb-4">
+              {repo.technologies.map((tech) => (
+                <span class="px-2 py-1 text-xs bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-gray-300 rounded">
+                  {tech}
+                </span>
+              ))}
+            </div>
+            
+            {repo.stars !== undefined && repo.stars > 0 && (
+              <div class="flex items-center gap-1 text-sm text-muted">
+                <Icon name="tabler:star" class="w-4 h-4" />
+                <span>{repo.stars}</span>
+              </div>
+            )}
+          </a>
+        ))}
+      </div>
+    </div>
+  )}
+
+  <!-- Publications Section -->
+  {showPublications && sortedPublications.length > 0 && (
+    <div>
+      <Headline
+        title="Research Publications"
+        subtitle="Academic papers and technical publications"
+        classes={{
+          container: 'text-center mb-8',
+          title: 'text-3xl font-bold',
+        }}
+      />
+      <div class="space-y-6">
+        {sortedPublications.map((pub) => (
+          <div class="p-6 bg-white dark:bg-slate-800 rounded-lg shadow-md border border-gray-200 dark:border-slate-700">
+            <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+              <div class="flex-1">
+                <h3 class="font-semibold text-lg mb-2">
+                  {pub.url ? (
+                    <a 
+                      href={pub.url} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      class="hover:text-primary transition-colors"
+                    >
+                      {pub.title}
+                    </a>
+                  ) : (
+                    pub.title
+                  )}
+                </h3>
+                
+                <p class="text-sm text-muted mb-2">
+                  {pub.authors.join(', ')}
+                </p>
+                
+                <p class="text-sm">
+                  <span class="font-medium">{pub.venue}</span>
+                  <span class="text-muted"> • {pub.year}</span>
+                </p>
+                
+                {pub.abstract && (
+                  <p class="mt-3 text-sm text-muted line-clamp-3">
+                    {pub.abstract}
+                  </p>
+                )}
+              </div>
+              
+              <div class="flex gap-2 md:flex-col">
+                {pub.url && (
+                  <a
+                    href={pub.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-1 px-3 py-2 text-sm bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 rounded transition-colors"
+                  >
+                    <Icon name="tabler:external-link" class="w-4 h-4" />
+                    View
+                  </a>
+                )}
+                {pub.downloadUrl && (
+                  <a
+                    href={pub.downloadUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-1 px-3 py-2 text-sm bg-primary/10 text-primary hover:bg-primary/20 rounded transition-colors"
+                  >
+                    <Icon name="tabler:download" class="w-4 h-4" />
+                    PDF
+                  </a>
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+
+  <!-- Empty State -->
+  {(!showRepositories || sortedRepositories.length === 0) && 
+   (!showPublications || sortedPublications.length === 0) && (
+    <div class="text-center py-12">
+      <Icon name="tabler:folder-off" class="w-12 h-12 mx-auto text-muted mb-4" />
+      <p class="text-muted">No repositories or publications to display.</p>
+    </div>
+  )}
+</WidgetWrapper>

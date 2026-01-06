@@ -1,0 +1,269 @@
+---
+import Features2 from '~/components/widgets/Features2.astro';
+import Features3 from '~/components/widgets/Features3.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Stats from '~/components/widgets/Stats.astro';
+import Steps2 from '~/components/widgets/Steps2.astro';
+import Content from '~/components/widgets/Content.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import Layout from '~/layouts/PageLayout.astro';
+
+const metadata = {
+  title: 'About Zuzu — CV & Background',
+  description: 'Learn about Zuzu\'s background, experience, certifications, and expertise in AI/ML and Robotics.',
+};
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero Widget ******************* -->
+
+  <Hero
+    tagline="About Me"
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Download CV',
+        href: '/cv-zuzu.pdf',
+        icon: 'tabler:download',
+        download: 'Zuzu-CV.pdf',
+      },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+      alt: 'AI and Machine Learning',
+    }}
+  >
+    <Fragment slot="title">
+      Hi, I'm <span class="text-accent dark:text-white">Zuzu</span><br />
+      <span class="text-3xl sm:text-4xl">AI/ML Engineer & Robotics Specialist</span>
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      Software Engineering graduate from the University of Melbourne with Honours, specializing in 
+      Artificial Intelligence, Machine Learning, Large Language Models, and Robotics. Passionate about 
+      building intelligent autonomous systems that bridge cutting-edge research and real-world applications.
+    </Fragment>
+  </Hero>
+
+  <!-- Stats Widget ****************** -->
+
+  <Stats
+    title="Career Highlights"
+    stats={[
+      { title: 'Research Papers', amount: '8' },
+      { title: 'Projects Completed', amount: '25+' },
+      { title: 'GitHub Stars', amount: '2.5K' },
+      { title: 'Training Hours', amount: '500+' },
+    ]}
+  />
+
+  <!-- Experience Section ************** -->
+
+  <Steps2
+    title="Professional Experience"
+    subtitle="Building AI systems from research to production"
+    items={[
+      {
+        title: 'Research Engineer — Melbourne AI Lab',
+        description: 'Leading research on multi-agent LLM systems and robotic manipulation. Published 2 papers at NeurIPS and ICRA. Built production LLM pipeline serving 10K+ daily requests. (2024 - Present)',
+        icon: 'tabler:building-skyscraper',
+      },
+      {
+        title: 'Robotics Software Engineer — RoboTech Solutions',
+        description: 'Developed autonomous navigation and manipulation systems. Implemented SLAM-based navigation reducing localization error by 35%. Designed deep RL policy with 95% success rate. (2023)',
+        icon: 'tabler:robot',
+      },
+      {
+        title: 'ML Engineer Intern — AI Startup Incubator',
+        description: 'Built and deployed ML models for startup clients. Developed computer vision system with 98% accuracy. Created RAG-based chatbot reducing response time by 60%. (2022)',
+        icon: 'tabler:rocket',
+      },
+    ]}
+  />
+
+  <!-- Education Section ************** -->
+
+  <Content
+    isReversed
+    tagline="Education"
+    title="Academic Background"
+    items={[
+      {
+        title: 'University of Melbourne',
+        description: 'Bachelor of Science in Software Engineering with Honours, specializing in Artificial Intelligence and Machine Learning.',
+      },
+      {
+        title: 'Research Focus',
+        description: 'Multi-agent systems, robotic manipulation, large language models, and reinforcement learning.',
+      },
+      {
+        title: 'Thesis',
+        description: 'Hierarchical Planning for Multi-Agent LLM Coordination in Complex Task Environments.',
+      },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+      alt: 'University Education',
+    }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Strong Academic Foundation</h3>
+      Combining rigorous academic training with hands-on research experience.
+    </Fragment>
+
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+    </Fragment>
+  </Content>
+
+  <!-- Certifications ************** -->
+
+  <Features3
+    title="Certifications"
+    subtitle="Industry-recognized credentials validating expertise"
+    columns={2}
+    items={[
+      {
+        title: 'AWS Certified Machine Learning - Specialty',
+        description: 'Amazon Web Services (2024) — Expertise in building, training, and deploying ML models on AWS.',
+        icon: 'tabler:cloud',
+      },
+      {
+        title: 'TensorFlow Developer Certificate',
+        description: 'Google (2023) — Proficiency in building and training neural networks with TensorFlow.',
+        icon: 'tabler:brand-google',
+      },
+      {
+        title: 'Deep Learning Specialization',
+        description: 'DeepLearning.AI (2023) — Comprehensive deep learning training from Andrew Ng.',
+        icon: 'tabler:brain',
+      },
+      {
+        title: 'ROS2 Developer Certificate',
+        description: 'The Construct (2023) — Expertise in Robot Operating System 2 development.',
+        icon: 'tabler:robot',
+      },
+    ]}
+  />
+
+  <!-- Skills Section ************** -->
+
+  <Features2
+    title="Technical Skills"
+    subtitle="Technologies and frameworks I work with"
+    tagline="Expertise"
+    columns={3}
+    items={[
+      {
+        title: 'AI/ML Frameworks',
+        description: 'PyTorch, TensorFlow, JAX, Hugging Face Transformers, scikit-learn, OpenCV',
+        icon: 'tabler:brain',
+      },
+      {
+        title: 'LLM & Agents',
+        description: 'LangChain, LlamaIndex, OpenAI API, Anthropic Claude, Prompt Engineering, RAG Systems',
+        icon: 'tabler:message-chatbot',
+      },
+      {
+        title: 'Robotics',
+        description: 'ROS/ROS2, Gazebo, MoveIt, SLAM, Motion Planning, Sensor Fusion',
+        icon: 'tabler:drone',
+      },
+      {
+        title: 'Programming',
+        description: 'Python, C++, TypeScript, CUDA, Rust',
+        icon: 'tabler:code',
+      },
+      {
+        title: 'MLOps & Cloud',
+        description: 'Docker, Kubernetes, AWS SageMaker, GCP Vertex AI, MLflow, Weights & Biases',
+        icon: 'tabler:cloud-computing',
+      },
+      {
+        title: 'Soft Skills',
+        description: 'Technical Writing, Research Presentation, Team Leadership, Mentoring',
+        icon: 'tabler:users',
+      },
+    ]}
+  >
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+    </Fragment>
+  </Features2>
+
+  <!-- Values Section ************** -->
+
+  <Steps2
+    title="My Values"
+    subtitle="Principles that guide my work"
+    isReversed={true}
+    items={[
+      {
+        title: 'Research-Driven Innovation',
+        description: 'Staying at the forefront of AI research while building practical, production-ready solutions.',
+        icon: 'tabler:bulb',
+      },
+      {
+        title: 'Responsible AI Development',
+        description: 'Prioritizing safety, fairness, and transparency in all AI systems I build.',
+        icon: 'tabler:shield-check',
+      },
+      {
+        title: 'Knowledge Sharing',
+        description: 'Contributing to open-source projects and sharing knowledge through publications and training.',
+        icon: 'tabler:share',
+      },
+    ]}
+  />
+
+  <!-- Contact Section ************** -->
+
+  <Features2
+    title="Get in Touch"
+    tagline="Contact"
+    columns={3}
+    items={[
+      {
+        title: 'Email',
+        description: 'zuzu@example.com',
+        icon: 'tabler:mail',
+      },
+      {
+        title: 'Location',
+        description: 'Melbourne, Australia',
+        icon: 'tabler:map-pin',
+      },
+      {
+        title: 'LinkedIn',
+        description: 'linkedin.com/in/zuzu-ai',
+        icon: 'tabler:brand-linkedin',
+      },
+    ]}
+  />
+
+  <!-- CallToAction Widget *********** -->
+
+  <CallToAction
+    actions={[
+      {
+        variant: 'primary',
+        text: 'View Portfolio',
+        href: '/portfolio',
+        icon: 'tabler:briefcase',
+      },
+      {
+        text: 'Contact Me',
+        href: '/contact',
+        icon: 'tabler:mail',
+      },
+    ]}
+  >
+    <Fragment slot="title">
+      Ready to Work Together?
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      Whether you need AI consulting, custom development, or training, I'm here to help bring your ideas to life.
+    </Fragment>
+  </CallToAction>
+</Layout>
