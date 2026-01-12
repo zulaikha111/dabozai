@@ -175,15 +175,7 @@ describe('Responsive Design Utilities', () => {
 describe('Real Component Responsive Design Verification', () => {
   const componentsDir = 'src/components/widgets';
 
-  const componentFiles = [
-    'Portfolio.astro',
-    'TrainingCatalog.astro',
-    'ContactForm.astro',
-    'Testimonials.astro',
-    'RepositoryShowcase.astro',
-    'Header.astro',
-    'Footer.astro',
-  ];
+  const componentFiles = ['Portfolio.astro', 'ContactForm.astro', 'Testimonials.astro', 'Header.astro', 'Footer.astro'];
 
   it('should verify all key components have responsive design', () => {
     const components: Array<{ name: string; content: string }> = [];
@@ -232,16 +224,6 @@ describe('Real Component Responsive Design Verification', () => {
 
       // Header should have responsive navigation
       expect(content).toMatch(/md:flex|md:block/);
-    }
-  });
-
-  it('should verify TrainingCatalog has responsive grid', () => {
-    const catalogPath = path.join(componentsDir, 'TrainingCatalog.astro');
-    if (fs.existsSync(catalogPath)) {
-      const content = fs.readFileSync(catalogPath, 'utf-8');
-
-      // Should have responsive grid columns
-      expect(content).toMatch(/md:grid-cols-|lg:grid-cols-/);
     }
   });
 

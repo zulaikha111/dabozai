@@ -2,12 +2,10 @@
 import Layout from '~/layouts/PageLayout.astro';
 
 import Hero from '~/components/widgets/Hero.astro';
-import Note from '~/components/widgets/Note.astro';
 import Features from '~/components/widgets/Features.astro';
 import Features2 from '~/components/widgets/Features2.astro';
 import Steps from '~/components/widgets/Steps.astro';
 import Content from '~/components/widgets/Content.astro';
-import FAQs from '~/components/widgets/FAQs.astro';
 import Stats from '~/components/widgets/Stats.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
 
@@ -30,7 +28,6 @@ const metadata = {
       },
       { text: 'Contact Me', href: '/contact', icon: 'tabler:mail' },
     ]}
-    image={{ src: '~/assets/images/hero-image.png', alt: 'Zuzu - AI/ML Engineer' }}
   >
     <Fragment slot="title">
       Hi, I'm <span class="text-accent dark:text-white">Zuzu</span><br />
@@ -46,13 +43,6 @@ const metadata = {
       Building intelligent systems that bridge the gap between cutting-edge AI research and real-world applications.
     </Fragment>
   </Hero>
-
-  <!-- Note Widget ******************* -->
-
-  <Note
-    title="Mission:"
-    description="Advancing AI to create intelligent, autonomous systems that enhance human capabilities"
-  />
 
   <!-- Features Widget *************** -->
 
@@ -268,47 +258,6 @@ const metadata = {
       <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
     </Fragment>
   </Features2>
-
-  <!-- FAQs Widget ******************* -->
-
-  <FAQs
-    title="Frequently Asked Questions"
-    subtitle="Common questions about my services and expertise"
-    tagline="FAQs"
-    classes={{ container: 'max-w-6xl' }}
-    items={[
-      {
-        title: 'What types of AI projects do you work on?',
-        description:
-          'I specialize in LLM applications (chatbots, RAG systems, agents), computer vision, robotics, and general ML/DL projects. I can help with everything from proof-of-concept to production deployment.',
-      },
-      {
-        title: 'Do you offer training courses?',
-        description:
-          'Yes! I offer in-person and virtual training on AI/ML topics including LLM development, prompt engineering, PyTorch, and robotics programming. Check out my training catalog for available courses.',
-      },
-      {
-        title: 'Can you help with existing AI projects?',
-        description:
-          'Absolutely. I can help optimize existing models, improve inference speed, reduce costs, or add new capabilities to your current AI systems.',
-      },
-      {
-        title: 'What is your approach to AI safety and ethics?',
-        description:
-          'I prioritize responsible AI development, including bias testing, safety guardrails for LLMs, and transparent documentation of model limitations and potential risks.',
-      },
-      {
-        title: 'Do you work with open-source or proprietary models?',
-        description:
-          'Both! I have experience with OpenAI, Anthropic, and Google models, as well as open-source alternatives like LLaMA, Mistral, and Falcon. The choice depends on your requirements for cost, privacy, and performance.',
-      },
-      {
-        title: 'How can I get started?',
-        description:
-          "Simply reach out through the contact form or email me directly. We'll schedule a free consultation to discuss your project needs and how I can help.",
-      },
-    ]}
-  />
 
   <!-- Stats Widget ****************** -->
 

@@ -4,7 +4,6 @@ import Features3 from '~/components/widgets/Features3.astro';
 import Hero from '~/components/widgets/Hero.astro';
 import Stats from '~/components/widgets/Stats.astro';
 import Steps2 from '~/components/widgets/Steps2.astro';
-import Content from '~/components/widgets/Content.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
 import Layout from '~/layouts/PageLayout.astro';
 
@@ -86,39 +85,34 @@ const metadata = {
 
   <!-- Education Section ************** -->
 
-  <Content
-    isReversed
-    tagline="Education"
+  <Features2
     title="Academic Background"
+    subtitle="Strong Academic Foundation — Combining rigorous academic training with hands-on research experience."
+    tagline="Education"
+    columns={3}
     items={[
       {
         title: 'University of Melbourne',
         description:
           'Bachelor of Science in Software Engineering with Honours, specializing in Artificial Intelligence and Machine Learning.',
+        icon: 'tabler:school',
       },
       {
         title: 'Research Focus',
         description: 'Multi-agent systems, robotic manipulation, large language models, and reinforcement learning.',
+        icon: 'tabler:flask',
       },
       {
         title: 'Thesis',
         description: 'Hierarchical Planning for Multi-Agent LLM Coordination in Complex Task Environments.',
+        icon: 'tabler:file-text',
       },
     ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-      alt: 'University Education',
-    }}
   >
-    <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Strong Academic Foundation</h3>
-      Combining rigorous academic training with hands-on research experience.
-    </Fragment>
-
     <Fragment slot="bg">
       <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
     </Fragment>
-  </Content>
+  </Features2>
 
   <!-- Certifications ************** -->
 
@@ -128,14 +122,16 @@ const metadata = {
     columns={2}
     items={[
       {
-        title: 'AWS Certified Machine Learning - Specialty',
-        description: 'Amazon Web Services (2024) — Expertise in building, training, and deploying ML models on AWS.',
+        title: 'AWS Certified Generative AI Developer Professional',
+        description:
+          'Advanced skills in building and deploying production-ready AI solutions using AWS services like Amazon Bedrock.',
         icon: 'tabler:cloud',
       },
       {
-        title: 'TensorFlow Developer Certificate',
-        description: 'Google (2023) — Proficiency in building and training neural networks with TensorFlow.',
-        icon: 'tabler:brand-google',
+        title: 'AWS Certified AI Practitioner',
+        description:
+          'Knowledge of artificial intelligence (AI), machine learning (ML), and generative AI concepts and use cases',
+        icon: 'tabler:cloud',
       },
       {
         title: 'Deep Learning Specialization',

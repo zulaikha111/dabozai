@@ -90,3 +90,105 @@
 .dd *:first-child {
   margin-top: 0;
 }
+
+/* Enhanced Course Content Styling */
+.course-content-enhanced {
+  @apply space-y-6;
+}
+
+.course-content-enhanced h2 {
+  @apply text-2xl font-bold mt-12 mb-6 pb-3 border-b-2 border-slate-200 dark:border-slate-700 relative pl-4;
+}
+
+.course-content-enhanced h2::before {
+  content: '';
+  @apply absolute left-0 top-1 w-1 h-8 bg-primary rounded-full;
+}
+
+/* Day sections (Day 1, Day 2, Day 3 main headings with full descriptions) - Blue/Primary styling */
+.course-content-enhanced h3[id^='day-'][id*='--'] {
+  @apply text-xl font-semibold mt-10 mb-4 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border-l-4 border-blue-500 text-blue-800 dark:text-blue-300;
+}
+
+/* Sub-sections (Hardware Minimums, Supported OS, Days 1-2, Permissions, etc.) - Amber/Gold styling */
+.course-content-enhanced h3:not([id^='day-'][id*='--']) {
+  @apply text-lg font-semibold mt-8 mb-4 py-3 px-4 bg-amber-50 dark:bg-amber-900/20 rounded-lg border-l-4 border-amber-500 text-amber-800 dark:text-amber-300;
+}
+
+.course-content-enhanced h4 {
+  @apply text-base font-semibold mt-6 mb-3 py-2 px-3 bg-teal-50 dark:bg-teal-900/20 rounded border-l-4 border-teal-500 text-teal-800 dark:text-teal-300;
+}
+
+.course-content-enhanced p {
+  @apply text-base leading-relaxed mb-4 text-slate-600 dark:text-slate-400;
+}
+
+.course-content-enhanced strong {
+  @apply text-slate-800 dark:text-slate-200 font-semibold;
+}
+
+.course-content-enhanced em {
+  @apply text-primary font-medium;
+}
+
+.course-content-enhanced ul {
+  @apply space-y-3 my-6 pl-0;
+}
+
+.course-content-enhanced ul > li {
+  @apply flex items-start gap-3 p-4 bg-slate-50 dark:bg-slate-800 rounded-lg border-l-4 border-primary list-none;
+}
+
+.course-content-enhanced ul > li::marker {
+  content: none;
+}
+
+.course-content-enhanced ul > li::before {
+  content: '✓';
+  @apply text-primary font-bold flex-shrink-0 text-lg;
+}
+
+/* Nested lists */
+.course-content-enhanced ul ul {
+  @apply mt-3 space-y-2 w-full;
+}
+
+.course-content-enhanced ul ul > li {
+  @apply p-2 pl-4 bg-white dark:bg-slate-700 rounded border-l-2 border-slate-300 dark:border-slate-600 list-none;
+}
+
+.course-content-enhanced ul ul > li::before {
+  content: '•';
+  @apply text-primary mr-2;
+}
+
+.course-content-enhanced hr {
+  @apply my-12 border-0 h-px bg-gradient-to-r from-transparent via-slate-300 dark:via-slate-600 to-transparent;
+}
+
+/* Blockquotes for emphasis */
+.course-content-enhanced blockquote {
+  @apply border-l-4 border-primary bg-slate-50 dark:bg-slate-800 p-6 rounded-r-lg my-6 italic;
+}
+
+/* Code blocks */
+.course-content-enhanced code {
+  @apply bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded text-sm font-mono;
+}
+
+/* Tables */
+.course-content-enhanced table {
+  @apply w-full my-6 border-collapse;
+}
+
+.course-content-enhanced th {
+  @apply bg-slate-100 dark:bg-slate-800 p-3 text-left font-semibold border-b-2 border-slate-300 dark:border-slate-600;
+}
+
+.course-content-enhanced td {
+  @apply p-3 border-b border-slate-200 dark:border-slate-700;
+}
+
+.course-content-enhanced tr:hover td {
+  @apply bg-slate-50 dark:bg-slate-800;
+}

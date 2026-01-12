@@ -4,7 +4,6 @@ import Content from '~/components/widgets/Content.astro';
 import Features2 from '~/components/widgets/Features2.astro';
 import Hero from '~/components/widgets/Hero.astro';
 import Testimonials from '~/components/widgets/Testimonials.astro';
-import Pricing from '~/components/widgets/Pricing.astro';
 import Layout from '~/layouts/PageLayout.astro';
 
 const metadata = {
@@ -38,40 +37,37 @@ const metadata = {
     columns={3}
     items={[
       {
-        title: 'LLM Development Fundamentals',
+        title: 'AI Systems: From Prompts to Agents',
         description:
-          'Learn to build applications with GPT-4, Claude, and open-source models. Covers prompt engineering, fine-tuning, and deployment. 2-day workshop.',
+          'Aa hands-on, three-day training that teaches you how modern AI systems actually work—and how to design them properly. You’ll move beyond prompts and chatbots to understand AI as a system: with structure, memory, tools, and clear boundaries. The course starts from first principles and gradually builds toward autonomous agent-based systems, without assuming a technical background for the first two days. By the end, you will understand how to design reliable AI workflows, reason about agent behavior, and confidently move from ideas to working AI systems.',
         icon: 'tabler:message-chatbot',
+        callToAction: {
+          text: 'View Course',
+          href: '/products/ai-systems-from-prompts-to-agents',
+          variant: 'primary',
+        },
       },
       {
         title: 'Building AI Agents',
         description:
           'Master autonomous AI agents using LangChain and custom architectures. Includes planning, memory, and tool-use patterns. 3-day intensive.',
         icon: 'tabler:robot',
+        callToAction: {
+          text: 'View Course',
+          href: '/products/building-ai-agents',
+          variant: 'primary',
+        },
       },
       {
         title: 'RAG Systems Masterclass',
         description:
           'Build production-ready Retrieval-Augmented Generation systems. Covers vector databases, hybrid search, and evaluation. 2-day workshop.',
         icon: 'tabler:database',
-      },
-      {
-        title: 'PyTorch Deep Learning',
-        description:
-          'From basics to advanced architectures. CNNs, Transformers, and training best practices. Hands-on projects included. 5-day course.',
-        icon: 'tabler:brain',
-      },
-      {
-        title: 'ROS2 for AI Robotics',
-        description:
-          'Integrate AI with robotic systems using ROS2. Navigation, manipulation, and perception pipelines. 3-day workshop.',
-        icon: 'tabler:drone',
-      },
-      {
-        title: 'MLOps & Deployment',
-        description:
-          'Deploy ML models at scale. Docker, Kubernetes, CI/CD, monitoring, and cloud platforms. 2-day workshop.',
-        icon: 'tabler:cloud-computing',
+        callToAction: {
+          text: 'View Course',
+          href: '/products/rag-systems-masterclass',
+          variant: 'primary',
+        },
       },
     ]}
   >
@@ -119,106 +115,6 @@ const metadata = {
       Learn from someone who builds these systems professionally and publishes research at top conferences.
     </Fragment>
   </Content>
-
-  <!-- Consulting Services **************** -->
-
-  <Content
-    isAfterContent
-    items={[
-      {
-        title: 'AI Strategy Consulting',
-        description: 'Help your organization identify AI opportunities and develop a roadmap for implementation.',
-        icon: 'tabler:chart-line',
-      },
-      {
-        title: 'Custom AI Development',
-        description: 'Build bespoke AI solutions tailored to your specific business needs and technical requirements.',
-        icon: 'tabler:settings',
-      },
-      {
-        title: 'Model Optimization',
-        description: 'Improve existing AI systems for better performance, lower costs, and faster inference.',
-        icon: 'tabler:rocket',
-      },
-      {
-        title: 'Technical Due Diligence',
-        description: 'Evaluate AI capabilities and technical feasibility for investments or acquisitions.',
-        icon: 'tabler:search',
-      },
-    ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-      alt: 'Consulting Services',
-    }}
-  >
-    <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Consulting Services</h3>
-      Beyond training, I offer consulting to help organizations implement AI effectively.
-    </Fragment>
-
-    <Fragment slot="bg">
-      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
-    </Fragment>
-  </Content>
-
-  <!-- Pricing Widget ****************** -->
-
-  <Pricing
-    title="Training Packages"
-    subtitle="Flexible options for individuals and teams"
-    prices={[
-      {
-        title: 'Individual',
-        subtitle: 'Join public workshops',
-        price: 'From $499',
-        period: 'per course',
-        items: [
-          { description: 'Access to scheduled public workshops' },
-          { description: 'Course materials and code samples' },
-          { description: '30-day email support' },
-          { description: 'Certificate of completion' },
-        ],
-        callToAction: {
-          text: 'View Schedule',
-          href: '/contact',
-        },
-      },
-      {
-        title: 'Team',
-        subtitle: 'Private training for your team',
-        price: 'From $3,999',
-        period: 'per workshop',
-        items: [
-          { description: 'Private session for up to 15 people' },
-          { description: 'Customized content for your use cases' },
-          { description: 'On-site or virtual delivery' },
-          { description: '60-day team support' },
-        ],
-        callToAction: {
-          text: 'Get Quote',
-          href: '/contact',
-        },
-        hasRibbon: true,
-        ribbonTitle: 'Popular',
-      },
-      {
-        title: 'Enterprise',
-        subtitle: 'Comprehensive AI enablement',
-        price: 'Custom',
-        period: 'contact for pricing',
-        items: [
-          { description: 'Multi-course training programs' },
-          { description: 'Ongoing consulting support' },
-          { description: 'Custom curriculum development' },
-          { description: 'Dedicated account manager' },
-        ],
-        callToAction: {
-          text: 'Contact Sales',
-          href: '/contact',
-        },
-      },
-    ]}
-  />
 
   <!-- Testimonials Widget *********** -->
 
