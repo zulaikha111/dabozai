@@ -1,4 +1,4 @@
-import { getPermalink, getBlogPermalink, getAsset } from './utils/permalinks';
+import { getPermalink, getAsset } from './utils/permalinks';
 
 /**
  * Navigation Configuration for Zuzu's Portfolio
@@ -13,18 +13,20 @@ export const headerData = {
       text: 'Home',
       href: getPermalink('/'),
     },
+    /*
     {
       text: 'Portfolio',
       href: getPermalink('/portfolio'),
-    },
+    },*/
     {
       text: 'About/CV',
       href: getPermalink('/about'),
     },
+    /*
     {
       text: 'Blog',
       href: getBlogPermalink(),
-    },
+    },*/
     {
       text: 'Training',
       href: getPermalink('/services'),
@@ -43,9 +45,7 @@ export const footerData = {
       title: 'Navigation',
       links: [
         { text: 'Home', href: getPermalink('/') },
-        { text: 'Portfolio', href: getPermalink('/portfolio') },
         { text: 'About/CV', href: getPermalink('/about') },
-        { text: 'Blog', href: getBlogPermalink() },
         { text: 'Training', href: getPermalink('/services') },
         { text: 'Contact', href: getPermalink('/contact') },
       ],
@@ -62,14 +62,14 @@ export const footerData = {
     {
       title: 'Legal',
       links: [
-        { text: 'Terms', href: getPermalink('/terms') },
-        { text: 'Privacy Policy', href: getPermalink('/privacy') },
+        { text: 'Terms', href: getPermalink('/services') },
+        { text: 'Privacy Policy', href: getPermalink('/services') },
       ],
     },
   ],
   secondaryLinks: [
-    { text: 'Terms', href: getPermalink('/terms') },
-    { text: 'Privacy Policy', href: getPermalink('/privacy') },
+    { text: 'Terms', href: getPermalink('/services') },
+    { text: 'Privacy Policy', href: getPermalink('/services') },
   ],
   socialLinks: [
     { ariaLabel: 'GitHub', icon: 'tabler:brand-github', href: 'https://github.com/zuzu-ai' },
@@ -78,6 +78,6 @@ export const footerData = {
     { ariaLabel: 'RSS', icon: 'tabler:rss', href: getAsset('/rss.xml') },
   ],
   footNote: `
-    © 2024 Zuzu | AI/ML Engineer & Robotics Specialist · Melbourne, Australia
+    © 2025 Zuzu | AI/ML Engineer & Robotics Specialist · Melbourne, Australia
   `,
 };

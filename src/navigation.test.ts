@@ -202,7 +202,9 @@ describe('Navigation Link Validity - Property Tests', () => {
     });
 
     it('should have all required navigation items (Home, About/CV, Blog, Training Products, Contact)', () => {
-      const requiredItems = ['Home', 'About/CV', 'Blog', 'Training Products', 'Contact'];
+      // const requiredItems = ['Home', 'About/CV', 'Blog', 'Training Products', 'Contact'];
+      const requiredItems = ['Home', 'About/CV', 'Training Products', 'Contact'];
+
       const linkTexts = headerLinks.map((link) => link.text);
 
       for (const item of requiredItems) {

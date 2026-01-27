@@ -2,7 +2,6 @@
 import Features2 from '~/components/widgets/Features2.astro';
 import Features3 from '~/components/widgets/Features3.astro';
 import Hero from '~/components/widgets/Hero.astro';
-import Stats from '~/components/widgets/Stats.astro';
 import Steps2 from '~/components/widgets/Steps2.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
 import Layout from '~/layouts/PageLayout.astro';
@@ -46,7 +45,7 @@ const metadata = {
 
   <!-- Stats Widget ****************** -->
 
-  <Stats
+  <!-- Stats
     title="Career Highlights"
     stats={[
       { title: 'Research Papers', amount: '8' },
@@ -54,34 +53,15 @@ const metadata = {
       { title: 'GitHub Stars', amount: '2.5K' },
       { title: 'Training Hours', amount: '500+' },
     ]}
-  />
+  / -->
 
   <!-- Experience Section ************** -->
 
-  <Steps2
+  <!-- Steps2
     title="Professional Experience"
     subtitle="Building AI systems from research to production"
-    items={[
-      {
-        title: 'Research Engineer — Melbourne AI Lab',
-        description:
-          'Leading research on multi-agent LLM systems and robotic manipulation. Published 2 papers at NeurIPS and ICRA. Built production LLM pipeline serving 10K+ daily requests. (2024 - Present)',
-        icon: 'tabler:building-skyscraper',
-      },
-      {
-        title: 'Robotics Software Engineer — RoboTech Solutions',
-        description:
-          'Developed autonomous navigation and manipulation systems. Implemented SLAM-based navigation reducing localization error by 35%. Designed deep RL policy with 95% success rate. (2023)',
-        icon: 'tabler:robot',
-      },
-      {
-        title: 'ML Engineer Intern — AI Startup Incubator',
-        description:
-          'Built and deployed ML models for startup clients. Developed computer vision system with 98% accuracy. Created RAG-based chatbot reducing response time by 60%. (2022)',
-        icon: 'tabler:rocket',
-      },
-    ]}
-  />
+    items={}
+  / -->
 
   <!-- Education Section ************** -->
 
@@ -133,16 +113,6 @@ const metadata = {
           'Knowledge of artificial intelligence (AI), machine learning (ML), and generative AI concepts and use cases',
         icon: 'tabler:cloud',
       },
-      {
-        title: 'Deep Learning Specialization',
-        description: 'DeepLearning.AI (2023) — Comprehensive deep learning training from Andrew Ng.',
-        icon: 'tabler:brain',
-      },
-      {
-        title: 'ROS2 Developer Certificate',
-        description: 'The Construct (2023) — Expertise in Robot Operating System 2 development.',
-        icon: 'tabler:robot',
-      },
     ]}
   />
 
@@ -155,34 +125,19 @@ const metadata = {
     columns={3}
     items={[
       {
-        title: 'AI/ML Frameworks',
-        description: 'PyTorch, TensorFlow, JAX, Hugging Face Transformers, scikit-learn, OpenCV',
-        icon: 'tabler:brain',
-      },
-      {
         title: 'LLM & Agents',
         description: 'LangChain, LlamaIndex, OpenAI API, Anthropic Claude, Prompt Engineering, RAG Systems',
         icon: 'tabler:message-chatbot',
       },
       {
-        title: 'Robotics',
-        description: 'ROS/ROS2, Gazebo, MoveIt, SLAM, Motion Planning, Sensor Fusion',
-        icon: 'tabler:drone',
-      },
-      {
         title: 'Programming',
-        description: 'Python, C++, TypeScript, CUDA, Rust',
+        description: 'Python, TypeScript, Java',
         icon: 'tabler:code',
       },
       {
         title: 'MLOps & Cloud',
-        description: 'Docker, Kubernetes, AWS SageMaker, GCP Vertex AI, MLflow, Weights & Biases',
+        description: 'Docker, AWS SageMaker, OpenSearch',
         icon: 'tabler:cloud-computing',
-      },
-      {
-        title: 'Soft Skills',
-        description: 'Technical Writing, Research Presentation, Team Leadership, Mentoring',
-        icon: 'tabler:users',
       },
     ]}
   >

@@ -6,7 +6,6 @@ import Features from '~/components/widgets/Features.astro';
 import Features2 from '~/components/widgets/Features2.astro';
 import Steps from '~/components/widgets/Steps.astro';
 import Content from '~/components/widgets/Content.astro';
-import Stats from '~/components/widgets/Stats.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
 
 const metadata = {
@@ -104,14 +103,8 @@ const metadata = {
           'Bachelor of Science in Software Engineering with Honours, specializing in Artificial Intelligence and Machine Learning.',
       },
       {
-        title: 'Research Experience',
-        description:
-          'Conducted research at the Melbourne AI Lab, focusing on multi-agent systems and robotic manipulation.',
-      },
-      {
-        title: 'Industry Collaboration',
-        description:
-          'Collaborated with leading tech companies on real-world AI applications during internships and research projects.',
+        title: 'GenAI Professional Certification',
+        description: 'AWS Certified Generative AI Developer - Professional, AWS Certified AI Practitioner',
       },
     ]}
     image={{
@@ -209,23 +202,13 @@ const metadata = {
     items={[
       {
         title: 'Python & PyTorch',
-        description: 'Primary language for ML development with deep expertise in PyTorch ecosystem.',
+        description: 'ML development with deep expertise in PyTorch ecosystem.',
         icon: 'tabler:brand-python',
       },
       {
-        title: 'LangChain & LlamaIndex',
+        title: 'LangChain & Amazon Bedrock',
         description: 'Building RAG systems, agents, and LLM-powered applications.',
         icon: 'tabler:link',
-      },
-      {
-        title: 'TensorFlow & JAX',
-        description: 'Experience with multiple deep learning frameworks for diverse projects.',
-        icon: 'tabler:brand-google',
-      },
-      {
-        title: 'ROS/ROS2',
-        description: 'Robot Operating System for building robotic applications and simulations.',
-        icon: 'tabler:robot',
       },
       {
         title: 'Docker & Kubernetes',
@@ -233,7 +216,7 @@ const metadata = {
         icon: 'tabler:brand-docker',
       },
       {
-        title: 'AWS & GCP',
+        title: 'AWS',
         description: 'Cloud platforms for training, deploying, and serving ML models.',
         icon: 'tabler:cloud',
       },
@@ -241,11 +224,6 @@ const metadata = {
         title: 'Hugging Face',
         description: 'Transformers library and model hub for NLP and multimodal AI.',
         icon: 'tabler:mood-smile',
-      },
-      {
-        title: 'OpenCV & CUDA',
-        description: 'Computer vision and GPU-accelerated computing.',
-        icon: 'tabler:eye',
       },
       {
         title: 'Git & MLflow',
@@ -261,14 +239,14 @@ const metadata = {
 
   <!-- Stats Widget ****************** -->
 
-  <Stats
+  <!-- Stats
     stats={[
       { title: 'Research Papers', amount: '8' },
       { title: 'Projects Completed', amount: '25+' },
       { title: 'GitHub Stars', amount: '2.5K' },
       { title: 'Training Hours', amount: '500+' },
     ]}
-  />
+  / -->
 
   <!-- CallToAction Widget *********** -->
 

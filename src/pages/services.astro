@@ -3,7 +3,6 @@ import CallToAction from '~/components/widgets/CallToAction.astro';
 import Content from '~/components/widgets/Content.astro';
 import Features2 from '~/components/widgets/Features2.astro';
 import Hero from '~/components/widgets/Hero.astro';
-import Testimonials from '~/components/widgets/Testimonials.astro';
 import Layout from '~/layouts/PageLayout.astro';
 
 const metadata = {
@@ -47,28 +46,6 @@ const metadata = {
           variant: 'primary',
         },
       },
-      {
-        title: 'Building AI Agents',
-        description:
-          'Master autonomous AI agents using LangChain and custom architectures. Includes planning, memory, and tool-use patterns. 3-day intensive.',
-        icon: 'tabler:robot',
-        callToAction: {
-          text: 'View Course',
-          href: '/products/building-ai-agents',
-          variant: 'primary',
-        },
-      },
-      {
-        title: 'RAG Systems Masterclass',
-        description:
-          'Build production-ready Retrieval-Augmented Generation systems. Covers vector databases, hybrid search, and evaluation. 2-day workshop.',
-        icon: 'tabler:database',
-        callToAction: {
-          text: 'View Course',
-          href: '/products/rag-systems-masterclass',
-          variant: 'primary',
-        },
-      },
     ]}
   >
     <Fragment slot="bg">
@@ -89,7 +66,7 @@ const metadata = {
       },
       {
         title: 'Small Class Sizes',
-        description: 'Maximum 15 participants per session ensures personalized attention and meaningful Q&A time.',
+        description: 'Maximum 10 participants per session ensures personalized attention and meaningful Q&A time.',
         icon: 'tabler:users',
       },
       {
@@ -118,7 +95,7 @@ const metadata = {
 
   <!-- Testimonials Widget *********** -->
 
-  <Testimonials
+  <!-- Testimonials
     title="What Participants Say"
     testimonials={[
       {
@@ -149,7 +126,7 @@ const metadata = {
         },
       },
     ]}
-  />
+  / -->
 
   <!-- CallToAction Widget *********** -->
 
@@ -157,7 +134,7 @@ const metadata = {
     actions={[
       {
         variant: 'primary',
-        text: 'Book a Consultation',
+        text: 'Contact Us',
         href: '/contact',
         icon: 'tabler:calendar',
       },

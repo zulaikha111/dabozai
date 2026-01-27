@@ -10,7 +10,7 @@ import * as path from 'path';
 import { productSchema } from './schemas';
 
 // Expected course slugs that must exist in the products collection
-const EXPECTED_COURSE_SLUGS = ['ai-systems-from-prompts-to-agents', 'building-ai-agents', 'rag-systems-masterclass'];
+const EXPECTED_COURSE_SLUGS = ['ai-systems-from-prompts-to-agents'];
 
 // Expected course links mapping slug to expected href
 const EXPECTED_COURSE_LINKS: Record<string, string> = {
@@ -187,19 +187,9 @@ describe('Course Data Files - Unit Tests', () => {
       expect(links).toContain('/products/ai-systems-from-prompts-to-agents');
     });
 
-    it('should have link to building-ai-agents course', () => {
-      const links = extractCourseLinksFromServicesPage();
-      expect(links).toContain('/products/building-ai-agents');
-    });
-
-    it('should have link to rag-systems-masterclass course', () => {
-      const links = extractCourseLinksFromServicesPage();
-      expect(links).toContain('/products/rag-systems-masterclass');
-    });
-
     it('should have exactly three course links', () => {
       const links = extractCourseLinksFromServicesPage();
-      expect(links).toHaveLength(3);
+      expect(links).toHaveLength(1);
     });
   });
 });
