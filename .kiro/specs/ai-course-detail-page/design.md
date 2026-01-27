@@ -82,7 +82,7 @@ The `src/pages/products/[...slug].astro` already provides:
 title: 'AI Systems: From Prompts to Agents'
 description: 'A hands-on, three-day training that teaches how modern AI systems actually work—and how to design them properly.'
 duration: '2-3 days'
-price: 200
+price: 1
 image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80'
 featured: true
 category: 'AI Training'

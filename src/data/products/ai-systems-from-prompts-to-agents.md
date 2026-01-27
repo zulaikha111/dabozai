@@ -2,7 +2,7 @@
 title: 'AI Systems: From Prompts to Agents'
 description: 'A hands-on, three-day training that teaches how modern AI systems actually work—and how to design them properly.'
 duration: '2-3 days'
-price: 200
+price: 1
 image: '/images/prompts-to-agents.jpeg'
 featured: true
 category: 'AI Training'
@@ -71,48 +71,47 @@ Topics covered:
 
 - What modern AI models actually do
 - Tokens, context windows, and limitations
+- LLM model training process/stages
 - Why hallucinations happen
-- The difference between prompts and specifications
+- Prompt engineering
+- Context Engineering
 - Describing behavior using intent instead of code
-- What skills are and how AI systems reuse them
-- Single agents and sub-agents as system components
 
 **Outcome:**  
 Participants understand how AI works and how to think in systems rather than prompts.
 
 ---
 
-### Day 2 – Memory, Tools, and Control
+### Day 2 – MCP, Skills, Agents, Workflows, AI Coding agents, RAG
 
-**Focus:** Making AI systems useful, safe, and repeatable
+**Focus:** Making AI systems useful, safe, and repeatable in real world
 
 Topics covered:
 
-- How AI systems use external knowledge
-- Memory as a system component, not a model feature
-- Designing workflows that retrieve and use information
-- Tool usage and capability boundaries
-- Local vs remote capabilities
-- Hooks as control points before and after actions
-- Designing guardrails and validation logic
+- How AI systems use external knowledge (Retrieval Augmented Generation)
+- Building workflows that retrieve and use information, and take action
+- Building AI agents
+- Introduction to AI coding agents
+- Building, and using Skills
+- Tools/MCP usage and capability boundaries
+- Local vs remote tool capabilities
 
 **Outcome:**  
-Participants can design structured AI workflows that use memory and tools responsibly.
+Participants can design structured AI workflows that use agents and tools responsibly.
 
 ---
 
-### Day 3 – From Systems to Agents (Optional)
+### Day 3 – Hands on - From Systems to Agents (Optional)
 
-**Focus:** Building autonomous agent-based systems
+**Focus:** Building autonomous agent-based systems from ground up (requires Python coding knowledge)
 
 Topics covered:
 
-- What makes an agent different from a workflow
 - Agent identity, goals, and planning
 - Multi-step reasoning and decision loops
 - Tool orchestration and state management
 - Designing agents that can act, reflect, and adapt
-- Reading and modifying real agent implementations
+- Build agents using Agentcore, Strand Agent, and LangChain frameworks
 
 **Outcome:**  
 Participants can build and reason about autonomous agents using Python-based systems.
@@ -180,8 +179,8 @@ No GPUs are required.
 
 ## Pricing
 
-- **Days 1–2:** USD $200
-- **Day 3 (Optional):** USD $100
+- **Days 1–2:** USD $xx
+- **Day 3 (Optional):** USD $xx
 
 Participants may enroll in:
 
