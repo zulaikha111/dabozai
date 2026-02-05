@@ -136,7 +136,8 @@
 }
 
 .course-content-enhanced ul > li {
-  @apply flex items-start gap-3 p-4 bg-slate-50 dark:bg-slate-800 rounded-lg border-l-4 border-primary list-none;
+  @apply flex items-start gap-3 p-4 bg-slate-50 dark:bg-slate-800 rounded-lg border-l-4 list-none;
+  border-left-color: rgb(137 207 240);
 }
 
 .course-content-enhanced ul > li::marker {
@@ -145,7 +146,8 @@
 
 .course-content-enhanced ul > li::before {
   content: '✓';
-  @apply text-primary font-bold flex-shrink-0 text-lg;
+  @apply font-bold flex-shrink-0 text-lg;
+  color: rgb(137 207 240);
 }
 
 /* Nested lists */
