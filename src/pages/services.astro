@@ -17,13 +17,9 @@ const metadata = {
 
   <Hero
     tagline="Training & Services"
-    title="Level Up Your AI/ML Skills"
+    title="Level up your skills in building with AI and sensors"
     subtitle="Hands-on training courses and consulting services in AI, Machine Learning, Large Language Models, and Robotics. From beginner workshops to advanced masterclasses."
     actions={[{ variant: 'primary', text: 'View Courses', href: '#courses' }]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-      alt: 'AI Training Workshop',
-    }}
   />
 
   <!-- Training Courses ************** -->
@@ -32,18 +28,28 @@ const metadata = {
     id="courses"
     title="Training Courses"
     subtitle="Comprehensive courses designed for different skill levels"
-    tagline="Learn AI/ML"
     columns={3}
     items={[
       {
         title: 'AI Systems: From Prompts to Agents',
         description:
-          'Aa hands-on, three-day training that teaches you how modern AI systems actually work—and how to design them properly. You’ll move beyond prompts and chatbots to understand AI as a system: with structure, memory, tools, and clear boundaries. The course starts from first principles and gradually builds toward autonomous agent-based systems, without assuming a technical background for the first two days. By the end, you will understand how to design reliable AI workflows, reason about agent behavior, and confidently move from ideas to working AI systems.',
+          "A hands-on, three-day training that teaches you how modern AI systems actually work—and how to design them properly. You'll move beyond prompts and chatbots to understand AI as a system: with structure, memory, tools, and clear boundaries. The course starts from first principles and gradually builds toward autonomous agent-based systems, without assuming a technical background for the first two days. By the end, you will understand how to design reliable AI workflows, reason about agent behavior, and confidently move from ideas to working AI systems.",
         icon: 'tabler:message-chatbot',
         callToAction: {
           text: 'View Course',
           href: '/products/ai-systems-from-prompts-to-agents',
           variant: 'primary',
+        },
+      },
+      {
+        title: 'Building with Sensors and Vision Systems',
+        description:
+          'Coming March 2026 — A hands-on course bridging digital intelligence with physical reality. Learn to integrate sensors and computer vision to build intelligent systems that can see, sense, and respond to their environment. Perfect for developers ready to work with IoT and robotics applications.',
+        icon: 'tabler:robot',
+        callToAction: {
+          text: 'Contact for Info',
+          href: '/contact',
+          variant: 'secondary',
         },
       },
     ]}

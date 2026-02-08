@@ -3,7 +3,6 @@ import Features2 from '~/components/widgets/Features2.astro';
 import Features3 from '~/components/widgets/Features3.astro';
 import Hero from '~/components/widgets/Hero.astro';
 import Steps2 from '~/components/widgets/Steps2.astro';
-import CallToAction from '~/components/widgets/CallToAction.astro';
 import Layout from '~/layouts/PageLayout.astro';
 
 const metadata = {
@@ -26,18 +25,14 @@ const metadata = {
         icon: 'tabler:brand-linkedin',
       },
     ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-      alt: 'AI and Machine Learning',
-    }}
   >
     <Fragment slot="title">
       Hi, I'm <span class="text-accent dark:text-white">Zuzu</span><br />
-      <span class="text-3xl sm:text-4xl">AI/ML Engineer & Robotics Specialist</span>
+      <span class="text-3xl sm:text-4xl">Software Engineer</span>
     </Fragment>
 
     <Fragment slot="subtitle">
-      Computing and Software Systems graduate from the University of Melbourne. I specialize in AI development—working
+      Computing and Software Systems graduate from the University of Melbourne. I specialize in AI development, working
       with LLMs, building agentic systems, and creating robotics applications. Through Dabozai, I deliver practical AI
       training where students build real projects. I'm driven by turning complex technology into something people can
       actually use.
@@ -70,19 +65,13 @@ const metadata = {
     title="Academic Background"
     subtitle="Strong Academic Foundation — Combining rigorous academic training with hands-on practical experience."
     tagline="Education"
-    columns={2}
+    columns={1}
     items={[
       {
         title: 'University of Melbourne',
         description:
           'Bachelor of Science (Computing and Software Systems), 2022-2025. Melbourne International Undergraduate Scholarship recipient.',
         icon: 'tabler:school',
-      },
-      {
-        title: 'Capstone Project',
-        description:
-          'Built LLM-backed mental health services navigation chatbot with RAG implementation, vector search, and geofencing for Victoria.',
-        icon: 'tabler:flask',
       },
     ]}
   >
@@ -115,6 +104,41 @@ const metadata = {
         description:
           'Professional certification demonstrating proficiency in Python programming fundamentals and best practices.',
         icon: 'tabler:brand-python',
+      },
+    ]}
+  />
+
+  <!-- Projects Section ************** -->
+
+  <Features2
+    title="Projects"
+    subtitle="Key projects showcasing practical application of AI and software development skills."
+    tagline="Portfolio"
+    columns={2}
+    items={[
+      {
+        title: 'Mental Health Services Navigation - Capstone Project',
+        description:
+          'Built LLM-backed mental health services navigation chatbot with RAG implementation, vector search, and geofencing for Victoria. Tech stack: Python, LangChain, Supabase (Postgres + pgvector), React, FastAPI, Google Cloud Run.',
+        icon: 'tabler:flask',
+      },
+      {
+        title: 'Automating Operational Tasks',
+        description:
+          'Working as part of the IT operations team, automated day-to-day operational tasks including data loading and cleaning for CMDB service team, identifying unused AWS resources, generating billing reports per department, full inventory across accounts/regions, identifying stale IAM users, checking publicly accessible S3 buckets, and generating IAM access reports.',
+        icon: 'tabler:automation',
+      },
+      {
+        title: 'Sokoban Puzzle AI Solver',
+        description:
+          'Built an AI-powered solver for the Sokoban box-pushing puzzle game. Implemented Dijkstra\'s graph search algorithm with custom priority queue and hash table for efficient state-space exploration. Developed deadlock detection optimizations to prune unsolvable states early. Tech stack: Python with custom data structures.',
+        icon: 'tabler:puzzle',
+      },
+      {
+        title: 'Netflix Content Rating and Genre Prediction Using NLP',
+        description:
+          'Worked in a team to investigate the relationship between Netflix content descriptions and their associated ratings across genres. Built genre prediction model using Logistic Regression on TF-IDF vectorized descriptions. Developed Random Forest regression model to predict IMDB/TMDB scores. Performed data preprocessing including lemmatization, stop word removal across ~5,850 titles. Tech stack: Python, scikit-learn, NLTK, spaCy, matplotlib, pandas.',
+        icon: 'tabler:movie',
       },
     ]}
   />
@@ -154,9 +178,9 @@ const metadata = {
         icon: 'tabler:users',
       },
       {
-        title: 'Soft Skills',
-        description: 'Leadership, Critical Thinking, Training & Mentoring, Time Management, Teamwork',
-        icon: 'tabler:heart',
+        title: 'Data & Databases',
+        description: 'PostgreSQL, Supabase, pgvector, Vector databases, Data preprocessing, ETL pipelines, Pandas, Data cleaning and transformation',
+        icon: 'tabler:database',
       },
     ]}
   >
@@ -170,7 +194,7 @@ const metadata = {
   <Steps2
     title="My Values"
     subtitle="Principles that guide my work"
-    isReversed={true}
+    isReversed={false}
     items={[
       {
         title: 'Quality & Innovation',
@@ -204,13 +228,8 @@ const metadata = {
   <Features2
     title="Get in Touch"
     tagline="Contact"
-    columns={3}
+    columns={2}
     items={[
-      {
-        title: 'Email',
-        description: 'zuzu@example.com',
-        icon: 'tabler:mail',
-      },
       {
         title: 'Location',
         description: 'Melbourne, Australia',

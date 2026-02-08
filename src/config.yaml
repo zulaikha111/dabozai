@@ -1,5 +1,5 @@
 site:
-  name: Zuzu | AI/ML Engineer
+  name: Zuzu | Software Engineer
   site: 'https://dabozai.com'
   base: '/'
   trailingSlash: false
@@ -9,14 +9,14 @@ site:
 # Default SEO metadata
 metadata:
   title:
-    default: Zuzu | AI/ML Engineer & Robotics Specialist
+    default: Zuzu | Software Engineer
     template: '%s — Zuzu'
   description: 'Portfolio of Zuzu, a Software Engineering graduate from the University of Melbourne specializing in AI/ML, Large Language Models, Agentic Systems, and Robotics. Explore research publications, projects, and training courses.'
   robots:
     index: true
     follow: true
   openGraph:
-    site_name: Zuzu | AI/ML Engineer
+    site_name: Zuzu | Software Engineer
     images:
       - url: '~/assets/images/default.png'
         width: 1200

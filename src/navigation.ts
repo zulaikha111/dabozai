@@ -78,6 +78,6 @@ export const footerData = {
     { ariaLabel: 'RSS', icon: 'tabler:rss', href: getAsset('/rss.xml') },
   ],
   footNote: `
-    © 2025 Zuzu | AI/ML Engineer & Robotics Specialist · Melbourne, Australia
+    © 2025 Zuzu | Software Engineer · Melbourne, Australia
   `,
 };

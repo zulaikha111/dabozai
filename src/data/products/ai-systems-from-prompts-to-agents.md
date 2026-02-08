@@ -1,8 +1,8 @@
 ---
 title: 'AI Systems: From Prompts to Agents'
 description: 'A hands-on, three-day training that teaches how modern AI systems actually work—and how to design them properly.'
-duration: '2-3 days'
-price: 1
+duration: '2 days'
+price: 200
 image: '/images/prompts-to-agents.jpeg'
 featured: true
 category: 'AI Training'
@@ -102,6 +102,8 @@ Participants can design structured AI workflows that use agents and tools respon
 ---
 
 ### Day 3 – Hands on - From Systems to Agents (Optional)
+
+> **Note:** Day 3 is available as an optional add-on for an additional **$100**. This hands-on builder day gives you direct experience implementing what you learned in Days 1–2, transforming theoretical knowledge into practical coding skills with autonomous AI agents.
 
 **Focus:** Building autonomous agent-based systems from ground up (requires Python coding knowledge)
 
