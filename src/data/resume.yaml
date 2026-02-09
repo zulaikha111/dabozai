@@ -105,10 +105,10 @@ skills:
       - 'CUDA'
       - 'Rust'
 
-  - category: 'MLOps & Cloud'
+  - category: 'Cloud'
     items:
       - 'Docker'
-      - 'Kubernetes'
+      - 'Git'
       - 'AWS (SageMaker, EC2, Lambda)'
       - 'GCP (Vertex AI)'
       - 'MLflow'
