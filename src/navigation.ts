@@ -56,7 +56,6 @@ export const footerData = {
         { text: 'LLM Development', href: getPermalink('/services') },
         { text: 'AI Agents', href: getPermalink('/services') },
         { text: 'Robotics', href: getPermalink('/services') },
-        { text: 'MLOps', href: getPermalink('/services') },
       ],
     },
     {
