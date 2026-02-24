@@ -1,4 +1,4 @@
-import { getPermalink, getAsset } from './utils/permalinks';
+import { getPermalink } from './utils/permalinks';
 
 /**
  * Navigation Configuration for Zuzu's Portfolio
@@ -22,11 +22,10 @@ export const headerData = {
       text: 'About/CV',
       href: getPermalink('/about'),
     },
-    /*
     {
       text: 'Blog',
-      href: getBlogPermalink(),
-    },*/
+      href: 'https://www.linkedin.com/newsletters/7419227121971249152/',
+    },
     {
       text: 'Training',
       href: getPermalink('/services'),
@@ -74,7 +73,6 @@ export const footerData = {
     { ariaLabel: 'GitHub', icon: 'tabler:brand-github', href: 'https://github.com/zuzu-ai' },
     { ariaLabel: 'LinkedIn', icon: 'tabler:brand-linkedin', href: 'https://linkedin.com/in/zuzu-ai' },
     { ariaLabel: 'X', icon: 'tabler:brand-x', href: 'https://twitter.com/zuzu_ai' },
-    { ariaLabel: 'RSS', icon: 'tabler:rss', href: getAsset('/rss.xml') },
   ],
   footNote: `
     © 2025 Zuzu | Software Engineer · Melbourne, Australia
